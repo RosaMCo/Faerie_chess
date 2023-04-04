@@ -30,14 +30,14 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-void Dibuja(Esfera esf)
+/*void Dibuja(Esfera esf)
 {
 	glColor3ub(esf.rojo, esf.verde, esf.azul);
 	glTranslatef(esf.x, esf.y, 0);
 	glutSolidSphere(esf.radio, 20, 20);
 	glTranslatef(-esf.x, -esf.y, 0); //DUDA: por qué el negativo?
 
-}
+}*/
 void OnDraw(void)
 {
 	//Borrado de la pantalla	
