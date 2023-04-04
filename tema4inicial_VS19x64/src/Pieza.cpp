@@ -23,7 +23,6 @@ Pieza::Pieza(int _x, int _y, bool blanco)
 	}
 	else {
 		rojo = verde = azul = 255;
-
 	}
 
 }
@@ -33,8 +32,12 @@ void Pieza::Dibuja()
 
 }
 
+void Pieza::setColor()
+{
 
-Pieza(int _x, int _y, int _tipo, bool color);
+}
+
+/*Pieza(int _x, int _y, int _tipo, bool color);
 virtual ~Pieza();
 void Dibuja();
 
@@ -46,6 +49,6 @@ void setNext();
 int getPosicion();
 bool getOcupado();
 bool getNext();
-
+*/
 
 

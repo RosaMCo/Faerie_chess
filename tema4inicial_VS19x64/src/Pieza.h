@@ -20,7 +20,7 @@ public:
 	Pieza();
 	Pieza(int _x, int _y, bool blanco);//Constructor de peones
 	Pieza(int _x, int _y, int _tipo, bool blanco);
-	virtual ~Pieza();
+	//virtual ~Pieza();
 	void Dibuja();
 
 	//set
