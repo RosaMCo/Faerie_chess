@@ -24,6 +24,8 @@ void Pieza::setColor()
 
 }
 
+
+
 /*Pieza(int _x, int _y, int _tipo, bool color);
 virtual ~Pieza();
 void Dibuja();
