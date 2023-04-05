@@ -3,7 +3,7 @@
 
 class Pieza
 {
-private:
+protected:
 	//Posición
 	Vector2D posicion;
 	//Movimientos
