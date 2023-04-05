@@ -1,12 +1,11 @@
 #pragma once
-
+#include "Vector2D.h"
 
 class Pieza
 {
 private:
 	//Posición
-	float x;
-	float y;
+	Vector2D posicion;
 	//Movimientos
 	bool next;
 	bool ocupada;

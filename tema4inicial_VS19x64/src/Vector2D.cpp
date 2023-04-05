@@ -8,10 +8,13 @@ Vector2D::~Vector2D()
 {
 
 }
-Vector2D::Vector2D(float x, float y)
+Vector2D::Vector2D(float ix, float iy)
 {
-	x = x;
-	y = y;
+	x = ix;
+	y = iy;
 }
 
-//Falta hacer la sobrecarga
+void Vector2D::setPosicion(float ix, float iy) {
+	x = ix;
+	y = iy;
+}

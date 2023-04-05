@@ -2,28 +2,15 @@
 
 Pieza::Pieza()
 {
-	x = y = 0;
-	rojo = verde = azul = 1;
+	//constructor de posicion
+	
 	ocupada = false;
 	next = false;
 	tipo = 0;
 
 }
 
-
-Pieza::Pieza(int _x, int _y, bool blanco)
-{
-	x = _x;
-	y = _y;
-	tipo = 0;
-	if (blanco == 0)
-	{
-		rojo = verde = azul = 0;
-
-	}
-	else {
-		rojo = verde = azul = 255;
-	}
+Pieza::~Pieza() {
 
 }
 
