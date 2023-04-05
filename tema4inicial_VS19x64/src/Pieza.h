@@ -10,17 +10,15 @@ private:
 	//Movimientos
 	bool next;
 	bool ocupada;
-	//Colores
-	unsigned char rojo;
-	unsigned char verde;
-	unsigned char azul;
+	//Colores, 
+	
 
 	int tipo;
 public:
+	//Constructor y destructor 
 	Pieza();
-	Pieza(int _x, int _y, bool blanco);//Constructor de peones
-	Pieza(int _x, int _y, int _tipo, bool blanco);
-	//virtual ~Pieza();
+	virtual ~Pieza();
+	//Dibujar pieza
 	void Dibuja();
 
 	//set
@@ -31,9 +29,10 @@ public:
 	void setColor();
 
 
-	//
+	//get
 	int getColor();
-	int getPosicion();
+	int getPosicionX();
+	int getPosicionY();
 	bool getOcupado();
 	bool getNext();
 
