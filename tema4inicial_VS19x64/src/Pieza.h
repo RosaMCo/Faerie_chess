@@ -10,6 +10,9 @@ protected:
 	bool next;
 	bool ocupada;
 	//Colores, 
+	bool Color;
+	bool blanco;
+	bool negro;
 	
 
 	int tipo;
