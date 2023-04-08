@@ -1,15 +1,21 @@
 #include "Peon.h"
 
-bool Peon::moverPeon(float nx, float ny) {
-	if (mov_ini == 0) {
-		if (nx == posicion.getX() && ny - posicion.getY() <= 2 * 10.0f) {
+Peon::Peon(bool col, int f, int c) {
+	color = col;
+	fila = f;
+	columna = c;
+}
+
+bool Peon::mover(int nx, int ny) {
+	if (mov_ini == 1) {
+		if (nx == columna && ny - fila <=2) {
 			return true;
 		}
 		return false;
 	}
 
 	else {
-		if (nx == posicion.getX() && ny - posicion.getY() == 1 * 10.0f) {
+		if (nx == columna && ny - fila == 1) {
 			return true;
 		}
 
@@ -18,8 +24,8 @@ bool Peon::moverPeon(float nx, float ny) {
 	return false;
 }
 
-bool Peon::comerPeon(float nx, float ny) {
-	if ((nx - posicion.getX() == 1 * 10.0f || nx - posicion.getX() == -1 * 10.0f) && (posicion.getY() == 1 * 10.0f)) {
+bool Peon::comer(int nx, int ny) {
+	if ((nx - columna == 1 || nx - columna == -1) && (fila == 1 )) {
 		return true;
 	}
 	return false;

@@ -4,15 +4,15 @@
 class Pieza
 {
 protected:
-	//Posición
-	Vector2D posicion;
+	//Posición en el tablero (matriz)
+	int fila;
+	int columna;
 	//Movimientos
 	bool next;
 	bool ocupada;
-	//Colores, 
-	bool Color;
-	bool blanco;
-	bool negro;
+	//Colores
+	bool color;//1 para blancas, 0 para negras
+
 	
 
 	int tipo;
@@ -22,7 +22,7 @@ public:
 	virtual ~Pieza();
 	//Dibujar pieza
 	void Dibuja();
-
+	bool getColor() { return color; }
 	//set
 	void setPosicion(float ix, float iy);
 	void setColor(unsigned char r, unsigned char v, unsigned char a);
@@ -32,7 +32,6 @@ public:
 
 
 	//get
-	int getColor();
 	int getPosicionX();
 	int getPosicionY();
 	bool getOcupado();
