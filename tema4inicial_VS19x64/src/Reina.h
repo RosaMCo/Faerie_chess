@@ -1,5 +1,16 @@
 #pragma once
-class Reina
+#include "Pieza.h"
+class Reina:public Pieza
 {
-};
+public:
 
+	Reina(bool color, int fila, int columna);
+	//virtual ~Rey();
+
+	//Métodos públicos
+	void Dibuja();
+	bool mReina(float nx, float ny);
+
+
+
+};
