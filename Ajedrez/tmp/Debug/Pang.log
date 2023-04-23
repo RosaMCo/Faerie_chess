@@ -1,5 +1,2 @@
-﻿  Rey.cpp
-  Tablero.cpp
-  Generando código...
-C:\Users\monia\source\repos\Faerie_chess\tema4inicial_VS19x64\src\Rey.cpp(65): warning C4715: 'Rey::mRey': no todas las rutas de acceso de control devuelven un valor
-  Pang.vcxproj -> C:\Users\monia\source\repos\Faerie_chess\tema4inicial_VS19x64\bin\Ajedrez_Fairy.exe
+﻿  Tablero.cpp
+  Pang.vcxproj -> C:\Users\monia\source\repos\Faerie_chess\Ajedrez\bin\Ajedrez_Fairy.exe

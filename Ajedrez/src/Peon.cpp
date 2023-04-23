@@ -4,6 +4,7 @@ Peon::Peon(bool col, int f, int c) {
 	color = col;
 	fila = f;
 	columna = c;
+	mov_ini = 1;
 }
 
 bool Peon::mover(int nx, int ny) {
