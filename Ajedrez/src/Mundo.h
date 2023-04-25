@@ -8,6 +8,7 @@ class Mundo
 public: 
 
 	Mundo();
+	void teclaEspecial(unsigned char key);
 	void tecla(unsigned char key);
 	void inicializa();
 	//void rotarOjo();
