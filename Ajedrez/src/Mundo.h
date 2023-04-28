@@ -19,7 +19,5 @@ public:
 	float x_ojo;
 	float y_ojo;
 	float z_ojo;
-	//Estados de la máquina:
-	enum ESTADO {Inicio, tienda, juego };
-	ESTADO estado;
+	
 };
