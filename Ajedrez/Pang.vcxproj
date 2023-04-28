@@ -19,20 +19,30 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Alfil.cpp" />
+    <ClCompile Include="src\CoordinadorAjedrez.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
     <ClCompile Include="src\Ajedrez.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
+    <ClCompile Include="src\Reina.cpp" />
     <ClCompile Include="src\Rey.cpp" />
     <ClCompile Include="src\Tablero.cpp" />
+    <ClCompile Include="src\Tienda.cpp" />
+    <ClCompile Include="src\Torre.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Alfil.h" />
+    <ClInclude Include="src\CoordinadorAjedrez.h" />
     <ClInclude Include="src\Mundo.h" />
     <ClInclude Include="src\Peon.h" />
     <ClInclude Include="src\Pieza.h" />
+    <ClInclude Include="src\Reina.h" />
     <ClInclude Include="src\Rey.h" />
     <ClInclude Include="src\Tablero.h" />
+    <ClInclude Include="src\Tienda.h" />
+    <ClInclude Include="src\Torre.h" />
     <ClInclude Include="src\Vector2D.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

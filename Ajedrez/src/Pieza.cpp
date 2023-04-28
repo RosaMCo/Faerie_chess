@@ -24,13 +24,16 @@ void Pieza::setColor()
 
 }
 
-
+void Pieza::setPosicion(int nx, int ny) {
+	columna = nx;
+	fila = ny;
+}
 
 /*Pieza(int _x, int _y, int _tipo, bool color);
 virtual ~Pieza();
 void Dibuja();
 
-void setPosicion(float ix, float iy);
+
 void setColor(unsigned char r, unsigned char v, unsigned char a);
 void toggleOcupado(); //Cambia si la casilla del tablero está ocupada o no.
 void setNext();
