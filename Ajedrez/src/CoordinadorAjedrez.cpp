@@ -66,8 +66,18 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 				mundo.inicializa();
 				estado = JUEGO;
 			}
-			if (key == '4')
+
+			else if (key == '2')
+			{
+				tienda.inicializa();
+				estado = TIENDA;
+			}
+
+			else if (key == '4')
+			{
 				exit(0);
+			}
+			
 		}
 		else if (estado == JUEGO)
 		{
