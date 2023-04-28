@@ -1,4 +1,4 @@
-#include "Mundo.h"
+
 #include "freeglut.h"
 #include"CoordinadorAjedrez.h"
 
