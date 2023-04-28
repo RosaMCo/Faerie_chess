@@ -1,10 +1,12 @@
 #pragma once
 #include "Mundo.h"
 #include "Tienda.h"
+#include "freeglut.h"
 
 class CoordinadorAjedrez
 {
 public:
+	float x_ojo, y_ojo, z_ojo;
 	CoordinadorAjedrez();
 	virtual ~CoordinadorAjedrez() {};
 
@@ -15,7 +17,7 @@ public:
 protected:
 	Mundo mundo;
 	Tienda tienda;
-	enum Estado { INICIO, JUEGO, TIENDA, REGLAS};
+	enum Estado { INICIO, JUEGO, TIENDA, REGLAS, GAMEOVER, FIN};
 	Estado estado;
 
 };

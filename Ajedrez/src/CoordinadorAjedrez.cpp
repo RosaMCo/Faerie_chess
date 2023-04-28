@@ -59,8 +59,30 @@ void CoordinadorAjedrez::dibuja()
 void CoordinadorAjedrez::tecla(unsigned char key)
 {
 	if (estado == INICIO) {
-		mundo.inicializa();
-		estado = JUEGO;
+		if (estado == INICIO)
+		{
+			if (key == '1')
+			{
+				mundo.inicializa();
+				estado = JUEGO;
+			}
+			if (key == '4')
+				exit(0);
+		}
+		else if (estado == JUEGO)
+		{
+			mundo.tecla(key);
+		}
+		else if (estado == GAMEOVER)
+		{
+			if (key == 'c')
+				estado = INICIO;
+		}
+		else if (estado == FIN)
+		{
+			if (key == 'c')
+				estado = INICIO;
+		}
 	}
 	else if (estado == JUEGO) {
 		mundo.tecla(key);
