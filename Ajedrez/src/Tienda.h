@@ -1,6 +1,7 @@
 #pragma once
 #include "ETSIDI.h"
 #include "freeglut.h"
+#include "Pieza.h"
 class Tienda
 {
 private:
