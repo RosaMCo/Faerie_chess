@@ -9,7 +9,7 @@ public:
 
 	//Métodos públicos
 	void Dibuja();
-	bool mRey(float nx, float ny);
+	bool mRey(float nf, float nc);
 	
 	
 

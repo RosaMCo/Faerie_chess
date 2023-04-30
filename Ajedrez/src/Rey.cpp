@@ -21,41 +21,41 @@ void Rey:: Dibuja()
 		glEnable(GL_TEXTURE_2D);//Falta modificar para poner la imagen del rey negro
 }
 
-bool Rey::mRey(float nx, float ny)
+bool Rey::mRey(float nf, float nc)
 {
 	//El rey se mueve uno para arriba
-	if (ny == fila + 1)
+	if (nc == fila + 1)
 		//El rey se mueve uno para arriba y uno a la izq, es decir,
 		//diagonal
-		if (nx == columna - 1)
+		if (nf == columna - 1)
 			return true;
-		else if (nx == columna + 1)//Diagonal derecha
+		else if (nf == columna + 1)//Diagonal derecha
 			return true;
-		else if (nx == columna)//No hay mov izq o der
+		else if (nf == columna)//No hay mov izq o der
 			return true;
 		else
 			return false;
 
 	//Lo mismo que la anterior pero hacia abajo
-	else if (ny == fila - 1)
+	else if (nc == fila - 1)
 		//El rey se mueve uno para arriba y uno a la izq, es decir,
 		//diagonal
-		if (nx == columna - 1)
+		if (nf == columna - 1)
 			return true;
-		else if (nx == columna + 1)//Diagonal derecha
+		else if (nf == columna + 1)//Diagonal derecha
 			return true;
-		else if (nx == columna)//No hay mov izq o der
+		else if (nf == columna)//No hay mov izq o der
 			return true;
 		else
 			return false;
 
 	//Se queda en la misma posición
-	else if (ny == fila)
+	else if (nc == fila)
 		//Mov a la izquierda
-		if (nx == columna - 1)
+		if (nf == columna - 1)
 			return true;
 		//Mov a la derecha
-		else if (nx == columna + 1)
+		else if (nf == columna + 1)
 			return true;
 		else
 			return false;
