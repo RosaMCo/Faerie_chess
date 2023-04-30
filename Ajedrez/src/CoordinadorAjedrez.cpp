@@ -18,7 +18,7 @@ void CoordinadorAjedrez::dibuja()
 
 			//Añadir fondo
 			glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/fondo3.png").id);
+			glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/FONDO.png").id);
 			glDisable(GL_LIGHTING);
 			glBegin(GL_POLYGON);
 			glColor3f(1, 1, 1);
@@ -34,12 +34,14 @@ void CoordinadorAjedrez::dibuja()
 			
 			setTextColor(1, 1, 0);
 			setFont("fuentes/Bitwise.ttf", 16);
-			printxy("Pang 1.1", -5, 8);
+			printxy("EL AJEDREZ", -5, 8);
 			setTextColor(1, 1, 1);
 			setFont("fuentes/Bitwise.ttf", 12);
-			printxy("PULSE LA TECLA -E- PARA EMPEZAR", -5, 7);
-			printxy("PULSE LA TECLA -S- PARA SALIR", -5, 6);
-			printxy("Hernando & Rodriguez-Losada", 2, 1);
+			printxy("PULSE LA TECLA -1- PARA EMPEZAR", -5, 7);
+			printxy("PULSE LA TECLA -2- PARA TIENDA", -5, 6);
+			printxy("PULSE LA TECLA -3- PARA REGLAS", -5, 5);
+			printxy("PULSE LA TECLA -4- PARA SALIR", -5, 4);
+			printxy("CHESS WINX", 2, 1);
 		
 	}
 	else if (estado == JUEGO)
