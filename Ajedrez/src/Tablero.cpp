@@ -52,3 +52,9 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 	}
 	return false;
 }
+
+void Tablero::dibuja() {
+	//dibujado tablero
+	
+	//llamada a dibujado piezas
+}

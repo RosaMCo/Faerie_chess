@@ -33,10 +33,10 @@ void CoordinadorAjedrez::dibuja()
 			//Hay que mirar lo de las letras
 			
 			setTextColor(1, 1, 0);
-			setFont("fuentes/Bitwise.ttf", 16);
+			setFont("bin/fuentes/Bitwise.ttf", 16);
 			printxy("EL AJEDREZ", -5, 8);
 			setTextColor(1, 1, 1);
-			setFont("fuentes/Bitwise.ttf", 12);
+			setFont("bin/fuentes/Bitwise.ttf", 12);
 			printxy("PULSE LA TECLA -1- PARA EMPEZAR", -5, 7);
 			printxy("PULSE LA TECLA -2- PARA TIENDA", -5, 6);
 			printxy("PULSE LA TECLA -3- PARA REGLAS", -5, 5);
