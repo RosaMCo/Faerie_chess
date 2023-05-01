@@ -1,2 +1,6 @@
-﻿  CoordinadorAjedrez.cpp
-  Pang.vcxproj -> C:\Users\monia\source\repos\Faerie_chess\Ajedrez\bin\Ajedrez_Fairy.exe
+﻿  Ajedrez.cpp
+  CoordinadorAjedrez.cpp
+  Mundo.cpp
+  Tablero.cpp
+  Generando código...
+  Pang.vcxproj -> C:\Users\monia\source\repos\faerie_chess\Ajedrez\bin\Ajedrez_Fairy.exe

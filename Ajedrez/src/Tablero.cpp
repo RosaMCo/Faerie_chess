@@ -8,7 +8,11 @@ Tablero::Tablero() {
 		}
 	}
 
-	turno = 1;//inician blancas
+	for (int i = 0; i < 32; i++) {
+		lista[i] = 0;
+	}
+
+	turno = (Color)blanco;//inician blancas
 }
 
 bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [pasar como const?]
@@ -51,4 +55,32 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 		return false;
 	}
 	return false;
+}
+
+void Tablero::dibuja() {
+	//dibujado tablero
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/fichas/tablero.png").id);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glTexCoord2d(0, 1); glVertex2f(-10, -2.5);
+	glTexCoord2d(1, 1); glVertex2f(10, -2.5);
+	glTexCoord2d(1, 0); glVertex2f(10, 17.5);
+	glTexCoord2d(0, 0); glVertex2f(-10, 17.5);
+	glEnd();
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+
+	//llamada a dibujado piezas
+	for (int i = 0; i < 32; i++) {
+		int tempf, tempc;
+		if (lista[i]) {//no llamar a dibujado si puntero vacío
+			//var. temporales para pasar las coordenadas correspondientes a la pieza
+			tempf = lista[i]->getFila();
+			tempc = lista[i]->getColumna();
+			//pasamos las coordenadas correspondientes a la pieza para que se dibuje
+			lista[i]->dibuja(casilla[tempf][tempc].getX(), casilla[tempf][tempc].getY());
+		}
+	}
 }

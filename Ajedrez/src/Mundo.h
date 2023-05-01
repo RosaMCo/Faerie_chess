@@ -3,8 +3,11 @@
 #include <math.h>
 #pragma once
 #include "ETSIDI.h"
+#include "Tablero.h"
 class Mundo
 {
+private:
+	Tablero tablero;
 public: 
 
 	Mundo();

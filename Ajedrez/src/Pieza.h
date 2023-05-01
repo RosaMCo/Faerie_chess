@@ -12,7 +12,7 @@ protected:
 	bool next;
 	bool ocupada;
 	//Colores
-	Color color;//1 para blancas, 0 para negras
+	Color color;
 	Tipo tipo;
 
 
@@ -22,17 +22,17 @@ public:
 	virtual ~Pieza();
 	//Dibujar pieza
 	void Dibuja();
-	bool getColor() { return color; }
+	virtual void dibuja(float ix, float iy) = 0;
 	//set
 	void setPosicion(int nx, int ny);
-	void setColor(unsigned char r, unsigned char v, unsigned char a);
 	void toggleOcupado(); //Cambia si la casilla del tablero está ocupada o no.
 	void setNext();
 	void setColor(Color c);
 	void setTipo(Tipo t);
 	//get
-	int getPosicionX();
-	int getPosicionY();
+	Color getColor() { return color; }
+	int getFila() { return fila; }
+	int getColumna() { return columna; }
 	bool getOcupado();
 	bool getNext();
 	//mover y comer virtuales

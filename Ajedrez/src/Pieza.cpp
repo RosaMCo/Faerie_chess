@@ -38,7 +38,6 @@ virtual ~Pieza();
 void Dibuja();
 
 
-void setColor(unsigned char r, unsigned char v, unsigned char a);
 void toggleOcupado(); //Cambia si la casilla del tablero está ocupada o no.
 void setNext();
 

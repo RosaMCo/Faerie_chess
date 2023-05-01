@@ -22,10 +22,11 @@ void Mundo::dibuja()
 	//Aquí va el juego del ajedrez clásico
 
 	gluLookAt(0, 7.5, 30,  // posicion del ojo
-		0.0, 0, 0.0,      // hacia que punto mira  (0,0,0) 
+		0.0, 7.5, 0.0,      // hacia que punto mira  (0,0,0) 
 		0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)    
 
 //aqui es donde hay que poner el codigo de dibujo
+	tablero.dibuja();
 //dibujo del suelo
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
