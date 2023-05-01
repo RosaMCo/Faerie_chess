@@ -8,7 +8,7 @@ class Casilla {
 	//Atributos privados
 private:
 
-	//Cada casilla debe apuntar a una pieza
+	//Puntero a pieza
 	Pieza* pieza;
 	//Colores
 	unsigned char rojo, verde, azul;
