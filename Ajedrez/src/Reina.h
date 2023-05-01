@@ -4,7 +4,7 @@ class Reina:public Pieza
 {
 public:
 
-	Reina(bool color, int fila, int columna);
+	Reina(Color color, int fila, int columna);
 	//virtual ~Rey();
 
 	//Métodos públicos

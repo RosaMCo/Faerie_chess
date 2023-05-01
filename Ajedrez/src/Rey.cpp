@@ -1,8 +1,9 @@
 #include "Rey.h"
 #include"freeglut.h"
-Rey::Rey(bool col, int f, int c)
+Rey::Rey(Color col, int f, int c)
 {
-	color = col;
+	setColor(col);
+	setTipo(REY);
 	fila = f;
 	columna = c;
  }

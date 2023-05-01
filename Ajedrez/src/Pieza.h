@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector2D.h"
-
+enum Color {indefinido, blanco, negro};
+enum Tipo { PEON, TORRE, ALFIL, CABALLO, REINA, REY, INDEFINIDO };
 class Pieza
 {
 protected:
@@ -11,11 +12,10 @@ protected:
 	bool next;
 	bool ocupada;
 	//Colores
-	bool color;//1 para blancas, 0 para negras
+	Color color;//1 para blancas, 0 para negras
+	Tipo tipo;
 
-	
 
-	int tipo;
 public:
 	//Constructor y destructor 
 	Pieza();
@@ -28,7 +28,8 @@ public:
 	void setColor(unsigned char r, unsigned char v, unsigned char a);
 	void toggleOcupado(); //Cambia si la casilla del tablero está ocupada o no.
 	void setNext();
-	void setColor();
+	void setColor(Color c);
+	void setTipo(Tipo t);
 	//get
 	int getPosicionX();
 	int getPosicionY();

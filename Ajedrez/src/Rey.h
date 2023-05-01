@@ -4,7 +4,7 @@ class Rey:public Pieza
 {
 public:
 
-	Rey(bool color, int fila,int columna);
+	Rey(Color color, int fila,int columna);
 	//virtual ~Rey();
 
 	//Métodos públicos

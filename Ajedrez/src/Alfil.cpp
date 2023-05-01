@@ -5,8 +5,9 @@
 //Para las piezas de tipo alfil, torre y reina, quiza fuera más conveniente sacar la posición actual(con fila y columna)
 //y la posición a la que se desea mover (Quiza haciendo uso del raton) para sacar la casilla de destino
 
-Alfil::Alfil(bool col, int f, int c) {
-	color = col;
+Alfil::Alfil(Color col, int f, int c) {
+	setColor(col);
+	setTipo(ALFIL);
 	fila = f;
 	columna = c;
 }

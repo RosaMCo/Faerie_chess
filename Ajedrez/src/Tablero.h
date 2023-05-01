@@ -13,7 +13,6 @@ public:
 	Tablero();
 	bool selPieza(int forigen, int corigen);//fila y columna (casilla) de origen para seleccionar la pieza
 	bool mover(int fdestino, int cdestino, int forigen, int corigen);//casilla destino para comprobar y realizar el movimiento
-	void dibuja();
 	//validar enroque
 	//comer al paso
 	

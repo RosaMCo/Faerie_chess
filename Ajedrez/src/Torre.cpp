@@ -1,8 +1,9 @@
 #include "Torre.h"
 #include"freeglut.h"
 
-Torre::Torre(bool col, int f, int c) {
-	color = col;
+Torre::Torre(Color col, int f, int c) {
+	setColor(col);
+	setTipo(TORRE);
 	fila = f;
 	columna = c;
 }

@@ -3,10 +3,10 @@
 Pieza::Pieza()
 {
 	//constructor de posicion
-	
+	color = indefinido;
+	tipo = INDEFINIDO;
 	ocupada = false;
 	next = false;
-	tipo = 0;
 
 }
 
@@ -19,9 +19,9 @@ void Pieza::Dibuja()
 
 }
 
-void Pieza::setColor()
+void Pieza::setColor(Color c)
 {
-
+	color = c;
 }
 
 void Pieza::setPosicion(int nx, int ny) {
@@ -29,6 +29,10 @@ void Pieza::setPosicion(int nx, int ny) {
 	fila = ny;
 }
 
+void Pieza::setTipo(Tipo t)
+{
+	tipo = t;
+}
 /*Pieza(int _x, int _y, int _tipo, bool color);
 virtual ~Pieza();
 void Dibuja();

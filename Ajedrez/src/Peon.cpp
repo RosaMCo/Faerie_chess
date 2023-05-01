@@ -1,7 +1,8 @@
 #include "Peon.h"
 
-Peon::Peon(bool col, int f, int c) {
-	color = col;
+Peon::Peon(Color col, int f, int c) {
+	setColor(col);
+	setTipo(PEON);
 	fila = f;
 	columna = c;
 	mov_ini = 1;

@@ -1,9 +1,10 @@
 #include "Reina.h"
 #include "freeglut.h"
 
-Reina::Reina(bool col, int f, int c)
+Reina::Reina(Color col, int f, int c)
 {
-	color = col;
+	setColor(col);
+	setTipo(REINA);
 	fila = f;
 	columna = c;
 }
