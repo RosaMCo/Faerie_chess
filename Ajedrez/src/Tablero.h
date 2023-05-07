@@ -2,6 +2,7 @@
 #include "Vector2D.h"
 #include "Pieza.h"
 #include "ETSIDI.h"
+#include "Peon.h"
 
 class Tablero
 {

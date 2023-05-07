@@ -3,13 +3,30 @@
 Tablero::Tablero() {
 	for (int fila = 0; fila <= 7; fila++) {
 		for (int columna = 0; columna <= 7; columna++) {
-			casilla[fila][columna].setPosicion(fila*10.0f,columna*10.0f);//valores aleatorios de las casillas, cambiar a los concretos
+			casilla[fila][columna].setPosicion(fila*1.0f,columna*1.0f);//valores aleatorios de las casillas, cambiar a los concretos
 			id[fila][columna] = 0;//punteros nulos, no apuntan a nada
 		}
 	}
 
 	for (int i = 0; i < 32; i++) {
 		lista[i] = 0;
+	}
+
+	for (int i = 0; i < 16; i++) {//creación de peones
+
+		if (i < 8) {//blancos
+			Peon* p = new Peon(blanco, 1, i);
+			lista[i] = p;
+
+			id[1][i] = lista[i];
+
+		}
+
+		else {//negros
+			Peon* p = new Peon(negro, 6, i);
+
+			id[6][i] = lista[i];
+		}
 	}
 
 	turno = (Color)blanco;//inician blancas

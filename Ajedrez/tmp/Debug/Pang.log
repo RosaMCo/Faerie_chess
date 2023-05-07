@@ -1,4 +1,6 @@
-﻿  CoordinadorAjedrez.cpp
-  Ajedrez.cpp
-  Generating Code...
-  Pang.vcxproj -> C:\Users\User\source\repos\Faerie_chess\Ajedrez\bin\Ajedrez_Fairy.exe
+﻿  Peon.cpp
+C:\Users\monia\source\repos\faerie_chess\Ajedrez\src\Peon.cpp(57,44): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+C:\Users\monia\source\repos\faerie_chess\Ajedrez\src\Peon.cpp(58,44): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+C:\Users\monia\source\repos\faerie_chess\Ajedrez\src\Peon.cpp(59,44): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+C:\Users\monia\source\repos\faerie_chess\Ajedrez\src\Peon.cpp(60,44): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+  Pang.vcxproj -> C:\Users\monia\source\repos\faerie_chess\Ajedrez\bin\Ajedrez_Fairy.exe

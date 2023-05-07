@@ -33,20 +33,20 @@ bool Peon::comer(int nx, int ny) {
 	return false;
 }
 
-void Peon::Dibuja()
+void Peon::dibuja(float ix, float iy)
 {
 	if (color == blanco)
 	{
 		//Imagen de pieza blanca
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/Fichas/W-Pawn.png").id);
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/Fichas/W-Pawn.png").id);
 		glDisable(GL_LIGHTING);
 	}
 	else if (color == negro)
 	{
 		//Imagen de pieza negra
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/Fichas/B-Pawn.png").id);
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/Fichas/B-Pawn.png").id);
 		glDisable(GL_LIGHTING);
 	}
 	//Tengo que hacer el lugar donde se va a situar cada pieza, para ello hago un polígono
@@ -54,10 +54,10 @@ void Peon::Dibuja()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBegin(GL_POLYGON);
 	glColor3f(1, 1, 1);
-	glTexCoord2d(0, 1); glVertex3f(posicion.getX(), posicion.getY(), 0.01);
-	glTexCoord2d(1, 1); glVertex3f(posicion.getX(), posicion.getY(), 0.01);
-	glTexCoord2d(1, 0); glVertex3f(posicion.getX(), posicion.getY(), 0.01);
-	glTexCoord2d(0, 0); glVertex3f(posicion.getX(), posicion.getY(), 0.01);
+	glTexCoord2d(0, 1); glVertex3f(ix, iy, 0.1);
+	glTexCoord2d(1, 1); glVertex3f(ix, iy, 0.1);
+	glTexCoord2d(1, 0); glVertex3f(ix, iy, 0.1);
+	glTexCoord2d(0, 0); glVertex3f(ix, iy, 0.1);
 	glEnd();
 	glDisable(GL_BLEND);
 	glEnable(GL_LIGHTING);
