@@ -10,5 +10,6 @@ public:
     bool mover(int nx, int ny);//true si el movimiento es permitido; nx y ny son los nuevos valores de x e y
     bool comer(int nx, int ny);//true si se puede comer
     //en-passant (forma especial de comer, si me apaño)
+    void Dibuja();
 };
 

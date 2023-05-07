@@ -32,3 +32,34 @@ bool Peon::comer(int nx, int ny) {
 	}
 	return false;
 }
+
+void Peon::Dibuja()
+{
+	if (color == blanco)
+	{
+		//Imagen de pieza blanca
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/Fichas/W-Pawn.png").id);
+		glDisable(GL_LIGHTING);
+	}
+	else if (color == negro)
+	{
+		//Imagen de pieza negra
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/Fichas/B-Pawn.png").id);
+		glDisable(GL_LIGHTING);
+	}
+	//Tengo que hacer el lugar donde se va a situar cada pieza, para ello hago un polígono
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glTexCoord2d(0, 1); glVertex3f(posicion.getX(), posicion.getY(), 0.01);
+	glTexCoord2d(1, 1); glVertex3f(posicion.getX(), posicion.getY(), 0.01);
+	glTexCoord2d(1, 0); glVertex3f(posicion.getX(), posicion.getY(), 0.01);
+	glTexCoord2d(0, 0); glVertex3f(posicion.getX(), posicion.getY(), 0.01);
+	glEnd();
+	glDisable(GL_BLEND);
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+}
