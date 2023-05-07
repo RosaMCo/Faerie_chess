@@ -12,7 +12,7 @@ public:
 
 	void teclaEspecial(unsigned char key);
 	void tecla(unsigned char key);
-	void mueve();
+	void mueve(int button, int state, int x, int y);
 	void dibuja();
 protected:
 	Mundo mundo;

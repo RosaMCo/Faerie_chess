@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Ajedrez",
+    "\\Ajedrez\\src",
+    "\\Ajedrez\\tmp"
   ],
-  "SelectedNode": "\\Ajedrez_Fairy.sln",
+  "SelectedNode": "\\Ajedrez\\src\\Tablero.h",
   "PreviewInSolutionExplorer": false
 }

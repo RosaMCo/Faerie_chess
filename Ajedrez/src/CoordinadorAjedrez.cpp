@@ -106,9 +106,9 @@ void CoordinadorAjedrez::teclaEspecial(unsigned char key) //Moverse por el menu 
 	if (estado == JUEGO)
 		mundo.teclaEspecial(key);
 }
-void CoordinadorAjedrez::mueve()
+void CoordinadorAjedrez::mueve(int button, int state, int x, int y)
 {
-	if (estado == JUEGO)
-		mundo.mueve();
+	if (estado == JUEGO) {};
+		//mundo.mueve();
 }
 

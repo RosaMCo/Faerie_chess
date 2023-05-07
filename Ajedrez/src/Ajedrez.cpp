@@ -34,6 +34,7 @@ int main(int argc,char* argv[])
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(25,OnTimer,0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
 	glutKeyboardFunc(OnKeyboardDown);
+	glutMouseFunc(OnMouseDown);
 
 	//mundo.inicializa();
 	
@@ -66,6 +67,14 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 	ajedrez.tecla(key);
 	ajedrez.teclaEspecial(key);
 	glutPostRedisplay();
+}
+
+void OnMouseDown(int button, int state, int x, int y)
+{
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && x >= 125 && x <= 677 && y >= 25 && y <= 577)
+	{
+		ajedrez.mueve(button, state, x, y);
+	}
 }
 
 void OnTimer(int value)

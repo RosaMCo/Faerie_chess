@@ -23,9 +23,5 @@ public:
 	//validar movimiento
 	
 	//Inicializar posición inicial
-	
-
-	
-
 };
 
