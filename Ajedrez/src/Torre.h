@@ -9,6 +9,7 @@ public:
 
     //true si el movimiento es permitido; nx y ny son los nuevos valores de x e y
     bool mover(int nx, int ny);
+    void Dibuja();
 
 
 };
