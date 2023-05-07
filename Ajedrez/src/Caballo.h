@@ -9,6 +9,7 @@ public:
 	Caballo(Color col, int f, int c);
 	~Caballo() {};
 	bool movOK(int nc, int nf);
+	void Dibuja();
 
 };
 
