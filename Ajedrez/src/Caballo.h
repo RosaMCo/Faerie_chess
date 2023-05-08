@@ -8,8 +8,9 @@ public:
 	//constructor y destructor
 	Caballo(Color col, int f, int c);
 	~Caballo() {};
-	bool movOK(int nc, int nf);
-	void Dibuja();
+	bool mover(int nc, int nf);
+	bool comer(int nx, int ny) { return mover(nx, ny); }
+	void dibuja(float ix, float iy);
 
 };
 

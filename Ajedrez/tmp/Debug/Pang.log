@@ -1,4 +1,10 @@
-﻿  Tablero.cpp
-C:\Users\monia\source\repos\Faerie_chess\Ajedrez\src\Tablero.cpp(6,76): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\monia\source\repos\Faerie_chess\Ajedrez\src\Tablero.cpp(6,56): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+﻿  Caballo.cpp
+C:\Users\monia\source\repos\Faerie_chess\Ajedrez\src\Caballo.cpp(43,44): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+C:\Users\monia\source\repos\Faerie_chess\Ajedrez\src\Caballo.cpp(44,55): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+C:\Users\monia\source\repos\Faerie_chess\Ajedrez\src\Caballo.cpp(44,36): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\monia\source\repos\Faerie_chess\Ajedrez\src\Caballo.cpp(45,66): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+C:\Users\monia\source\repos\Faerie_chess\Ajedrez\src\Caballo.cpp(45,51): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\monia\source\repos\Faerie_chess\Ajedrez\src\Caballo.cpp(45,36): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\monia\source\repos\Faerie_chess\Ajedrez\src\Caballo.cpp(46,55): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+C:\Users\monia\source\repos\Faerie_chess\Ajedrez\src\Caballo.cpp(46,40): warning C4244: 'argumento': conversión de 'double' a 'GLfloat'; posible pérdida de datos
   Pang.vcxproj -> C:\Users\monia\source\repos\Faerie_chess\Ajedrez\bin\Ajedrez_Fairy.exe

@@ -28,7 +28,32 @@ Tablero::Tablero() {
 		}
 	}
 
+	for (int i = 16; i < 20; i++) {
+		if (i < 18) {
+			Torre* t = new Torre(blanco, 0, (i - 16) * 7);
+			lista[i] = t;
+			id[0][(i - 16) * 7];
+		}
+		else {
+			Torre* t = new Torre(negro, 7, (i - 18) * 7);
+			lista[i] = t;
+			id[7][(i - 18) * 7];
+		}
+	}
 
+	for (int i = 20; i < 24; i++) {
+		if (i < 22) {
+			Caballo* c = new Caballo(blanco, 0, (i - 20) * 5 + 1);
+			lista[i] = c;
+			id[0][(i - 20) * 5 + 1];
+		}
+
+		else {
+			Caballo* c = new Caballo(negro, 7, (i - 22) * 5 + 1);
+			lista[i] = c;
+			id[0][(i - 22) * 5 + 1];
+		}
+	}
 	turno = (Color)blanco;//inician blancas
 }
 

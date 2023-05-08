@@ -4,6 +4,7 @@
 #include "ETSIDI.h"
 #include "Peon.h"
 #include "Torre.h"
+#include "Caballo.h"
 
 class Tablero
 {
