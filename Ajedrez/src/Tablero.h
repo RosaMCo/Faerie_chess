@@ -3,6 +3,7 @@
 #include "Pieza.h"
 #include "ETSIDI.h"
 #include "Peon.h"
+#include "Torre.h"
 
 class Tablero
 {

@@ -3,7 +3,7 @@
 Tablero::Tablero() {
 	for (int fila = 0; fila <= 7; fila++) {
 		for (int columna = 0; columna <= 7; columna++) {
-			casilla[fila][columna].setPosicion(fila*1.0f,columna*1.0f);//valores aleatorios de las casillas, cambiar a los concretos
+			casilla[fila][columna].setPosicion(columna * 20.0/8 - 10, fila * 20.0/8 - 2.5);//valores aleatorios de las casillas, cambiar a los concretos
 			id[fila][columna] = 0;//punteros nulos, no apuntan a nada
 		}
 	}
@@ -17,17 +17,17 @@ Tablero::Tablero() {
 		if (i < 8) {//blancos
 			Peon* p = new Peon(blanco, 1, i);
 			lista[i] = p;
-
 			id[1][i] = lista[i];
 
 		}
 
 		else {//negros
-			Peon* p = new Peon(negro, 6, i);
-
-			id[6][i] = lista[i];
+			Peon* p = new Peon(negro, 6, i - 8);
+			lista[i] = p;
+			id[6][i - 8] = lista[i - 8];
 		}
 	}
+
 
 	turno = (Color)blanco;//inician blancas
 }
@@ -76,6 +76,7 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 
 void Tablero::dibuja() {
 	//dibujado tablero
+	
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/fichas/tablero.png").id);
 	glDisable(GL_LIGHTING);
@@ -88,6 +89,7 @@ void Tablero::dibuja() {
 	glEnd();
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
+	
 
 	//llamada a dibujado piezas
 	for (int i = 0; i < 32; i++) {
