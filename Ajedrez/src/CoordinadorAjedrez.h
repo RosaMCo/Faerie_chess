@@ -12,12 +12,12 @@ public:
 
 	void teclaEspecial(unsigned char key);
 	void tecla(unsigned char key);
-	void mueve(int button, int state, int x, int y);
+	void jugada(int button, int state, int x, int y);
 	void dibuja();
 protected:
 	Mundo mundo;
 	Tienda tienda;
-	enum Estado { INICIO, JUEGO, TIENDA, REGLAS, GAMEOVER, FIN};
+	enum Estado { INICIO, JUEGO, TIENDA, REGLAS, GAMEOVER, FIN,JAQUEBLANCO, JAQUENEGRO};
 	Estado estado;
 
 };
