@@ -1,1 +1,6 @@
 .vs/
+tmp/
+Debug/
+bin/Ajedrez_Fairy.exe
+bin/Ajedrez_Fairy.pdb
+bin/Pang.exe
