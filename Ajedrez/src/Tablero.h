@@ -5,6 +5,7 @@
 #include "Peon.h"
 #include "Torre.h"
 #include "Caballo.h"
+#include "Alfil.h"
 
 class Tablero
 {

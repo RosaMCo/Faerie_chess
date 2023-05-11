@@ -59,12 +59,14 @@ void Mundo::teclaEspecial(unsigned char key)
 {
 
 }
+/*
 Casilla Mundo::getCasilla(int x, int y) { //Devuelve la casilla en función de las coordenadas x,y del ratón
 	Casilla casilla;
 	casilla.c = floor((x - 125) / 69);		//Obtenido experimentalmente para el tamaño de ventana del juego
 	casilla.f = 7 - floor((y - 25) / 69);	//Si se cambia el tamaño de ventana, esto no vale
 	return casilla;
 }
+*/
 
 bool Mundo::validarTurno(int color) {
 
@@ -76,6 +78,6 @@ bool Mundo::validarTurno(int color) {
 
 int Mundo::jugada(int button, int state, int x, int y)
 { //Implementación de una jugada
-
+	return 0;
 	/////////////////////////////////////////Funciones del ratón/////////////////////////////////////////////77
 }

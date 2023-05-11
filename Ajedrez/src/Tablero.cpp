@@ -12,48 +12,64 @@ Tablero::Tablero() {
 		lista[i] = 0;
 	}
 
+	//los números mágicos son offsets para colocar las piezas en el tablero
 	for (int i = 0; i < 16; i++) {//creación de peones
 
 		if (i < 8) {//blancos
-			Peon* p = new Peon(blanco, 1, i);
+			Peon* p = new Peon(blanco, 1, i);//fila 1, todas las columnas
 			lista[i] = p;
 			id[1][i] = lista[i];
 
 		}
 
 		else {//negros
-			Peon* p = new Peon(negro, 6, i - 8);
+			Peon* p = new Peon(negro, 6, i - 8);//fila 6, todas las columnas (-8 porque i empieza en 8 y las columnas en 0)
 			lista[i] = p;
 			id[6][i - 8] = lista[i - 8];
 		}
 	}
 
-	for (int i = 16; i < 20; i++) {
-		if (i < 18) {
-			Torre* t = new Torre(blanco, 0, (i - 16) * 7);
+	for (int i = 16; i < 20; i++) {//creación de torres
+		if (i < 18) {//blancas
+			Torre* t = new Torre(blanco, 0, (i - 16) * 7);//fila 0, columnas 0 y 7
 			lista[i] = t;
 			id[0][(i - 16) * 7];
 		}
-		else {
-			Torre* t = new Torre(negro, 7, (i - 18) * 7);
+		else {//negras
+			Torre* t = new Torre(negro, 7, (i - 18) * 7);//fila 7, columnas 0 y 7
 			lista[i] = t;
 			id[7][(i - 18) * 7];
 		}
 	}
 
-	for (int i = 20; i < 24; i++) {
-		if (i < 22) {
-			Caballo* c = new Caballo(blanco, 0, (i - 20) * 5 + 1);
+	for (int i = 20; i < 24; i++) {//creación de caballos
+		if (i < 22) {//blancos
+			Caballo* c = new Caballo(blanco, 0, (i - 20) * 5 + 1);//fila 0,  columnas 1 y 6
 			lista[i] = c;
 			id[0][(i - 20) * 5 + 1];
 		}
 
 		else {
-			Caballo* c = new Caballo(negro, 7, (i - 22) * 5 + 1);
-			lista[i] = c;
+			Caballo* c = new Caballo(negro, 7, (i - 22) * 5 + 1);//fila 7, columnas 1 y 6
+			lista[i] = c;//negros
 			id[0][(i - 22) * 5 + 1];
 		}
 	}
+
+	for (int i = 24; i < 28; i++) {//creación de alfiles
+		if (i < 26) {//blancos
+			Alfil* a = new Alfil(blanco, 0, (i - 24) * 3 + 2);
+			lista[i] = a;
+			id[0][(i - 24) * 3 + 2];
+		}
+
+		else {//negros
+			Alfil* a = new Alfil(negro, 7, (i - 26) * 3 + 2);
+			lista[i] = a;
+			id[0][(i - 26) * 3 + 2];
+		}
+	}
+
 	turno = (Color)blanco;//inician blancas
 }
 
