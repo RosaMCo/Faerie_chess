@@ -6,6 +6,9 @@
 #include "Torre.h"
 #include "Caballo.h"
 #include "Alfil.h"
+#include "Reina.h"
+#include "Rey.h"
+
 
 class Tablero
 {

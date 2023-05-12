@@ -10,20 +10,20 @@ Reina::Reina(Color col, int f, int c)
 	columna = c;
 }
 
-void Reina::Dibuja()
+void Reina::dibuja(float ix, float iy)
 {
 	if (color == blanco)
 	{
 		//Imagen de pieza blanca
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/Fichas/W-Queen.png").id);
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/Fichas/W-Queen.png").id);
 		glDisable(GL_LIGHTING);
 	}
 	else if(color==negro)
 	{
 		//Imagen de pieza negra
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("imagenes/Fichas/B-Queen.png").id);
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/Fichas/B-Queen.png").id);
 		glDisable(GL_LIGHTING);
 	}
 	//Tengo que hacer el lugar donde se va a situar cada pieza, para ello hago un polígono
@@ -31,10 +31,10 @@ void Reina::Dibuja()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBegin(GL_POLYGON);
 	glColor3f(1, 1, 1);
-	glTexCoord2d(0, 1); glVertex3f(posicion.getX(), posicion.getY(), 0.01);
-	glTexCoord2d(1, 1); glVertex3f(posicion.getX(), posicion.getY(), 0.01);
-	glTexCoord2d(1, 0); glVertex3f(posicion.getX(), posicion.getY(), 0.01);
-	glTexCoord2d(0, 0); glVertex3f(posicion.getX(), posicion.getY(), 0.01);
+	glTexCoord2d(0, 1); glVertex3f(ix, iy, 0.1);
+	glTexCoord2d(1, 1); glVertex3f(ix + 20.0 / 8, iy, 0.1);
+	glTexCoord2d(1, 0); glVertex3f(ix + 20.0 / 8, iy + 20.0 / 8, 0.1);
+	glTexCoord2d(0, 0); glVertex3f(ix, iy + 20.0 / 8, 0.1);
 	glEnd();
 	glDisable(GL_BLEND);
 	glEnable(GL_LIGHTING);
@@ -42,7 +42,7 @@ void Reina::Dibuja()
 
 }
 
-bool Reina::mReina(float nf, float nc)
+bool Reina::mover(int nf, int nc)
 {
 	//La reina utiliza los movimientos de la torre y del alfil 
 	//Para la torre: La reina debe moverse hacia la derecha "O" a la izquierda:

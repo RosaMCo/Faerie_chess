@@ -68,6 +68,35 @@ Tablero::Tablero() {
 			lista[i] = a;
 			id[0][(i - 26) * 3 + 2];
 		}
+	
+	}
+
+	for (int i = 28; i < 30; i++) {
+		if (i < 29) {
+			Reina* r = new Reina(blanco, 0, i - 25);
+			lista[i] = r;
+			id[0][i - 25];
+		}
+		else {
+			Reina* r = new Reina(negro, 7, i - 26);
+			lista[i] = r;
+			id[7][i - 26];
+		}
+	}
+
+	for (int i = 30; i < 32; i++) {
+		if (i < 31) {
+			Rey* r = new Rey(blanco, 0, i - 26);
+			lista[i] = r;
+			id[0][i - 26];
+		}
+
+		else {
+			Rey* r = new Rey(negro, 7, i - 27);
+			lista[i] = r;
+			id[7][i - 27];
+		}
+		
 	}
 
 	turno = (Color)blanco;//inician blancas

@@ -8,9 +8,9 @@ public:
 	//virtual ~Rey();
 
 	//Métodos públicos
-	void Dibuja();
-	bool mRey(float nf, float nc);
-	
+	void dibuja(float ix, float iy);
+	bool mover(int nf, int nc);
+	bool comer(int nf, int nc) { return mover(nf, nc); }
 	
 
 };
