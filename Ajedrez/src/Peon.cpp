@@ -8,16 +8,16 @@ Peon::Peon(Color col, int f, int c) {
 	mov_ini = 1;
 }
 
-bool Peon::mover(int nx, int ny) {
+bool Peon::mover(int nc, int nf) {
 	if (mov_ini == 1) {
-		if (nx == columna && ny - fila <=2) {
+		if (nc == columna && nf - fila <=2) {
 			return true;
 		}
 		return false;
 	}
 
 	else {
-		if (nx == columna && ny - fila == 1) {
+		if (nc == columna && nf - fila == 1) {
 			return true;
 		}
 
@@ -26,8 +26,8 @@ bool Peon::mover(int nx, int ny) {
 	return false;
 }
 
-bool Peon::comer(int nx, int ny) {
-	if ((nx - columna == 1 || nx - columna == -1) && (fila == 1 )) {
+bool Peon::comer(int nc, int nf) {
+	if ((nc - columna == 1 || nc - columna == -1) && (fila == 1 )) {
 		return true;
 	}
 	return false;

@@ -12,25 +12,25 @@ Alfil::Alfil(Color col, int f, int c) {
 	columna = c;
 }
 
-bool Alfil::mover(int nx, int ny) {
+bool Alfil::mover(int nc, int nf) {
 	//El afil se mueve hacia arriba 
 	
-	if (ny - fila <= 7) {
+	if (nf - fila <= 7) {
 		//Se mueve hacia la derecha
-		if(nx - columna<=7)
+		if(nc - columna<=7)
 			return true;
 		//Se mueve hacia la izquierda 
-		if (nx + columna <= 7)
+		if (nc + columna <= 7)
 			return true;
 	}
 
 	//El alfil se mueve hacia abajo
-	else if (ny + fila <= 7) {
+	else if (nf + fila <= 7) {
 		//Se mueve hacia la derecha
-		if (nx - columna <= 7)
+		if (nc - columna <= 7)
 			return true;
 		//Se mueve hacia la izquierda 
-		if (nx + columna <= 7)
+		if (nc + columna <= 7)
 			return true;
 	}
 

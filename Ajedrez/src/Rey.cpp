@@ -42,7 +42,7 @@ void Rey::dibuja(float ix, float iy)
 	glDisable(GL_TEXTURE_2D);
 }
 
-bool Rey::mover(int nf, int nc)
+bool Rey::mover(int nc, int nf)
 {
 	//El rey se mueve uno para arriba
 	if (nc == fila + 1)

@@ -42,7 +42,7 @@ void Reina::dibuja(float ix, float iy)
 
 }
 
-bool Reina::mover(int nf, int nc)
+bool Reina::mover(int nc, int nf)
 {
 	//La reina utiliza los movimientos de la torre y del alfil 
 	//Para la torre: La reina debe moverse hacia la derecha "O" a la izquierda:

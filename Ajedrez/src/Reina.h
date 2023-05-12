@@ -9,6 +9,6 @@ public:
 
 	//Métodos públicos
 	void dibuja(float ix, float iy);
-	bool mover(int nf, int nc);
-	bool comer(int nf, int nc) { return mover(nf, nc); }
+	bool mover(int nc, int nf);
+	bool comer(int nc, int nf) { return mover(nc, nf); }
 };

@@ -9,7 +9,7 @@ public:
 	Caballo(Color col, int f, int c);
 	~Caballo() {};
 	bool mover(int nc, int nf);
-	bool comer(int nx, int ny) { return mover(nx, ny); }
+	bool comer(int nc, int nf) { return mover(nc, nf); }
 	void dibuja(float ix, float iy);
 
 };

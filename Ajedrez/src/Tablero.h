@@ -29,6 +29,5 @@ public:
 	// jaque
 	//validar movimiento
 	
-	//Inicializar posición inicial
 };
 

@@ -58,13 +58,13 @@ Tablero::Tablero() {
 
 	for (int i = 24; i < 28; i++) {//creación de alfiles
 		if (i < 26) {//blancos
-			Alfil* a = new Alfil(blanco, 0, (i - 24) * 3 + 2);
+			Alfil* a = new Alfil(blanco, 0, (i - 24) * 3 + 2);//fila 0, columnas 2 y 5
 			lista[i] = a;
 			id[0][(i - 24) * 3 + 2];
 		}
 
 		else {//negros
-			Alfil* a = new Alfil(negro, 7, (i - 26) * 3 + 2);
+			Alfil* a = new Alfil(negro, 7, (i - 26) * 3 + 2);//fila 7, columnas 2 y 5
 			lista[i] = a;
 			id[0][(i - 26) * 3 + 2];
 		}
@@ -73,12 +73,12 @@ Tablero::Tablero() {
 
 	for (int i = 28; i < 30; i++) {
 		if (i < 29) {
-			Reina* r = new Reina(blanco, 0, i - 25);
+			Reina* r = new Reina(blanco, 0, i - 25);//fila 0, columna 3
 			lista[i] = r;
 			id[0][i - 25];
 		}
 		else {
-			Reina* r = new Reina(negro, 7, i - 26);
+			Reina* r = new Reina(negro, 7, i - 26);//fila 7, columna 3
 			lista[i] = r;
 			id[7][i - 26];
 		}
@@ -86,13 +86,13 @@ Tablero::Tablero() {
 
 	for (int i = 30; i < 32; i++) {
 		if (i < 31) {
-			Rey* r = new Rey(blanco, 0, i - 26);
+			Rey* r = new Rey(blanco, 0, i - 26);//fila 0, columna 4
 			lista[i] = r;
 			id[0][i - 26];
 		}
 
 		else {
-			Rey* r = new Rey(negro, 7, i - 27);
+			Rey* r = new Rey(negro, 7, i - 27);//fila 7, columna 4
 			lista[i] = r;
 			id[7][i - 27];
 		}
