@@ -1,6 +1,11 @@
 #include "CoordinadorAjedrez.h"
 #include "ETSIDI.h"
+#include <iostream>
+
 using namespace ETSIDI;
+bool action_click = false; //Esta variable indica en false si estamos selecionando una pieza, en true si estamos moviendo una pieza
+int* ficha_selecionada = NULL; 
+
 CoordinadorAjedrez::CoordinadorAjedrez()
 {
 	estado = INICIO;
@@ -106,13 +111,44 @@ void CoordinadorAjedrez::teclaEspecial(unsigned char key) //Moverse por el menu 
 	if (estado == JUEGO)
 		mundo.teclaEspecial(key);
 }
+
 void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 {
-	if (estado == JUEGO) {
-		mundo.jugada(button, state, x, y);
-	}if (estado == JAQUEBLANCO || estado == JAQUENEGRO) {
-		mundo.jugada(button, state, x, y);
+
+	if (action_click == false) {//al ser false estamos seleccionando ficha 
+		int* ficha_sel = mundo.SeleccionarFicha(button, state, x, y);
+		if (ficha_sel) {
+			std::cout << "mover ficha;sel" << ficha_sel[0] << "\n";
+			std::cout << "mover ficha;sel" << ficha_sel[1] << "\n";
+			action_click = true; 
+			ficha_selecionada = ficha_sel;
+		}
+		else
+		{
+			ficha_selecionada = NULL;
+			action_click = false;
+		} 
+
 	}
+
+	else { //moviendo ficha 
+		std::cout << "mover ficha;" << ficha_selecionada[0] << "\n";
+		std::cout << "mover ficha;" << ficha_selecionada[1] << "\n";
+		int* movimiento = mundo.ValidarClick(x, y);
+		std::cout << "mover ficha;movimiento" << movimiento[0] << "\n";
+		std::cout << "mover ficha;movimiento" << movimiento[1] << "\n";
+		mundo.tablero.mover(movimiento[0], movimiento[1], ficha_selecionada[0], ficha_selecionada[1]);
+		ficha_selecionada = NULL;
+		action_click = false;
+	}
+
+	
+
+/*/if (estado == JUEGO) {
+		mundo.SeleccionarFicha(button, state, x, y);
+	}if (estado == JAQUEBLANCO || estado == JAQUENEGRO) {
+		mundo.SeleccionarFicha(button, state, x, y);
+	}*/
 }
 
 void CoordinadorAjedrez::jaque()

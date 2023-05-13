@@ -71,8 +71,14 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t)
 
 void OnMouseDown(int button, int state, int x, int y)
 {
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && x >= 125 && x <= 677 && y >= 25 && y <= 577)
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN
+		&& x >= 125 && x <= 677 && y >= 25 && y <= 577
+		/*x >= glutGet(GLUT_WINDOW_HEIGHT) * 0.15 &&
+			x <= glutGet(GLUT_WINDOW_HEIGHT) * 0.85 &&
+			y >= glutGet(GLUT_WINDOW_WIDTH) * 0.04 &&
+			y <= glutGet(GLUT_WINDOW_WIDTH) * 0.96*/)
 	{
+		
 		ajedrez.jugada(button, state, x, y);
 	}
 }

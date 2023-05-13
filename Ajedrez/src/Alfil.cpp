@@ -44,14 +44,14 @@ void Alfil::dibuja(float ix, float iy)
 	{
 		//Imagen de pieza blanca
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/Fichas/W-Pontiff.png").id);
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/Fichas/W-Bishop.png").id);
 		glDisable(GL_LIGHTING);
 	}
 	else if (color == negro)
 	{
 		//Imagen de pieza negra
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/Fichas/B-Pontiff.png").id);
+		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/Fichas/B-Bishop.png").id);
 		glDisable(GL_LIGHTING);
 	}
 	//Tengo que hacer el lugar donde se va a situar cada pieza, para ello hago un polígono

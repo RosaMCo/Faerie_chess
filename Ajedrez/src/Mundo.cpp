@@ -1,4 +1,6 @@
 #include "Mundo.h"
+#include <math.h>
+#include <iostream>
 
 //Estado inicial del mundo
  
@@ -28,7 +30,7 @@ void Mundo::dibuja()
 //aqui es donde hay que poner el codigo de dibujo
 	tablero.dibuja();
 //dibujo del suelo
-	glDisable(GL_LIGHTING);
+	/*glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
 	glColor3ub(255, 0, 0);
 	glVertex3f(-5.0f, 0, -5.0f);
@@ -37,7 +39,7 @@ void Mundo::dibuja()
 	glVertex3f(5.0f, 0, 5.0f);
 	glVertex3f(5.0f, 0, -5.0f);
 	glEnd();
-	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHTING);*/
 }
 
 void Mundo::mueve()
@@ -76,8 +78,9 @@ bool Mundo::validarTurno(int color) {
 
 }
 
-int Mundo::jugada(int button, int state, int x, int y)
+int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
 { //Implementación de una jugada
+<<<<<<< Updated upstream
 	return 0;
 	/////////////////////////////////////////Funciones del ratón/////////////////////////////////////////////77
 }
@@ -85,4 +88,61 @@ int Mundo::jugada(int button, int state, int x, int y)
 int Mundo::jaque()
 {
 	return tablero.jaque(turno);
+=======
+	
+	//NO BORRAR COSAS EN PRUEBAS
+	
+	int window_height = glutGet(GLUT_WINDOW_HEIGHT) * 0.92; //cantidad de pixeles de alto 
+	int window_width = glutGet(GLUT_WINDOW_WIDTH) * 0.7; //cantidad de pixeles de ancho
+
+	float range_height = window_height / 8; //8 es el numero de filas
+	float range_width = window_width / 8;
+
+	int calculate_fila = (y- glutGet(GLUT_WINDOW_HEIGHT)*0.04) / range_height;
+	int calculate_columna = (x- glutGet(GLUT_WINDOW_WIDTH)*0.15) / range_width;
+
+	
+
+	int* position = new int[2];
+
+	if (tablero.selPieza(calculate_fila, calculate_columna)) {
+		
+		position[0]= 7-calculate_fila;
+		position[1] = calculate_columna;
+		
+		return position;
+	}
+	else {
+		return NULL;
+	}
+
+
+	//std::cout << "glut screen width: " << glutGet(GLUT_SCREEN_WIDTH) << std::endl;
+	//std::cout << "glut screen height: " << glutGet(GLUT_SCREEN_HEIGHT) << std::endl;
+
+}
+
+int* Mundo::ValidarClick( int x, int y)
+{ 
+	//NO BORRAR COSAS EN PRUEBAS
+	/*std::cout << "coordenada x : " << x << "coordenada y : " << y << "\n";
+	std::cout << glutGet(GLUT_WINDOW_HEIGHT) * 0.92 << " maximo de altura\n";
+	std::cout << glutGet(GLUT_WINDOW_WIDTH) * 0.7 << " maximo de ancho\n";*/
+
+	int window_height = glutGet(GLUT_WINDOW_HEIGHT) * 0.92; //cantidad de pixeles de alto 
+	int window_width = glutGet(GLUT_WINDOW_WIDTH) * 0.7; //cantidad de pixeles de ancho
+
+	float range_height = window_height / 8; //8 es el numero de filas
+	float range_width = window_width / 8;
+
+	int calculate_fila = (y - glutGet(GLUT_WINDOW_HEIGHT) * 0.04) / range_height;
+	int calculate_columna = (x - glutGet(GLUT_WINDOW_WIDTH) * 0.15) / range_width;
+
+	int* position=new int [2];
+
+	position[0] = 7-calculate_fila;
+	position[1] = calculate_columna;
+
+	return position;
+>>>>>>> Stashed changes
 }
