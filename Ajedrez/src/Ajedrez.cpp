@@ -83,6 +83,7 @@ void OnTimer(int value)
 	//mundo.mueve();
 
 	//no borrar estas lineas
-	glutTimerFunc(25,OnTimer,0);
+	ajedrez.jaque();
+	glutTimerFunc(25, OnTimer, 0);
 	glutPostRedisplay();
 }
