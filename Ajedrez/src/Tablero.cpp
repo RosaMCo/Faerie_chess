@@ -173,3 +173,8 @@ void Tablero::dibuja() {
 		}
 	}
 }
+
+int Tablero::jaque(int turno)
+{
+	return 0;
+}

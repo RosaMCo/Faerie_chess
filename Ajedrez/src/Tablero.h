@@ -27,6 +27,7 @@ public:
 	//comer al paso
 	
 	// jaque
+	int jaque(int turno);
 	//validar movimiento
 	
 };
