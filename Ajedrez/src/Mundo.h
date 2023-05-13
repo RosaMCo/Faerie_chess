@@ -31,4 +31,5 @@ public:
 	int jugada(int button, int state, int x, int y);
 	//Casilla getCasilla(int x, int y);
 	bool validarTurno(int color);
+	int jaque();
 };

@@ -81,3 +81,8 @@ int Mundo::jugada(int button, int state, int x, int y)
 	return 0;
 	/////////////////////////////////////////Funciones del ratón/////////////////////////////////////////////77
 }
+
+int Mundo::jaque()
+{
+	return tablero.jaque(turno);
+}
