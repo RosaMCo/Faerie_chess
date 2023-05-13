@@ -61,6 +61,7 @@ void Mundo::teclaEspecial(unsigned char key)
 {
 
 }
+
 /*
 Casilla Mundo::getCasilla(int x, int y) { //Devuelve la casilla en función de las coordenadas x,y del ratón
 	Casilla casilla;
@@ -80,46 +81,37 @@ bool Mundo::validarTurno(int color) {
 
 int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
 { //Implementación de una jugada
-<<<<<<< Updated upstream
-	return 0;
-	/////////////////////////////////////////Funciones del ratón/////////////////////////////////////////////77
-}
+		//NO BORRAR COSAS EN PRUEBAS
 
-int Mundo::jaque()
-{
-	return tablero.jaque(turno);
-=======
-	
-	//NO BORRAR COSAS EN PRUEBAS
-	
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT) * 0.92; //cantidad de pixeles de alto 
 	int window_width = glutGet(GLUT_WINDOW_WIDTH) * 0.7; //cantidad de pixeles de ancho
 
 	float range_height = window_height / 8; //8 es el numero de filas
 	float range_width = window_width / 8;
 
-	int calculate_fila = (y- glutGet(GLUT_WINDOW_HEIGHT)*0.04) / range_height;
-	int calculate_columna = (x- glutGet(GLUT_WINDOW_WIDTH)*0.15) / range_width;
+	int calculate_fila = (y - glutGet(GLUT_WINDOW_HEIGHT) * 0.04) / range_height;
+	int calculate_columna = (x - glutGet(GLUT_WINDOW_WIDTH) * 0.15) / range_width;
 
-	
+
 
 	int* position = new int[2];
 
 	if (tablero.selPieza(calculate_fila, calculate_columna)) {
-		
-		position[0]= 7-calculate_fila;
+
+		position[0] = 7 - calculate_fila;
 		position[1] = calculate_columna;
-		
+
 		return position;
 	}
 	else {
 		return NULL;
 	}
 
+}
 
-	//std::cout << "glut screen width: " << glutGet(GLUT_SCREEN_WIDTH) << std::endl;
-	//std::cout << "glut screen height: " << glutGet(GLUT_SCREEN_HEIGHT) << std::endl;
-
+int Mundo::jaque()
+{
+	return tablero.jaque(turno);
 }
 
 int* Mundo::ValidarClick( int x, int y)
@@ -144,5 +136,5 @@ int* Mundo::ValidarClick( int x, int y)
 	position[1] = calculate_columna;
 
 	return position;
->>>>>>> Stashed changes
+
 }
