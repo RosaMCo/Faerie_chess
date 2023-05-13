@@ -115,3 +115,36 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 	}
 }
 
+void CoordinadorAjedrez::jaque()
+{
+	//Si estamos jugando a la partida de ajedrez
+	if (estado == JUEGO)
+	{
+		if (mundo.jaque() == 1)
+		{
+			estado == JAQUEBLANCO;
+			JaqueBlanco = true;
+		}
+		else if (mundo.jaque() == 2)
+		{
+			estado = JAQUENEGRO;
+			JaqueNegro = true;
+		}
+		else if (mundo.jaque() == 3 || mundo.jaque() == 4)
+		{
+			estado = FIN;
+		}
+		
+	}
+	//Cuando deja de haber jaque entonces se reanuda el juego
+	else if (estado == JAQUEBLANCO || estado == JAQUENEGRO)
+	{
+		if (mundo.jaque() == 0)
+		{
+			JaqueBlanco = false;
+			JaqueNegro = false;
+			estado = JUEGO;
+		}
+	}
+}
+

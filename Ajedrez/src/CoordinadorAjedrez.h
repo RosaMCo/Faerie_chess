@@ -14,11 +14,15 @@ public:
 	void tecla(unsigned char key);
 	void jugada(int button, int state, int x, int y);
 	void dibuja();
+	void jaque();
 protected:
 	Mundo mundo;
 	Tienda tienda;
 	enum Estado { INICIO, JUEGO, TIENDA, REGLAS, GAMEOVER, FIN,JAQUEBLANCO, JAQUENEGRO};
 	Estado estado;
+	//Variables de jaque desactivadas
+	bool JaqueBlanco = false;
+	bool JaqueNegro = false;
 
 };
 
