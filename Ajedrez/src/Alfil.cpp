@@ -13,29 +13,35 @@ Alfil::Alfil(Color col, int f, int c) {
 }
 
 bool Alfil::mover(int nc, int nf) {
-	//El afil se mueve hacia arriba 
-	
-	if (nf - fila <= 7) {
-		//Se mueve hacia la derecha
-		if(nc - columna<=7)
-			return true;
-		//Se mueve hacia la izquierda 
-		if (nc + columna <= 7)
-			return true;
-	}
+	if ((nc < 0) || (nc > 7) || (nf < 0) || (nf > 7))
+		return false;
+	else
+	{
 
-	//El alfil se mueve hacia abajo
-	else if (nf + fila <= 7) {
-		//Se mueve hacia la derecha
-		if (nc - columna <= 7)
-			return true;
-		//Se mueve hacia la izquierda 
-		if (nc + columna <= 7)
-			return true;
-	}
+		//El afil se mueve hacia arriba 
 
-	//falta comprobar que en caso de que la casilla final sea la misma que otra ficha, comemos esa ficha 
-	else return false;
+		if (nf - fila <= 7) {
+			//Se mueve hacia la derecha
+			if (nc - columna <= 7)
+				return true;
+			//Se mueve hacia la izquierda 
+			if (nc + columna <= 7)
+				return true;
+		}
+
+		//El alfil se mueve hacia abajo
+		else if (nf + fila <= 7) {
+			//Se mueve hacia la derecha
+			if (nc - columna <= 7)
+				return true;
+			//Se mueve hacia la izquierda 
+			if (nc + columna <= 7)
+				return true;
+		}
+
+		//falta comprobar que en caso de que la casilla final sea la misma que otra ficha, comemos esa ficha 
+		else return false;
+	}
 }
 
 void Alfil::dibuja(float ix, float iy)

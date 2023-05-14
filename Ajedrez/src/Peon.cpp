@@ -9,21 +9,26 @@ Peon::Peon(Color col, int f, int c) {
 }
 
 bool Peon::mover(int nc, int nf) {
-	if (mov_ini == 1) {
-		if (nc == columna && nf - fila <=2) {
-			return true;
+	if ((nc < 0) || (nc > 7) || (nf < 0) || (nf > 7))
+		return false;
+	else
+	{
+		if (mov_ini == 1) {
+			if (nc == columna && nf - fila <= 2) {
+				return true;
+			}
+			return false;
+		}
+
+		else {
+			if (nc == columna && nf - fila == 1) {
+				return true;
+			}
+
+			return false;
 		}
 		return false;
 	}
-
-	else {
-		if (nc == columna && nf - fila == 1) {
-			return true;
-		}
-
-		return false;
-	}
-	return false;
 }
 
 bool Peon::comer(int nc, int nf) {

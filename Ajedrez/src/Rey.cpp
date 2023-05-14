@@ -6,6 +6,7 @@ Rey::Rey(Color col, int f, int c)
 	setTipo(REY);
 	fila = f;
 	columna = c;
+	movIni = 0;
  }
 
 //Rey ::~Rey()
@@ -44,41 +45,71 @@ void Rey::dibuja(float ix, float iy)
 
 bool Rey::mover(int nc, int nf)
 {
-	//El rey se mueve uno para arriba
-	if (nc == fila + 1)
-		//El rey se mueve uno para arriba y uno a la izq, es decir,
-		//diagonal
-		if (nf == columna - 1)
-			return true;
-		else if (nf == columna + 1)//Diagonal derecha
-			return true;
-		else if (nf == columna)//No hay mov izq o der
-			return true;
-		else
-			return false;
+	if ((nc < 0) || (nc > 7) || (nf < 0) || (nf > 7))
+		return false;
+	else
+	{
+		//El rey se mueve uno para arriba
+		if (nc == fila + 1)
+			//El rey se mueve uno para arriba y uno a la izq, es decir,
+			//diagonal
+			if (nf == columna - 1)
+			{
+				movIni = 1;
+				return true;
+			}
+			else if (nf == columna + 1)//Diagonal derecha
+			{
+				movIni = 1;
+				return true;
+			}
+			else if (nf == columna)//No hay mov izq o der
+			{
+				movIni = 1;
+				return true;
+			}
+			else
+				return false;
 
-	//Lo mismo que la anterior pero hacia abajo
-	else if (nc == fila - 1)
-		//El rey se mueve uno para arriba y uno a la izq, es decir,
-		//diagonal
-		if (nf == columna - 1)
-			return true;
-		else if (nf == columna + 1)//Diagonal derecha
-			return true;
-		else if (nf == columna)//No hay mov izq o der
-			return true;
-		else
-			return false;
+		//Lo mismo que la anterior pero hacia abajo
+		else if (nc == fila - 1)
+			//El rey se mueve uno para arriba y uno a la izq, es decir,
+			//diagonal
+			if (nf == columna - 1)
+			{
+				movIni = 1;
+				return true;
+			}
+			else if (nf == columna + 1)//Diagonal derecha
+			{
+				movIni = 1;
+				return true;
+			}
+			else if (nf == columna)//No hay mov izq o der
+			{
+				movIni = 1;
+				return true;
+			}
+			else
+				return false;
 
-	//Se queda en la misma posición
-	else if (nc == fila)
-		//Mov a la izquierda
-		if (nf == columna - 1)
-			return true;
+		//Se queda en la misma posición
+		else if (nc == fila)
+			//Mov a la izquierda
+			if (nf == columna - 1)
+			{
+				movIni = 1;
+				return true;
+			}
 		//Mov a la derecha
-		else if (nf == columna + 1)
-			return true;
-		else
-			return false;
+			else if (nf == columna + 1)
+			{
+				movIni = 1;
+				return true;
+			}
+			else
+				return false;
+
+	}
 
 }

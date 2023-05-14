@@ -6,32 +6,40 @@ Torre::Torre(Color col, int f, int c) {
 	setTipo(TORRE);
 	fila = f;
 	columna = c;
+	movIni = 0;
 }
 
 bool Torre::mover(int nx, int ny) {
-	//Movimiento arriba 
-	if (nx == columna && ny - fila <= 7) {
-		return true;
+	if ((nx < 0) || (nx > 7) || (nx < 0) || (ny > 7))
+		return false;
+	else
+	{
+		//Movimiento arriba 
+		if (nx == columna && ny - fila <= 7) {
+			return true;
+			movIni = 1;
+		}
+
+		//Movimiento abajo 
+		else if (nx == columna && ny + fila <= 7) {
+			return true;
+			movIni = 1;
+		}
+
+		//Movimiento derecha
+		else if (nx - columna <= 7 && ny == fila) {
+			return true;
+			movIni = 1;
+		}
+
+		//Movimiento izquierda 
+		else if (nx + columna <= 7 && ny == fila) {
+			return true;
+			movIni = 1;
+		}
+
+		else return false;
 	}
-
-	//Movimiento abajo 
-	else if (nx == columna && ny + fila <= 7) {
-		return true;
-	}
-
-	//Movimiento derecha
-	else if (nx - columna <= 7 && ny == fila) {
-		return true;
-	}
-
-	//Movimiento izquierda 
-	else if (nx + columna <= 7 && ny == fila) {
-		return true;
-	}
-
-	else return false;
-
-	//falta comprobar que en caso de que la casilla final sea la misma que otra ficha, comemos esa ficha 
 }
 
 void Torre::dibuja(float ix, float iy)

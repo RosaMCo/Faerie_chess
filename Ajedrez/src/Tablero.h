@@ -25,10 +25,20 @@ public:
 	void dibuja();
 	//validar enroque
 	//comer al paso
-	
-	// jaque
-	int jaque(int turno);
-	//validar movimiento
+	bool colorDistinto(Pieza& pieza, Pieza& pieza2);
+	bool casillaVacia(int c, int f);
+	//void actualizarId(int fdestino, int cdestino, int forigen, int corigen);
+
+	bool amenaza(Pieza& pieza);
+
+	void enroqueLargo(Torre& torre, Rey& rey);
+	void enroqueCorto(Torre& torre, Rey& rey);
+	void enroque(Torre& torre, Rey& rey);
+
+	bool jaque(Rey& rey);
+	bool jaqueMate(Rey& rey);
+
+	bool comerAlPaso(Peon& peon);
 	
 };
 

@@ -174,7 +174,155 @@ void Tablero::dibuja() {
 	}
 }
 
-int Tablero::jaque(int turno)
+bool Tablero::casillaVacia(int c, int f)
 {
-	return 0;
+	auto& iden = id[c][f];
+	if (iden)
+		return false;
+	else
+		return true;
+}
+
+bool Tablero::colorDistinto(Pieza& pieza, Pieza& pieza2)
+{
+	if (pieza.getColor() != pieza2.getColor())
+		return true;
+	else return false;
+}
+
+bool Tablero::amenaza(Pieza& pieza)
+{
+	int _columna = pieza.getColumna();
+	int _fila = pieza.getFila();
+	for (int i = 0; i < 32; i++)
+	{
+		if (colorDistinto((*lista[i]), pieza)) //si tienen colores distintos
+		{
+			if ((lista[i]->getTipo()) == PEON)
+			{
+				if (lista[i]->comer(_columna, _fila))
+					return true;
+				else return false;
+			}
+			else
+				if (lista[i]->mover(_columna, _fila))
+					return true;
+				else return false;
+		}
+		else return false;
+	}
+
+}
+
+bool Tablero::jaque(Rey& rey)
+{
+	if (amenaza(rey))
+		return true;
+	else
+		return false;
+}
+
+void Tablero::enroque(Torre& torre, Rey& rey)
+{
+	if (((rey.getMovIni() == 0) && (torre.getMovIni() == 0)) && (colorDistinto(torre, rey) == 0))//si nunca se han movido y son del mismo color
+	{
+		if (jaque(rey) == 0) //si el rey no está en jaque
+		{
+			if (torre.getColumna() == 0) //torres de la izquierda
+				enroqueLargo(torre, rey);
+			if (torre.getColumna() == 7)
+				enroqueCorto(torre, rey); //torres de la derecha
+		}
+	}
+}
+
+void Tablero::enroqueLargo(Torre& torre, Rey& rey)
+{
+	Rey _rey = rey;
+	//1. Compruebo que no haya piezas entre medias
+	int contador = 0;
+	int _fila = torre.getFila();//1.1 tomo la fila en la que esté la torre
+
+	for (int i = 0; i < 32; i++)
+	{
+		if ((lista[i]->getFila()) == _fila) //1.2 si la fila de alguna pieza coincide con la de la torre
+			for (int _columna = 1; _columna < 4; _columna++) //las columnas de las casillas entre torre y rey
+			{
+				if ((lista[i]->getColumna()) == _columna) //1.3 si además de la fila, está entre las columnas entre medias
+					contador++; //1.4 si hay pieza entre medias, sumo contador 
+				//2. Compruebo que ninguna de las columnas por las que pasará el rey quede atacada
+				if (_columna > 1)//2.1 En el enroque largo, la casilla de la derecha de la torre sí puede ser atacada
+					_rey.setPosicion(_columna, _fila);
+				if (amenaza(rey))
+					contador++;//2.2 Si alguna de las casillas está amenazada, sumo contador
+			}
+	}
+	if (contador == 0) //no hay piezas entremedias, ninguna de las casillas por las que pasará el rey está amenazada.
+	{
+		_rey.setPosicion(2, _fila);
+		if ((amenaza(_rey)) == 0)
+		{
+			rey.setPosicion(2, _fila);
+			torre.setPosicion(3, _fila);
+		}
+		//FALTA ACTUALIZAR ID
+	}
+
+}
+
+void Tablero::enroqueCorto(Torre& torre, Rey& rey)
+{
+	Rey _rey = rey;
+	//1. Compruebo que no haya piezas entre medias
+	int contador = 0;
+	int _fila = torre.getFila();//1.1 tomo la fila en la que esté la torre
+
+	for (int i = 0; i < 32; i++)
+	{
+		if ((lista[i]->getFila()) == _fila) //1.2 si la fila de alguna pieza coincide con la de la torre
+			for (int _columna = 6; _columna > 4; _columna--) //las columnas de las casillas entre torre y rey
+			{
+				if ((lista[i]->getColumna()) == _columna) //1.3 si además de la fila, está entre las columnas entre medias
+					contador++; //1.4 si hay pieza entre medias, sumo contador 
+
+				_rey.setPosicion(_columna, _fila);//2. Compruebo que ninguna de las columnas por las que pasará el rey quede atacada
+				if (amenaza(rey))
+					contador++;//2.2 Si alguna de las casillas está amenazada, sumo contador
+			}
+	}
+	if (contador == 0) //no hay piezas entremedias, ninguna de las casillas por las que pasará el rey está amenazada.
+	{
+		_rey.setPosicion(6, _fila);
+		if ((amenaza(_rey)) == 0)
+		{
+			rey.setPosicion(6, _fila);
+			torre.setPosicion(5, _fila);
+		}
+
+		//FALTA ACTUALIZAR ID
+
+	}
+}
+
+
+bool Tablero::jaqueMate(Rey& rey)
+{
+	int _columna = rey.getColumna();
+	int _fila = rey.getFila();
+	if (jaque(rey))//si está en jaque..
+	{
+		for (int i = 0; i < 8; i++)
+			for (int j = 0; j < 8; j++)
+			{
+				if ((rey.mover(i, j)) && casillaVacia(i, j))//..y el rey se puede mover a una casilla vacía...
+					return false; //...no hay jaque mate
+				else return false;
+			}
+	}
+	else
+		return true;
+}
+bool Tablero::comerAlPaso(Peon& peon)
+{
+	return true;
 }

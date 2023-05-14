@@ -26,12 +26,13 @@ public:
 	virtual void dibuja(float ix, float iy) = 0;
 	//set
 	void setPosicion(int nx, int ny);
-	void toggleOcupado(); //Cambia si la casilla del tablero está ocupada o no.
-	void setNext();
+	void toggleOcupado() {}; //Cambia si la casilla del tablero está ocupada o no.
+	void setNext() {};
 	void setColor(Color c);//poner inline
 	void setTipo(Tipo t);//poner inline
 	//get
 	Color getColor() { return color; }
+	Tipo getTipo() { return tipo; }
 	int getFila() { return fila; }
 	int getColumna() { return columna; }
 	bool getOcupado();

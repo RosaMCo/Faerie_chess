@@ -8,7 +8,7 @@ Caballo::Caballo(Color col, int f, int c) {
 }
 bool Caballo::mover(int nc, int nf)
 	{
-		if (nc < 0 || nf < 0 || nc > 8 || nf > 8)
+		if (nc < 0 || nf < 0 || nc > 7 || nf > 7)
 		{
 			return false;
 		}
