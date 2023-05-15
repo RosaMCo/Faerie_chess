@@ -17,14 +17,14 @@ Tablero::Tablero() {
 	for (int i = 0; i < 16; i++) {//creación de peones
 
 		if (i < 8) {//blancos
-			Peon* p = new Peon(blanco, 1, i);//fila 1, todas las columnas
+			Peon* p = new Peon(negro, 1, i);//fila 1, todas las columnas
 			lista[i] = p;
 			id[1][i] = lista[i];
 
 		}
 
 		else {//negros
-			Peon* p = new Peon(negro, 6, i - 8);//fila 6, todas las columnas (-8 porque i empieza en 8 y las columnas en 0)
+			Peon* p = new Peon(blanco, 6, i - 8);//fila 6, todas las columnas (-8 porque i empieza en 8 y las columnas en 0)
 			lista[i] = p;
 			id[6][i - 8] = lista[i];
 		}
@@ -32,12 +32,12 @@ Tablero::Tablero() {
 
 	for (int i = 16; i < 20; i++) {//creación de torres
 		if (i < 18) {//blancas
-			Torre* t = new Torre(blanco, 0, (i - 16) * 7);//fila 0, columnas 0 y 7
+			Torre* t = new Torre(negro, 0, (i - 16) * 7);//fila 0, columnas 0 y 7
 			lista[i] = t;
 			id[0][(i - 16) * 7] = lista[i];
 		}
 		else {//negras
-			Torre* t = new Torre(negro, 7, (i - 18) * 7);//fila 7, columnas 0 y 7
+			Torre* t = new Torre(blanco, 7, (i - 18) * 7);//fila 7, columnas 0 y 7
 			lista[i] = t;
 			id[7][(i - 18) * 7] = lista[i];
 		}
@@ -45,13 +45,13 @@ Tablero::Tablero() {
 
 	for (int i = 20; i < 24; i++) {//creación de caballos
 		if (i < 22) {//blancos
-			Caballo* c = new Caballo(blanco, 0, (i - 20) * 5 + 1);//fila 0,  columnas 1 y 6
+			Caballo* c = new Caballo(negro, 0, (i - 20) * 5 + 1);//fila 0,  columnas 1 y 6
 			lista[i] = c;
 			id[0][(i - 20) * 5 + 1] = lista[i];
 		}
 
 		else {
-			Caballo* c = new Caballo(negro, 7, (i - 22) * 5 + 1);//fila 7, columnas 1 y 6
+			Caballo* c = new Caballo(blanco, 7, (i - 22) * 5 + 1);//fila 7, columnas 1 y 6
 			lista[i] = c;//negros
 			id[0][(i - 22) * 5 + 1] = lista[i];
 		}
@@ -59,13 +59,13 @@ Tablero::Tablero() {
 
 	for (int i = 24; i < 28; i++) {//creación de alfiles
 		if (i < 26) {//blancos
-			Alfil* a = new Alfil(blanco, 0, (i - 24) * 3 + 2);//fila 0, columnas 2 y 5
+			Alfil* a = new Alfil(negro, 0, (i - 24) * 3 + 2);//fila 0, columnas 2 y 5
 			lista[i] = a;
 			id[0][(i - 24) * 3 + 2] = lista[i];
 		}
 
 		else {//negros
-			Alfil* a = new Alfil(negro, 7, (i - 26) * 3 + 2);//fila 7, columnas 2 y 5
+			Alfil* a = new Alfil(blanco, 7, (i - 26) * 3 + 2);//fila 7, columnas 2 y 5
 			lista[i] = a;
 			id[0][(i - 26) * 3 + 2] = lista[i];
 		}
@@ -74,12 +74,12 @@ Tablero::Tablero() {
 
 	for (int i = 28; i < 30; i++) {
 		if (i < 29) {
-			Reina* r = new Reina(blanco, 0, i - 25);//fila 0, columna 3
+			Reina* r = new Reina(negro, 0, i - 25);//fila 0, columna 3
 			lista[i] = r;
 			id[0][i - 25] = lista[i];
 		}
 		else {
-			Reina* r = new Reina(negro, 7, i - 26);//fila 7, columna 3
+			Reina* r = new Reina(blanco, 7, i - 26);//fila 7, columna 3
 			lista[i] = r;
 			id[7][i - 26] = lista[i];
 		}
@@ -87,13 +87,13 @@ Tablero::Tablero() {
 
 	for (int i = 30; i < 32; i++) {
 		if (i < 31) {
-			Rey* r = new Rey(blanco, 0, i - 26);//fila 0, columna 4
+			Rey* r = new Rey(negro, 0, i - 26);//fila 0, columna 4
 			lista[i] = r;
 			id[0][i - 26] = lista[i];;
 		}
 
 		else {
-			Rey* r = new Rey(negro, 7, i - 27);//fila 7, columna 4
+			Rey* r = new Rey(blanco, 7, i - 27);//fila 7, columna 4
 			lista[i] = r;
 			id[7][i - 27]=lista[i];
 		}
@@ -101,17 +101,28 @@ Tablero::Tablero() {
 	}
 
 	turno = (Color)blanco;//inician blancas
+	std::cout << "Incializo turno en: " << turno << "\n";
+
 }
 
 bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [pasar como const?]
+	std::cout << "Entro en Tablero::seleccionar Pieza" << "\n";
+	std::cout << "El turno en tablero es:" << turno << "\n";
 	auto& iden = id[forigen][corigen];//es muy largo de escribir, así que referencia/alias
+	//Color aux = iden->getColor();
+	//std::cout << "El color de la pieza seleccionada en tablero es:" << aux << "\n";
 	if (iden) {//comprobar puntero no nulo (casilla no vacía)
 		if (iden->getColor() == turno) {//comprobar que coinciden el color de la pieza y el del turno
+			Color aux2 = iden->getColor();
+			std::cout << "Hay una pieza de color" << aux2 << "\n";
 			return true;
 		}
-		else return false;
+		else {
+			return false; Color aux2 = iden->getColor();
+			std::cout << "La pieza es de color " << aux2 << "y el turno es" << turno << "por lo que no muevo" << "\n";
+		}
 	}
-	else return false;
+	else { return false; std::cout << "No estás seleccionando nada" << "\n"; }
 }
 
 bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//selección de destino (una vez seleccionada pieza a mover)

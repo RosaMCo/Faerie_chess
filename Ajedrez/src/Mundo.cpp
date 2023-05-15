@@ -91,6 +91,7 @@ int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
 {//Implementación de una jugada
 		//NO BORRAR COSAS EN PRUEBAS
 	std::cout << "Entro en mundo::seleccionar ficha" << "\n";
+	std::cout << "En mundo, el turno es: " << tablero.getTurno()<< "\n";
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT) * 0.92; //cantidad de pixeles de alto 
 	int window_width = glutGet(GLUT_WINDOW_WIDTH) * 0.7; //cantidad de pixeles de ancho
 

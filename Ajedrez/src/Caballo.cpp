@@ -21,14 +21,14 @@ bool Caballo::mover(int nc, int nf)
 
 void Caballo::dibuja(float ix, float iy)
 {
-	if (color == blanco)
+	if (color == negro)
 	{
 		//Imagen de pieza blanca
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/Fichas/W-Knight.png").id);
 		glDisable(GL_LIGHTING);
 	}
-	else if (color == negro)
+	else if (color == blanco)
 	{
 		//Imagen de pieza negra
 		glEnable(GL_TEXTURE_2D);

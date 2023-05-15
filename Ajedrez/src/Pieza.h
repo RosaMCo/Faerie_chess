@@ -1,7 +1,7 @@
 #pragma once
 #include "Vector2D.h"
 #include "ETSIDI.h"
-enum Color {indefinido, blanco, negro};
+enum Color {indefinido,blanco, negro};
 enum Tipo { PEON, TORRE, ALFIL, CABALLO, REINA, REY, INDEFINIDO };
 class Pieza
 {
@@ -35,8 +35,8 @@ public:
 	Tipo getTipo() { return tipo; }
 	int getFila() { return fila; }
 	int getColumna() { return columna; }
-	bool getOcupado();
-	bool getNext();
+	//bool getOcupado();
+	//bool getNext();
 	//mover y comer virtuales
 	//revisar si está bien hecho
 	virtual bool mover(int nx, int ny) = 0;
