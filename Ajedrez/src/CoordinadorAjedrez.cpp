@@ -11,6 +11,7 @@ int* ficha_selecionada = NULL;
 CoordinadorAjedrez::CoordinadorAjedrez()
 {
 	estado = INICIO;
+	cursor = 0;
 }
 
 void CoordinadorAjedrez::dibuja()
@@ -78,12 +79,14 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 			{
 				mundo.inicializa();
 				estado = JUEGO;
+				cursor = 1;
 			}
 
 			else if (key == '2')
 			{
 				tienda.inicializa();
 				estado = TIENDA;
+				cursor = 1;
 			}
 
 			else if (key == '4')
@@ -120,33 +123,35 @@ void CoordinadorAjedrez::teclaEspecial(unsigned char key) //Moverse por el menu 
 
 void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 {
-	std::cout << "turno: " << mundo.tablero.getTurno() << "\n";
-	if (action_click == false) {//al ser false estamos seleccionando ficha 
-		int* ficha_sel = mundo.SeleccionarFicha(button, state, x, y);
-		if (ficha_sel) {
-			std::cout << "mover ficha;sel" << ficha_sel[0] << "\n";
-			std::cout << "mover ficha;sel" << ficha_sel[1] << "\n";
-			action_click = true; 
-			ficha_selecionada = ficha_sel;
+	if (cursor == 1) {
+		std::cout << "turno: " << mundo.tablero.getTurno() << "\n";
+		if (action_click == false) {//al ser false estamos seleccionando ficha 
+			int* ficha_sel = mundo.SeleccionarFicha(button, state, x, y);
+			if (ficha_sel) {
+				std::cout << "mover ficha;sel" << ficha_sel[0] << "\n";
+				std::cout << "mover ficha;sel" << ficha_sel[1] << "\n";
+				action_click = true;
+				ficha_selecionada = ficha_sel;
+			}
+			else
+			{
+				ficha_selecionada = NULL;
+				action_click = false;
+			}
+
 		}
-		else
-		{
+
+		else { //moviendo ficha 
+			std::cout << "mover ficha;" << ficha_selecionada[0] << "\n";
+			std::cout << "mover ficha;" << ficha_selecionada[1] << "\n";
+			int* movimiento = mundo.ValidarClick(x, y);
+			std::cout << "mover ficha;movimiento" << movimiento[0] << "\n";
+			std::cout << "mover ficha;movimiento" << movimiento[1] << "\n";
+			mundo.tablero.mover(movimiento[0], movimiento[1], ficha_selecionada[0], ficha_selecionada[1]);
+			mundo.cambiaTurno();
 			ficha_selecionada = NULL;
 			action_click = false;
-		} 
-
-	}
-
-	else { //moviendo ficha 
-		std::cout << "mover ficha;" << ficha_selecionada[0] << "\n";
-		std::cout << "mover ficha;" << ficha_selecionada[1] << "\n";
-		int* movimiento = mundo.ValidarClick(x, y);
-		std::cout << "mover ficha;movimiento" << movimiento[0] << "\n";
-		std::cout << "mover ficha;movimiento" << movimiento[1] << "\n";
-		mundo.tablero.mover(movimiento[0], movimiento[1], ficha_selecionada[0], ficha_selecionada[1]);
-		mundo.cambiaTurno();
-		ficha_selecionada = NULL;
-		action_click = false;
+		}
 	}
 	//mundo.cambiaTurno();
 

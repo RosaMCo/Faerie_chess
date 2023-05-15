@@ -9,6 +9,7 @@ public:
 	float x_ojo, y_ojo, z_ojo;
 	CoordinadorAjedrez();
 	virtual ~CoordinadorAjedrez() {};
+	bool cursor;
 
 	void teclaEspecial(unsigned char key);
 	void tecla(unsigned char key);

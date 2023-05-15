@@ -26,7 +26,7 @@ Tablero::Tablero() {
 		else {//negros
 			Peon* p = new Peon(negro, 6, i - 8);//fila 6, todas las columnas (-8 porque i empieza en 8 y las columnas en 0)
 			lista[i] = p;
-			id[6][i - 8] = lista[i - 8];
+			id[6][i - 8] = lista[i];
 		}
 	}
 
@@ -34,12 +34,12 @@ Tablero::Tablero() {
 		if (i < 18) {//blancas
 			Torre* t = new Torre(blanco, 0, (i - 16) * 7);//fila 0, columnas 0 y 7
 			lista[i] = t;
-			id[0][(i - 16) * 7];
+			id[0][(i - 16) * 7] = lista[i];
 		}
 		else {//negras
 			Torre* t = new Torre(negro, 7, (i - 18) * 7);//fila 7, columnas 0 y 7
 			lista[i] = t;
-			id[7][(i - 18) * 7];
+			id[7][(i - 18) * 7] = lista[i];
 		}
 	}
 
@@ -47,13 +47,13 @@ Tablero::Tablero() {
 		if (i < 22) {//blancos
 			Caballo* c = new Caballo(blanco, 0, (i - 20) * 5 + 1);//fila 0,  columnas 1 y 6
 			lista[i] = c;
-			id[0][(i - 20) * 5 + 1];
+			id[0][(i - 20) * 5 + 1] = lista[i];
 		}
 
 		else {
 			Caballo* c = new Caballo(negro, 7, (i - 22) * 5 + 1);//fila 7, columnas 1 y 6
 			lista[i] = c;//negros
-			id[0][(i - 22) * 5 + 1];
+			id[0][(i - 22) * 5 + 1] = lista[i];
 		}
 	}
 
@@ -61,13 +61,13 @@ Tablero::Tablero() {
 		if (i < 26) {//blancos
 			Alfil* a = new Alfil(blanco, 0, (i - 24) * 3 + 2);//fila 0, columnas 2 y 5
 			lista[i] = a;
-			id[0][(i - 24) * 3 + 2];
+			id[0][(i - 24) * 3 + 2] = lista[i];
 		}
 
 		else {//negros
 			Alfil* a = new Alfil(negro, 7, (i - 26) * 3 + 2);//fila 7, columnas 2 y 5
 			lista[i] = a;
-			id[0][(i - 26) * 3 + 2];
+			id[0][(i - 26) * 3 + 2] = lista[i];
 		}
 	
 	}
@@ -76,12 +76,12 @@ Tablero::Tablero() {
 		if (i < 29) {
 			Reina* r = new Reina(blanco, 0, i - 25);//fila 0, columna 3
 			lista[i] = r;
-			id[0][i - 25];
+			id[0][i - 25] = lista[i];
 		}
 		else {
 			Reina* r = new Reina(negro, 7, i - 26);//fila 7, columna 3
 			lista[i] = r;
-			id[7][i - 26];
+			id[7][i - 26] = lista[i];
 		}
 	}
 
@@ -89,13 +89,13 @@ Tablero::Tablero() {
 		if (i < 31) {
 			Rey* r = new Rey(blanco, 0, i - 26);//fila 0, columna 4
 			lista[i] = r;
-			id[0][i - 26];
+			id[0][i - 26] = lista[i];;
 		}
 
 		else {
 			Rey* r = new Rey(negro, 7, i - 27);//fila 7, columna 4
 			lista[i] = r;
-			id[7][i - 27];
+			id[7][i - 27]=lista[i];
 		}
 		
 	}
@@ -109,31 +109,22 @@ bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [
 		if (iden->getColor() == turno) {//comprobar que coinciden el color de la pieza y el del turno
 			return true;
 		}
-		return false;
+		else return false;
 	}
-	return false;
+	else return false;
 }
 
 bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//selección de destino (una vez seleccionada pieza a mover)
 	auto& destino = id[fdestino][cdestino];
 	auto& origen = id[forigen][corigen];
-	std::cout << "Entro en método de Tablero mover" << "\n";
 	if (destino) {//casilla ocupada
 		if (destino->getColor() != turno) {//comprobar pieza color distinto
-			std::cout << "AQUÍ HAY UNA PIEZA porque el color" <<"es distinto del turno: "<< turno<< "\n";
 			if (origen->comer(cdestino, fdestino)) {//llamar a comer de la pieza seleccionada
 				//llamar a destructor de la pieza destino (delete)
-				std::cout << "Puedo comer" << "\n";
 				//realizar el movimiento
 				origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
 				destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
 				origen = 0;//casilla origen ahora vacía (no apunta a la pieza)
-				/*if (turno == negro) {
-					turno = blanco;
-				}
-				else {
-					turno = negro;
-				}*/
 			}
 			return false;
 		}
@@ -141,10 +132,8 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 	}
 
 	else {//casilla vacía
-		std::cout << "AQUÍ NO UNA PIEZA porque el color" << "es igual del turno: " << turno << "\n";
 		if (origen->mover(cdestino, fdestino)) {//llamar a mover de la pieza seleccionada
 			//realizar el movimiento
-			std::cout << "Puedo mover" << "\n";
 			origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
 			destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
 			origen = 0;//casilla origen ahora vacía (no apunta a la pieza)

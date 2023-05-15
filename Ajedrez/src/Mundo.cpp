@@ -86,8 +86,9 @@ bool Mundo::validarTurno(Color color) {
 
 }
 
+
 int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
-{ //Implementación de una jugada
+{//Implementación de una jugada
 		//NO BORRAR COSAS EN PRUEBAS
 	std::cout << "Entro en mundo::seleccionar ficha" << "\n";
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT) * 0.92; //cantidad de pixeles de alto 
@@ -111,6 +112,7 @@ int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
 
 		return position;
 	}
+	
 	else {
 		std::cout << "Pero no reconozco seleccion" << "\n";
 		return NULL;
