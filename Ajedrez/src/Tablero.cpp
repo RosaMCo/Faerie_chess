@@ -126,6 +126,9 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 				origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
 				destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
 				origen = 0;//casilla origen ahora vacía (no apunta a la pieza)
+
+
+			
 			}
 			return false;
 		}
@@ -138,7 +141,18 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 			origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
 			destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
 			origen = 0;//casilla origen ahora vacía (no apunta a la pieza)
+
+			if (turno == negro) {
+				turno = blanco;
+			}
+			else {
+				turno = negro;
+			}
 		}
+
+		//std::cout << "1 Blancas 2 negras  " << "\n";
+		//std::cout << "Le toca jugar a las :  " << (Color)turno << "\n";
+
 		return false;
 	}
 	return false;
