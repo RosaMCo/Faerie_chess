@@ -87,6 +87,7 @@ void OnTimer(int value)
 {
 //poner aqui el código de animacion
 	//mundo.mueve();
+	//ajedrez.cambiaTurno();
 
 	//no borrar estas lineas
 	ajedrez.jaque();

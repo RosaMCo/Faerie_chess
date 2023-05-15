@@ -15,6 +15,7 @@ public:
 	void jugada(int button, int state, int x, int y);
 	void dibuja();
 	void jaque();
+	void cambiaTurno();
 protected:
 	Mundo mundo;
 	Tienda tienda;

@@ -71,10 +71,17 @@ Casilla Mundo::getCasilla(int x, int y) { //Devuelve la casilla en función de la
 }
 */
 
-bool Mundo::validarTurno(int color) {
+/*bool Mundo::validarTurno(int color) {
 
-	if (turno % 2 == 0 && color == 0) { return true; }		//Turno par -> piezas blancas
+	if (turno == 0 && color == 0) { return true; }		//Turno par -> piezas blancas
 	else if (turno % 2 != 0 && color == 1) { return true; }	//Turno impar -> piezas negras
+	else { return false; }
+
+}*/
+bool Mundo::validarTurno(Color color) {
+
+	if (tablero.getTurno() == blanco && color == blanco) { return true; }		//Turno par -> piezas blancas
+	else if (tablero.getTurno() == negro && color == negro) { return true; }	//Turno impar -> piezas negras
 	else { return false; }
 
 }
@@ -108,10 +115,19 @@ int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
 	}
 
 }
+void Mundo::cambiaTurno()
+{
+	if (tablero.getTurno() == blanco)
+	{
+		tablero.setTurno(negro);
+	}
+	else tablero.setTurno(blanco);
+	std::cout << "desde Mundo, turno cambiado a: " << tablero.getTurno() << "\n";
+}
 
 int Mundo::jaque()
 {
-	return tablero.jaque(turno);
+	return tablero.jaque(tablero.getTurno());
 }
 
 int* Mundo::ValidarClick( int x, int y)

@@ -23,22 +23,25 @@ public:
 	bool selPieza(int forigen, int corigen);//fila y columna (casilla) de origen para seleccionar la pieza
 	bool mover(int fdestino, int cdestino, int forigen, int corigen);//casilla destino para comprobar y realizar el movimiento
 	void dibuja();
+	Color getTurno() { return turno; }
+	void setTurno(Color tur) {turno = tur;}
 	//validar enroque
 	//comer al paso
 	bool colorDistinto(Pieza& pieza, Pieza& pieza2);
 	bool casillaVacia(int c, int f);
 	//void actualizarId(int fdestino, int cdestino, int forigen, int corigen);
 
-	bool amenaza(Pieza& pieza);
+	bool amenaza(Pieza& pieza); //true si pieza puede ser comida, no incluye comer al paso
 
 	void enroqueLargo(Torre& torre, Rey& rey);
 	void enroqueCorto(Torre& torre, Rey& rey);
 	void enroque(Torre& torre, Rey& rey);
 
-	bool jaque(Rey& rey);
+	//bool jaque(Rey& rey);
+	bool jaque(Color turno);
 	bool jaqueMate(Rey& rey);
 
-	bool comerAlPaso(Peon& peon);
+	bool comerAlPaso(Peon& peon); //true si peon puede comer al paso. Setea las posiciones del peón si puede comer.
 	
 };
 

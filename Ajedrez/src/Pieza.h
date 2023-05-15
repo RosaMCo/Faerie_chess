@@ -41,6 +41,7 @@ public:
 	//revisar si está bien hecho
 	virtual bool mover(int nx, int ny) = 0;
 	virtual bool comer(int nx, int ny) = 0;
+	virtual bool getMovIniLargo() = 0;
 
 };
 

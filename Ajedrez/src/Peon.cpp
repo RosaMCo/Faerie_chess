@@ -6,6 +6,7 @@ Peon::Peon(Color col, int f, int c) {
 	fila = f;
 	columna = c;
 	mov_ini = 1;
+	movIniLargo = 0;
 }
 
 bool Peon::mover(int nc, int nf) {
@@ -15,6 +16,8 @@ bool Peon::mover(int nc, int nf) {
 	{
 		if (mov_ini == 1) {
 			if (nc == columna && nf - fila <= 2) {
+				movIniLargo = 1;
+				mov_ini = 0;
 				return true;
 			}
 			return false;
@@ -22,6 +25,8 @@ bool Peon::mover(int nc, int nf) {
 
 		else {
 			if (nc == columna && nf - fila == 1) {
+				mov_ini = 0;
+				movIniLargo = 0; //si se mueve una segunda vez después de haberse desplazado dos la primera vez
 				return true;
 			}
 

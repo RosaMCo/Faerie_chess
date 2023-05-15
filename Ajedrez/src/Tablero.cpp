@@ -126,6 +126,12 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 				origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
 				destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
 				origen = 0;//casilla origen ahora vacía (no apunta a la pieza)
+				/*if (turno == negro) {
+					turno = blanco;
+				}
+				else {
+					turno = negro;
+				}*/
 			}
 			return false;
 		}
@@ -174,6 +180,7 @@ void Tablero::dibuja() {
 	}
 }
 
+
 bool Tablero::casillaVacia(int c, int f)
 {
 	auto& iden = id[c][f];
@@ -190,6 +197,34 @@ bool Tablero::colorDistinto(Pieza& pieza, Pieza& pieza2)
 	else return false;
 }
 
+bool Tablero::comerAlPaso(Peon& peon)
+{
+	for (int i = 0; i < 32; i++)
+	{
+		if (colorDistinto((*lista[i]), peon)) //si la pieza es de distinto color...
+		{
+			if (((lista[i]->getTipo()) == PEON)) //...y es un peon...
+				if (lista[i]->getMovIniLargo()) //que se ha movido dos casillas en el primer movimiento...
+				{
+					int columna = peon.getColumna();
+					int fila = peon.getFila();
+					int columna2 = lista[i]->getColumna();
+					int fila2 = lista[i]->getFila();
+
+					if (fila2 == fila) //...si ambos peones se encuentran en la misma fila
+						if ((columna == columna2 - 1) || (columna == columna2 + 1)) //y en una columna a la derecha o a la izquierda
+							if (casillaVacia(columna2, fila2 - 1)) //y la casilla que está detrás del peon que se pretende comer al paso está vacía...
+							{
+								peon.setPosicion(columna2, fila + 1);
+								return true; //....podremos comer al paso
+							}
+
+				}
+		}
+		else return false;
+	}
+}
+
 bool Tablero::amenaza(Pieza& pieza)
 {
 	int _columna = pieza.getColumna();
@@ -198,14 +233,14 @@ bool Tablero::amenaza(Pieza& pieza)
 	{
 		if (colorDistinto((*lista[i]), pieza)) //si tienen colores distintos
 		{
-			if ((lista[i]->getTipo()) == PEON)
+			/*if ((lista[i]->getTipo()) == PEON)
 			{
 				if (lista[i]->comer(_columna, _fila))
 					return true;
 				else return false;
 			}
-			else
-				if (lista[i]->mover(_columna, _fila))
+			else*/
+				if (lista[i]->comer(_columna, _fila)) // incluir comer al paso
 					return true;
 				else return false;
 		}
@@ -213,20 +248,32 @@ bool Tablero::amenaza(Pieza& pieza)
 	}
 
 }
+bool Tablero::jaque(Color turno)
+{
+	if (lista[30]->getColor() == turno) //blancas
+	{
+		return amenaza(*lista[30]);
+	}
 
-bool Tablero::jaque(Rey& rey)
+	if (lista[31]->getColor() == turno) //negras
+	{
+		return amenaza(*lista[31]);
+	}
+}
+
+/*bool Tablero::jaque(Rey& rey)
 {
 	if (amenaza(rey))
 		return true;
 	else
 		return false;
-}
+}*/
 
 void Tablero::enroque(Torre& torre, Rey& rey)
 {
 	if (((rey.getMovIni() == 0) && (torre.getMovIni() == 0)) && (colorDistinto(torre, rey) == 0))//si nunca se han movido y son del mismo color
 	{
-		if (jaque(rey) == 0) //si el rey no está en jaque
+		if (amenaza(rey) == 0) //si el rey no está en jaque
 		{
 			if (torre.getColumna() == 0) //torres de la izquierda
 				enroqueLargo(torre, rey);
@@ -309,7 +356,7 @@ bool Tablero::jaqueMate(Rey& rey)
 {
 	int _columna = rey.getColumna();
 	int _fila = rey.getFila();
-	if (jaque(rey))//si está en jaque..
+	if (amenaza(rey))//si está en jaque..
 	{
 		for (int i = 0; i < 8; i++)
 			for (int j = 0; j < 8; j++)
@@ -321,8 +368,4 @@ bool Tablero::jaqueMate(Rey& rey)
 	}
 	else
 		return true;
-}
-bool Tablero::comerAlPaso(Peon& peon)
-{
-	return true;
 }

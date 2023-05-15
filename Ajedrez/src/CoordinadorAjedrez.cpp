@@ -1,6 +1,8 @@
 #include "CoordinadorAjedrez.h"
 #include "ETSIDI.h"
 #include <iostream>
+#include "Tablero.h"
+#include "Mundo.h"
 
 using namespace ETSIDI;
 bool action_click = false; //Esta variable indica en false si estamos selecionando una pieza, en true si estamos moviendo una pieza
@@ -62,6 +64,10 @@ void CoordinadorAjedrez::dibuja()
 		//PONER INSTRUCCIONES EN UN TXT?
 	}
 }
+void CoordinadorAjedrez::cambiaTurno()
+{
+	mundo.cambiaTurno();
+}
 
 void CoordinadorAjedrez::tecla(unsigned char key)
 {
@@ -114,7 +120,7 @@ void CoordinadorAjedrez::teclaEspecial(unsigned char key) //Moverse por el menu 
 
 void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 {
-
+	std::cout << "turno: " << mundo.getTurno() << "\n";
 	if (action_click == false) {//al ser false estamos seleccionando ficha 
 		int* ficha_sel = mundo.SeleccionarFicha(button, state, x, y);
 		if (ficha_sel) {
@@ -138,9 +144,12 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 		std::cout << "mover ficha;movimiento" << movimiento[0] << "\n";
 		std::cout << "mover ficha;movimiento" << movimiento[1] << "\n";
 		mundo.tablero.mover(movimiento[0], movimiento[1], ficha_selecionada[0], ficha_selecionada[1]);
+		mundo.cambiaTurno();
 		ficha_selecionada = NULL;
 		action_click = false;
 	}
+	//mundo.cambiaTurno();
+
 
 	
 
