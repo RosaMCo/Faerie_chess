@@ -120,7 +120,7 @@ void CoordinadorAjedrez::teclaEspecial(unsigned char key) //Moverse por el menu 
 
 void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 {
-	std::cout << "turno: " << mundo.getTurno() << "\n";
+	std::cout << "turno: " << mundo.tablero.getTurno() << "\n";
 	if (action_click == false) {//al ser false estamos seleccionando ficha 
 		int* ficha_sel = mundo.SeleccionarFicha(button, state, x, y);
 		if (ficha_sel) {

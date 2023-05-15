@@ -1,4 +1,5 @@
 #include "Tablero.h"
+#include <iostream>
 
 Tablero::Tablero() {
 	for (int fila = 0; fila <= 7; fila++) {
@@ -116,12 +117,13 @@ bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [
 bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//selección de destino (una vez seleccionada pieza a mover)
 	auto& destino = id[fdestino][cdestino];
 	auto& origen = id[forigen][corigen];
+	std::cout << "Entro en método de Tablero mover" << "\n";
 	if (destino) {//casilla ocupada
 		if (destino->getColor() != turno) {//comprobar pieza color distinto
-			
+			std::cout << "AQUÍ HAY UNA PIEZA porque el color" <<"es distinto del turno: "<< turno<< "\n";
 			if (origen->comer(cdestino, fdestino)) {//llamar a comer de la pieza seleccionada
 				//llamar a destructor de la pieza destino (delete)
-				
+				std::cout << "Puedo comer" << "\n";
 				//realizar el movimiento
 				origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
 				destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
@@ -139,8 +141,10 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 	}
 
 	else {//casilla vacía
+		std::cout << "AQUÍ NO UNA PIEZA porque el color" << "es igual del turno: " << turno << "\n";
 		if (origen->mover(cdestino, fdestino)) {//llamar a mover de la pieza seleccionada
 			//realizar el movimiento
+			std::cout << "Puedo mover" << "\n";
 			origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
 			destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
 			origen = 0;//casilla origen ahora vacía (no apunta a la pieza)
