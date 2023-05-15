@@ -5,8 +5,9 @@ Pieza::Pieza()
 	//constructor de posicion
 	color = indefinido;
 	tipo = INDEFINIDO;
-	ocupada = false;
-	next = false;
+	fila = columna = -1;
+	posicion.setPosicion(fila, columna);
+
 
 }
 

@@ -128,13 +128,16 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 		if (action_click == false) {//al ser false estamos seleccionando ficha 
 			int* ficha_sel = mundo.SeleccionarFicha(button, state, x, y);
 			if (ficha_sel) {
-				std::cout << "mover ficha;sel" << ficha_sel[0] << "\n";
-				std::cout << "mover ficha;sel" << ficha_sel[1] << "\n";
+				//std::cout << "mover ficha;sel" << ficha_sel[0] << "\n";
+				//std::cout << "mover ficha;sel" << ficha_sel[1] << "\n";
+				std::cout << "Voy a mover:" << "\n";
+				mundo.tablero.imprimirInfo(ficha_selecionada[0], ficha_selecionada[1]);
 				action_click = true;
 				ficha_selecionada = ficha_sel;
 			}
 			else
 			{
+				std::cout << "creo que aqui me rayo y me paro\n\n";
 				ficha_selecionada = NULL;
 				action_click = false;
 			}
@@ -142,11 +145,14 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 		}
 
 		else { //moviendo ficha 
-			std::cout << "mover ficha;" << ficha_selecionada[0] << "\n";
-			std::cout << "mover ficha;" << ficha_selecionada[1] << "\n";
+			//std::cout << "mover ficha;" << ficha_selecionada[0] << "\n";
+			//std::cout << "mover ficha;" << ficha_selecionada[1] << "\n";
 			int* movimiento = mundo.ValidarClick(x, y);
-			std::cout << "mover ficha;movimiento" << movimiento[0] << "\n";
-			std::cout << "mover ficha;movimiento" << movimiento[1] << "\n";
+			//std::cout << "mover ficha;movimiento" << movimiento[0] << "\n";
+			//std::cout << "mover ficha;movimiento" << movimiento[1] << "\n";
+			
+			std::cout << "\nAl destino:" << "\n";
+			mundo.tablero.imprimirInfo(movimiento[0], movimiento[1]);
 			mundo.tablero.mover(movimiento[0], movimiento[1], ficha_selecionada[0], ficha_selecionada[1]);
 			mundo.cambiaTurno();
 			ficha_selecionada = NULL;
@@ -160,7 +166,7 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 
 /*/if (estado == JUEGO) {
 		mundo.SeleccionarFicha(button, state, x, y);
-	}if (estado == JAQUEBLANCO || estado == JAQUENEGRO) {
+	}if (estado == JAQUE0 || estado == JAQUE1) {
 		mundo.SeleccionarFicha(button, state, x, y);
 	}*/
 }
@@ -177,7 +183,7 @@ void CoordinadorAjedrez::jaque()
 		}
 		else if (mundo.jaque() == 2)
 		{
-			estado = JAQUENEGRO;
+			estado = JAQUEBLANCO;
 			JaqueNegro = true;
 		}
 		else if (mundo.jaque() == 3 || mundo.jaque() == 4)

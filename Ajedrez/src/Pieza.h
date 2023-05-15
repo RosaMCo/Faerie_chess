@@ -10,9 +10,10 @@ protected:
 	int fila;
 	int columna;
 	//Movimientos
-	bool next;
-	bool ocupada;
+	//bool next;
+	//bool ocupada;
 	//Colores
+	//Color color;
 	Color color;
 	Tipo tipo;
 	Vector2D posicion;
