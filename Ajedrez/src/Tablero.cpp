@@ -56,7 +56,7 @@ Tablero::Tablero() {
 		else {
 			Caballo* c = new Caballo(negro, 7, (i - 22) * 5 + 1);//fila 7, columnas 1 y 6
 			lista[i] = c;//1s
-			id[7][(i - 22) * 5 + 1] = lista[i];
+			id[7][(i - 22) * 5 + 1] = lista[i]; //segun yo 7, anterior 0
 		}
 	}
 
@@ -70,7 +70,7 @@ Tablero::Tablero() {
 		else {//1s
 			Alfil* a = new Alfil(negro, 7, (i - 26) * 3 + 2);//fila 7, columnas 2 y 5
 			lista[i] = a;
-			id[7][(i - 26) * 3 + 2] = lista[i];
+			id[7][(i - 26) * 3 + 2] = lista[i]; //segun yo 7, anterior 0
 		}
 	
 	}
@@ -104,7 +104,7 @@ Tablero::Tablero() {
 	}
 	
 
-	turno = blanco;//inician blancas
+	turno =(Color) blanco;//inician blancas
 	std::cout << "Incializo turno en: " << turno << "\n";
 
 }
@@ -267,7 +267,7 @@ bool Tablero::amenaza(Pieza& pieza)
 	}
 
 }
-bool Tablero::jaque(bool turno)
+bool Tablero::jaque(Color turno)
 {
 	if (lista[30]->getColor() == turno) //blancas
 	{
@@ -390,40 +390,43 @@ bool Tablero::jaqueMate(Rey& rey)
 }
 void Tablero::imprimirInfo(int i, int j)
 {
-	std::cout << "\n-------SOBRE LA ID----------" << "\n";
-	Tipo tip = id[i][j]->getTipo();
-	std::string _tipo, _color;
+	if (id[i][j]) {
+		std::cout << "\n-------SOBRE LA ID----------" << "\n";
+		Tipo tip = id[i][j]->getTipo();
+		std::string _tipo, _color;
 		switch (tip)
 		{
 		case PEON:
 			_tipo = "peon"; break;
 		case TORRE:
-				_tipo = "torre"; break;
+			_tipo = "torre"; break;
 		case CABALLO:
-				_tipo = "caballo"; break;
+			_tipo = "caballo"; break;
 		case ALFIL:
-				_tipo = "alfil"; break;
+			_tipo = "alfil"; break;
 		case REY:
-				_tipo = "rey"; break;
+			_tipo = "rey"; break;
 		case REINA:
-				_tipo = "reina"; break;
+			_tipo = "reina"; break;
 
 
-			
+
 		default:
 			break;
 		}
-		
+
 		switch (id[i][j]->getColor())
 		{
-		case 0:
+		case blanco:
 			_color = "blanco";
-		case 1:
+		case negro:
 			_color = "negro";
 		default:
 			break;
 		}
 
-	std::cout << "id[" << i << "][" << j << "] tipo:" << _tipo << " en x= " << id[i][j]->getColumna() << " | y=" << id[i][j]->getFila() << "\n";
-	std::cout << "\t color: " << _color << "\n";
+		std::cout << "id[" << i << "][" << j << "] tipo:" << _tipo << " en x= " << id[i][j]->getColumna() << " | y=" << id[i][j]->getFila() << "\n";
+		std::cout << "\t color: " << _color << "\n";
+	}
+	else std::cout << "\t PUNTERO NULO"<< "\n";
 }

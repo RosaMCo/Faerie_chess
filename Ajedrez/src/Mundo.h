@@ -35,5 +35,5 @@ public:
 	bool validarTurno(Color color);
 	void cambiaTurno();
 	int jaque();
-	bool getTurno() { return tablero.getTurno(); }
+	Color getTurno() { return tablero.getTurno(); }
 };

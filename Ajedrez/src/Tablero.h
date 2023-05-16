@@ -39,7 +39,7 @@ public:
 	void enroque(Torre& torre, Rey& rey);
 
 	//bool jaque(Rey& rey);
-	bool jaque(bool turno);
+	bool jaque(Color turno);
 	bool jaqueMate(Rey& rey);
 
 	bool comerAlPaso(Peon& peon); //true si peon puede comer al paso. Setea las posiciones del peón si puede comer.

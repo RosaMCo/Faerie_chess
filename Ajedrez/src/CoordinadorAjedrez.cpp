@@ -128,10 +128,8 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 		if (action_click == false) {//al ser false estamos seleccionando ficha 
 			int* ficha_sel = mundo.SeleccionarFicha(button, state, x, y);
 			if (ficha_sel) {
-				//std::cout << "mover ficha;sel" << ficha_sel[0] << "\n";
-				//std::cout << "mover ficha;sel" << ficha_sel[1] << "\n";
-				std::cout << "Voy a mover:" << "\n";
-				mundo.tablero.imprimirInfo(ficha_selecionada[0], ficha_selecionada[1]);
+				std::cout << "mover ficha;sel" << ficha_sel[0] << "\n";
+				std::cout << "mover ficha;sel" << ficha_sel[1] << "\n";
 				action_click = true;
 				ficha_selecionada = ficha_sel;
 			}
@@ -150,6 +148,8 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 			int* movimiento = mundo.ValidarClick(x, y);
 			//std::cout << "mover ficha;movimiento" << movimiento[0] << "\n";
 			//std::cout << "mover ficha;movimiento" << movimiento[1] << "\n";
+			std::cout << "Voy a mover:" << "\n";
+			mundo.tablero.imprimirInfo(ficha_selecionada[0], ficha_selecionada[1]);
 			
 			std::cout << "\nAl destino:" << "\n";
 			mundo.tablero.imprimirInfo(movimiento[0], movimiento[1]);
