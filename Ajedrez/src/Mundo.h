@@ -32,7 +32,7 @@ public:
 	int* SeleccionarFicha(int button, int state, int x, int y);
 	int* ValidarClick(int x, int y);
 	//Casilla getCasilla(int x, int y);
-	bool validarTurno(Color color);
+	//bool validarTurno(Color turn);
 	void cambiaTurno();
 	int jaque();
 	Color getTurno() { return tablero.getTurno(); }

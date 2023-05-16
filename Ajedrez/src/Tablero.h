@@ -8,7 +8,7 @@
 #include "Alfil.h"
 #include "Reina.h"
 #include "Rey.h"
-
+//enum Color {indefinido, blanco, negro};
 
 class Tablero
 {
@@ -30,6 +30,7 @@ public:
 	//comer al paso
 	bool colorDistinto(Pieza& pieza, Pieza& pieza2);
 	bool casillaVacia(int c, int f);
+	bool piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen);
 	//void actualizarId(int fdestino, int cdestino, int forigen, int corigen);
 
 	bool amenaza(Pieza& pieza); //true si pieza puede ser comida, no incluye comer al paso
@@ -43,6 +44,8 @@ public:
 	bool jaqueMate(Rey& rey);
 
 	bool comerAlPaso(Peon& peon); //true si peon puede comer al paso. Setea las posiciones del peón si puede comer.
+
 	void imprimirInfo(int i, int j);
+	void imprimirTurno();
 };
 

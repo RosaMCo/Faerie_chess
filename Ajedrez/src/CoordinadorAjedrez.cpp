@@ -124,7 +124,8 @@ void CoordinadorAjedrez::teclaEspecial(unsigned char key) //Moverse por el menu 
 void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 {
 	if (cursor == 1) {
-		std::cout << "turno en coordinador: " << mundo.tablero.getTurno() << "\n";
+		std::cout << "turno en coordinador: ";
+		mundo.tablero.imprimirTurno();
 		if (action_click == false) {//al ser false estamos seleccionando ficha 
 			int* ficha_sel = mundo.SeleccionarFicha(button, state, x, y);
 			if (ficha_sel) {

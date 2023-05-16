@@ -10,6 +10,7 @@ Alfil::Alfil(Color col, int f, int c) {
 	setTipo(ALFIL);
 	fila = f;
 	columna = c;
+
 }
 
 bool Alfil::mover(int nc, int nf) {
@@ -46,14 +47,14 @@ bool Alfil::mover(int nc, int nf) {
 
 void Alfil::dibuja(float ix, float iy)
 {
-	if (color == blanco)
+	if (color == negro)
 	{
 		//Imagen de pieza blanca
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/Fichas/W-Bishop.png").id);
 		glDisable(GL_LIGHTING);
 	}
-	else if (color == negro)
+	else if (color == blanco)
 	{
 		//Imagen de pieza negra
 		glEnable(GL_TEXTURE_2D);

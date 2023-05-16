@@ -3,7 +3,8 @@
 #include <string>
 
 Tablero::Tablero() {
-
+	setTurno(blanco);//inician blancas
+	std::cout << "Incializo turno en: "<< turno; imprimirTurno();
 	for (int i = 0; i < 32; i++) {
 		lista[i] = 0;
 	}
@@ -20,14 +21,14 @@ Tablero::Tablero() {
 	for (int i = 0; i < 16; i++) {//creación de peones
 
 		if (i < 8) {//blancos
-			Peon* p = new Peon(blanco, 1, i);//fila 1, todas las columnas
+			Peon* p = new Peon(negro, 1, i);//fila 1, todas las columnas
 			lista[i] = p;
 			id[1][i] = lista[i];
 
 		}
 
 		else {//negros
-			Peon* p = new Peon(negro, 6, i - 8);//fila 6, todas las columnas (-8 porque i empieza en 8 y las columnas en 0)
+			Peon* p = new Peon(blanco, 6, i - 8);//fila 6, todas las columnas (-8 porque i empieza en 8 y las columnas en 0)
 			lista[i] = p;
 			id[6][i - 8] = lista[i];
 		}
@@ -35,12 +36,12 @@ Tablero::Tablero() {
 
 	for (int i = 16; i < 20; i++) {//creación de torres
 		if (i < 18) {//blancas
-			Torre* t = new Torre(blanco, 0, (i - 16) * 7);//fila 0, columnas 0 y 7
+			Torre* t = new Torre(negro, 0, (i - 16) * 7);//fila 0, columnas 0 y 7
 			lista[i] = t;
 			id[0][(i - 16) * 7] = lista[i];
 		}
 		else {//negras
-			Torre* t = new Torre(negro, 7, (i - 18) * 7);//fila 7, columnas 0 y 7
+			Torre* t = new Torre(blanco, 7, (i - 18) * 7);//fila 7, columnas 0 y 7
 			lista[i] = t;
 			id[7][(i - 18) * 7] = lista[i];
 		}
@@ -48,13 +49,13 @@ Tablero::Tablero() {
 
 	for (int i = 20; i < 24; i++) {//creación de caballos
 		if (i < 22) {//0s
-			Caballo* c = new Caballo(blanco, 0, (i - 20) * 5 + 1);//fila 0,  columnas 1 y 6
+			Caballo* c = new Caballo(negro, 0, (i - 20) * 5 + 1);//fila 0,  columnas 1 y 6
 			lista[i] = c;
 			id[0][(i - 20) * 5 + 1] = lista[i];
 		}
 
 		else {
-			Caballo* c = new Caballo(negro, 7, (i - 22) * 5 + 1);//fila 7, columnas 1 y 6
+			Caballo* c = new Caballo(blanco, 7, (i - 22) * 5 + 1);//fila 7, columnas 1 y 6
 			lista[i] = c;//1s
 			id[7][(i - 22) * 5 + 1] = lista[i]; //segun yo 7, anterior 0
 		}
@@ -62,13 +63,13 @@ Tablero::Tablero() {
 
 	for (int i = 24; i < 28; i++) {//creación de alfiles
 		if (i < 26) {//0s
-			Alfil* a = new Alfil(blanco, 0, (i - 24) * 3 + 2);//fila 0, columnas 2 y 5
+			Alfil* a = new Alfil(negro, 0, (i - 24) * 3 + 2);//fila 0, columnas 2 y 5
 			lista[i] = a;
 			id[0][(i - 24) * 3 + 2] = lista[i];
 		}
 
 		else {//1s
-			Alfil* a = new Alfil(negro, 7, (i - 26) * 3 + 2);//fila 7, columnas 2 y 5
+			Alfil* a = new Alfil(blanco, 7, (i - 26) * 3 + 2);//fila 7, columnas 2 y 5
 			lista[i] = a;
 			id[7][(i - 26) * 3 + 2] = lista[i]; //segun yo 7, anterior 0
 		}
@@ -77,12 +78,12 @@ Tablero::Tablero() {
 
 	for (int i = 28; i < 30; i++) {
 		if (i < 29) {
-			Reina* r = new Reina(blanco, 0, i - 25);//fila 0, columna 3
+			Reina* r = new Reina(negro, 0, i - 25);//fila 0, columna 3
 			lista[i] = r;
 			id[0][i - 25] = lista[i];
 		}
 		else {
-			Reina* r = new Reina(negro, 7, i - 26);//fila 7, columna 3
+			Reina* r = new Reina(blanco, 7, i - 26);//fila 7, columna 3
 			lista[i] = r;
 			id[7][i - 26] = lista[i];
 		}
@@ -90,28 +91,24 @@ Tablero::Tablero() {
 
 	for (int i = 30; i < 32; i++) {
 		if (i < 31) {
-			Rey* r = new Rey(blanco, 0, i - 26);//fila 0, columna 4
+			Rey* r = new Rey(negro, 0, i - 26);//fila 0, columna 4
 			lista[i] = r;
 			id[0][i - 26] = lista[i];;
 		}
 
 		else {
-			Rey* r = new Rey(negro, 7, i - 27);//fila 7, columna 4
+			Rey* r = new Rey(blanco, 7, i - 27);//fila 7, columna 4
 			lista[i] = r;
 			id[7][i - 27]=lista[i];
 		}
 		
 	}
-	
-
-	turno =(Color) blanco;//inician blancas
-	std::cout << "Incializo turno en: " << turno << "\n";
 
 }
 
 bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [pasar como const?]
 	std::cout << "Entro en Tablero::seleccionar Pieza" << "\n";
-	std::cout << "El turno en tablero es:" << turno << "\n";
+	std::cout << "El turno en tablero es:"; imprimirTurno();
 	auto& iden = id[forigen][corigen];//es muy largo de escribir, así que referencia/alias
 	/*for (int i = 0; i<8; i++)
 		for (int j = 0; j < 8; j++)
@@ -134,7 +131,7 @@ bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [
 		}
 		else {
 			return false; Color aux2 = iden->getColor();
-			std::cout << "La pieza es de color " << aux2 << "y el turno es" << turno << "por lo que no muevo" << "\n";
+			std::cout << "La pieza es de color " << aux2 << "y el turno es "; imprimirTurno();std::cout << "por lo que no muevo" << "\n";
 		}
 	}
 	else { return false; std::cout << "No estás seleccionando nada" << "\n"; }
@@ -143,36 +140,41 @@ bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [
 bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//selección de destino (una vez seleccionada pieza a mover)
 	auto& destino = id[fdestino][cdestino];
 	auto& origen = id[forigen][corigen];
-	if (destino) {//casilla ocupada
-		std::cout << "\ncasilla ocupada ";
-		if (destino->getColor() != turno) {//comprobar pieza color distinto
-			std::cout << "por pieza de distinto color \n ";
-			if (origen->comer(cdestino, fdestino)) {//llamar a comer de la pieza seleccionada
-				std::cout << "La puedo comer!! \n ";
-				//llamar a destructor de la pieza destino (delete)
+	//NO BORRAR lO COMENTADO, PENDIENTE DE REVISAR IMPLEMENTACIÓN
+	/*if (piezaEnMedio(fdestino, cdestino, forigen, corigen))
+		return false;*/
+	//else
+	//{
+		if (destino) {//casilla ocupada
+			std::cout << "\ncasilla ocupada ";
+			if (destino->getColor() != turno) {//comprobar pieza color distinto
+				std::cout << "por pieza de distinto color \n ";
+				if (origen->comer(cdestino, fdestino)) {//llamar a comer de la pieza seleccionada
+					std::cout << "La puedo comer!! \n ";
+					//llamar a destructor de la pieza destino (delete)
+					//realizar el movimiento
+					origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
+					destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
+					origen = 0;//casilla origen ahora vacía (no apunta a la pieza)
+				}
+				else { return false; std::cout << "No la puedo comer :( \n "; }
+			}
+			else { return false; std::cout << "por pieza del mismo color \n "; }
+		}
+
+		else {//casilla vacía
+			std::cout << "La casilla destino esta vacia \n ";
+			if (origen->mover(cdestino, fdestino)) {//llamar a mover de la pieza seleccionada
 				//realizar el movimiento
+				std::cout << "Me muevo a  \n ";
+				imprimirInfo(cdestino, fdestino);
 				origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
 				destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
 				origen = 0;//casilla origen ahora vacía (no apunta a la pieza)
 			}
-			else { return false; std::cout << "No la puedo comer :( \n "; }
+			else { return false; std::cout << "No me puedo mover... \n "; }
 		}
-		else { return false; std::cout << "por pieza del mismo color \n "; }
-	}
-
-	else {//casilla vacía
-		std::cout << "La casilla destino esta vacia \n ";
-		if (origen->mover(cdestino, fdestino)) {//llamar a mover de la pieza seleccionada
-			//realizar el movimiento
-			std::cout << "Me muevo a  \n ";
-			imprimirInfo(cdestino, fdestino);
-			origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
-			destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
-			origen = 0;//casilla origen ahora vacía (no apunta a la pieza)
-		}
-		else { return false; std::cout << "No me puedo mover... \n "; }
-	}
-	//return false;
+	//}
 }
 
 void Tablero::dibuja() {
@@ -390,39 +392,40 @@ bool Tablero::jaqueMate(Rey& rey)
 }
 void Tablero::imprimirInfo(int i, int j)
 {
-	if (id[i][j]) {
+	if (id[i][j]) 
+	{
 		std::cout << "\n-------SOBRE LA ID----------" << "\n";
 		Tipo tip = id[i][j]->getTipo();
 		std::string _tipo, _color;
 		switch (tip)
 		{
-		case PEON:
-			_tipo = "peon"; break;
-		case TORRE:
-			_tipo = "torre"; break;
-		case CABALLO:
-			_tipo = "caballo"; break;
-		case ALFIL:
-			_tipo = "alfil"; break;
-		case REY:
-			_tipo = "rey"; break;
-		case REINA:
-			_tipo = "reina"; break;
+			case PEON:
+				_tipo = "peon"; break;
+			case TORRE:
+				_tipo = "torre"; break;
+			case CABALLO:
+				_tipo = "caballo"; break;
+			case ALFIL:
+				_tipo = "alfil"; break;
+			case REY:
+				_tipo = "rey"; break;
+			case REINA:
+				_tipo = "reina"; break;
 
 
 
-		default:
-			break;
+			default:
+				break;
 		}
 
 		switch (id[i][j]->getColor())
 		{
-		case blanco:
-			_color = "blanco";
-		case negro:
-			_color = "negro";
-		default:
-			break;
+			case blanco:
+				_color = "blanco";
+			case negro:
+				_color = "negro";
+			default:
+				break;
 		}
 
 		std::cout << "id[" << i << "][" << j << "] tipo:" << _tipo << " en x= " << id[i][j]->getColumna() << " | y=" << id[i][j]->getFila() << "\n";
@@ -430,3 +433,50 @@ void Tablero::imprimirInfo(int i, int j)
 	}
 	else std::cout << "\t PUNTERO NULO"<< "\n";
 }
+
+void Tablero::imprimirTurno()
+{
+	std::string _turno;
+	if((int)turno==1)
+		_turno = "blancas";
+	else
+		_turno = "negras";
+	
+	std::cout << "\t ******** Juegan las  " << _turno << " **************\n";
+
+}
+
+bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen) {//selección de destino (una vez seleccionada pieza a mover)
+	auto& destino = id[fdestino][cdestino];
+	auto& origen = id[forigen][corigen];
+	int _color = (int)origen->getColor(); //si color es 1, +1; si color es 2; -1
+	/*if (origen->getTipo() == PEON)
+	{
+		for (int fila = ((forigen - _color) * 2 + 3); fila < (((fdestino - _color) * (-2) + 3)); fila++)
+	*/
+	if (origen->getTipo() == CABALLO)
+		return false;
+	else
+	{
+		int contador = 0;
+		int difX = cdestino - corigen;
+		int difY = fdestino - forigen;
+		int direccionX = (int)(difX / abs(difX));
+		int direccionY = (int)(difY / abs(difY));
+
+		for (int fila = (forigen + direccionY); fila < fdestino; fila += direccionY)
+		{
+			for (int columna = (corigen + direccionX); columna < cdestino; columna += direccionX)
+			{
+				for (int i = 0; i < 32; i++)
+				{
+					if (((lista[i]->getFila()) == fila) && ((lista[i]->getColumna()) == columna))
+						contador++;
+				}
+			}
+		}
+		if (contador != 0) { std::cout << "No puedo mover, hay alguna pieza en medio\n"; return true; }
+		else { std::cout << "Puedo mover, camino libre\n"; return false; }
+	}
+}
+

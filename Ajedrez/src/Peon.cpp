@@ -7,6 +7,7 @@ Peon::Peon(Color col, int f, int c) {
 	columna = c;
 	mov_ini = 1;
 	movIniLargo = 0;
+
 }
 
 bool Peon::mover(int nc, int nf) {
@@ -45,7 +46,7 @@ bool Peon::comer(int nc, int nf) {
 
 void Peon::dibuja(float ix, float iy)
 {
-	if (color == blanco)
+	if (color == negro)
 	{
 		//Imagen de pieza blanca
 		
@@ -54,7 +55,7 @@ void Peon::dibuja(float ix, float iy)
 
 		
 	}
-	else if (color == negro)
+	else if (color == blanco)
 	{
 		//Imagen de pieza negra
 		glEnable(GL_TEXTURE_2D);

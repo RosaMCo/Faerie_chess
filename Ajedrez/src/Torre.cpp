@@ -44,14 +44,14 @@ bool Torre::mover(int nx, int ny) {
 
 void Torre::dibuja(float ix, float iy)
 {
-	if (color == blanco)
+	if (color == negro)
 	{
 		//Imagen de pieza blanca
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("bin/imagenes/Fichas/W-Rook.png").id);
 		glDisable(GL_LIGHTING);
 	}
-	else if (color == negro)
+	else if (color == blanco)
 	{
 		//Imagen de pieza negra
 		glEnable(GL_TEXTURE_2D);

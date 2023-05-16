@@ -78,20 +78,21 @@ Casilla Mundo::getCasilla(int x, int y) { //Devuelve la casilla en función de la
 	else { return false; }
 
 }*/
-bool Mundo::validarTurno(Color color) {
+/*bool Mundo::validarTurno(Color turn) {
 
-	if (tablero.getTurno() == blanco && color == blanco) { return true; }		//Turno par -> piezas blancas
-	else if (tablero.getTurno() == negro && color == negro) { return true; }	//Turno impar -> piezas negras
+	if (tablero.getTurno() == blanco && turn == blanco) { return true; }		//Turno par -> piezas blancas
+	else if (tablero.getTurno() == negro && turn == negro) { return true; }	//Turno impar -> piezas negras
 	else { return false; }
 
-}
+}*/
 
 
 int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
 {//Implementación de una jugada
 		//NO BORRAR COSAS EN PRUEBAS
 	std::cout << "Entro en mundo::seleccionar ficha" << "\n";
-	std::cout << "En mundo, el turno es: " << tablero.getTurno()<< "\n";
+	std::cout << "En mundo, el turno es: ";
+	tablero.imprimirTurno();
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT) * 0.92; //cantidad de pixeles de alto 
 	int window_width = glutGet(GLUT_WINDOW_WIDTH) * 0.7; //cantidad de pixeles de ancho
 
