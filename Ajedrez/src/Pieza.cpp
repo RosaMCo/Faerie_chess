@@ -6,7 +6,7 @@ Pieza::Pieza()
 	color = indefinido;
 	tipo = INDEFINIDO;
 	fila = columna = -1;
-	posicion.setPosicion(fila, columna);
+	posicion.setPosicion(columna, fila);
 
 
 }

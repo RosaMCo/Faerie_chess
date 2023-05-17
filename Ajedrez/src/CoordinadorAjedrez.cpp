@@ -131,6 +131,7 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 			if (ficha_sel) {
 				//std::cout << "mover ficha;sel" << ficha_sel[0] << "\n";
 				//std::cout << "mover ficha;sel" << ficha_sel[1] << "\n";
+				std::cout << "Seleccion de cursor: c=" << ficha_sel[0]+1 << " f=" << ficha_sel[1]+1 << "\n";
 				action_click = true;
 				ficha_selecionada = ficha_sel;
 			}
@@ -152,8 +153,8 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 			std::cout << "Voy a mover:"<< "\n";
 			mundo.tablero.imprimirInfo(ficha_selecionada[0], ficha_selecionada[1]);
 			
-			std::cout << "\nNueva direccion:" << "\n";
-			mundo.tablero.imprimirInfo(movimiento[0], movimiento[1]);
+			std::cout << "\nAl destino:" << "\n";
+			mundo.tablero.imprimirInfo(movimiento[1], movimiento[0]);
 			if (mundo.tablero.mover(movimiento[0], movimiento[1], ficha_selecionada[0], ficha_selecionada[1]))
 			{
 				std::cout << "Desde Coordinador he movido y voy a cambiar el turno:" << "\n";

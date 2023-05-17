@@ -110,13 +110,13 @@ int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
 
 		position[0] = 7 - calculate_fila;
 		position[1] = calculate_columna;
-		std::cout << "Seleccionada la pieza de c="<<position[0]+1<<" y f="<<position[1]+1 << "\n";
+		std::cout << "Cursor:Seleccionada la pieza de c="<<position[0]+1<<" y f="<<position[1]+1 << "\n";
 
 		return position;
 	}
 	
 	else {
-		std::cout << "Pero no reconozco seleccion" << "\n";
+		std::cout << "No es tu turno" << "\n";
 		return NULL;
 	}
 

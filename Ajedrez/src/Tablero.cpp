@@ -122,16 +122,18 @@ bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [
 			std::cout << "La pieza es de color " << aux2 << "y el turno es "; imprimirTurno();std::cout << "por lo que no muevo" << "\n";
 		}
 	}
-	else { return false; std::cout << "No estás seleccionando nada" << "\n"; }
+	else { return false; std::cout << "La id no contiene nada. Casilla vacía" << "\n"; }
 }
 
 bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//selección de destino (una vez seleccionada pieza a mover)
+	std::cout << "\n->Entro en mover de tablero\n";
 	auto& destino = id[fdestino][cdestino];
 	auto& origen = id[forigen][corigen];
 	bool coincidentes = 0;
 	if ((fdestino == forigen) && (cdestino == corigen))
 	{
-		coincidentes = 1; std::cout << "Elige un destino valido.\n <>VUELVE A SELECCIONAR LA PIEZA QUE DESEA MOVER: " << "\n"; return false;
+		coincidentes = 1; std::cout << "Elige un destino valido.\n <>VUELVE A SELECCIONAR LA PIEZA QUE DESEA MOVER: " << "\n"; 
+		return false;
 	}
 	if ((piezaEnMedio(fdestino, cdestino, forigen, corigen))||coincidentes)
 		return false;
@@ -140,6 +142,7 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 	if (!origen) //si no hay una pieza en origen
 	{
 		std::cout << "Intentas mover una pieza? Selecciona una casilla donde halla una. \n ";
+		return false;
 
 	}
 	else
@@ -151,9 +154,7 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 					std::cout << "La puedo comer!! \n ";
 					//llamar a destructor de la pieza destino (delete)
 					//realizar el movimiento
-					origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
-					destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
-					id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
+					return actualizarId(fdestino, cdestino, forigen, corigen);
 				}
 				else { return false; std::cout << "No la puedo comer :( \n "; }
 			}
@@ -166,13 +167,33 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 				//realizar el movimiento
 				std::cout << "Me muevo a  \n ";
 				imprimirInfo(cdestino, fdestino);
-				origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
-				destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
-				id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
+				return actualizarId(fdestino,cdestino,forigen,corigen);
 			}
 			else { return false; std::cout << "No me puedo mover... \n "; }
 		}
 	}
+}
+bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen)
+{
+	std::cout << "\nestoy actualizando la id...";
+	//auto& destino = id[fdestino][cdestino];
+	//auto& origen = id[forigen][corigen];
+	if (id[forigen][corigen])
+	{
+		id[forigen][corigen]->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
+		id[fdestino][cdestino] = id[forigen][corigen];//copia de dir. de memoria para que apunten ambos a la misma pieza
+		id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
+		std::cout << "\nID ACTUALIZADA; Ahora:"; imprimirInfo(cdestino, fdestino);
+		return true;
+		
+	}
+	else 
+	{
+		std::cout << "Queria actualizar la id pero no había nada en origen";
+		return false;
+	}
+	
+
 }
 
 void Tablero::dibuja() {
@@ -514,9 +535,12 @@ void Tablero::imprimirTipo(Tipo tip)
 			_tip = "rey"; break;
 		case REINA:
 			_tip = "reina"; break;
+		case INDEFINIDO:
+			_tip = "indefinido"; break;
 		default:
 			break;
 	}
+
 	std::cout<< " tipo: " << _tip << " ";
 }
 void Tablero::comprobarAsignaciones()
