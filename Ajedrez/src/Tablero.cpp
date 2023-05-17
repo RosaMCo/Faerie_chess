@@ -3,7 +3,7 @@
 #include <string>
 
 Tablero::Tablero() {
-	setTurno(blanco);//inician blancas
+	setTurno(negro);//inician blancas
 	std::cout << "Incializo turno en: "<< turno; imprimirTurno();
 	for (int i = 0; i < 32; i++) {
 		lista[i] = 0;
