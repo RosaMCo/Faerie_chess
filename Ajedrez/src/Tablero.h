@@ -45,7 +45,8 @@ public:
 	bool comerAlPaso(Peon& peon); //true si peon puede comer al paso. Setea las posiciones del peón si puede comer.
 
 	bool actualizarId(int fdestino, int cdestino, int forigen, int corigen);
-	void imprimirInfo(int i, int j);
+	void imprimirId(int i, int j);
+	void imprimirLista(int i, int j);
 	void imprimirTurno();
 	void imprimirTipo(Tipo tip);
 	void imprimirColor(Color col);

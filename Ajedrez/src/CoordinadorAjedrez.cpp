@@ -151,13 +151,12 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 			//std::cout << "mover ficha;movimiento" << movimiento[0] << "\n";
 			//std::cout << "mover ficha;movimiento" << movimiento[1] << "\n";
 			std::cout << "Voy a mover:"<< "\n";
-			mundo.tablero.imprimirInfo(ficha_selecionada[0], ficha_selecionada[1]);
-			
+			mundo.tablero.imprimirId(ficha_selecionada[0], ficha_selecionada[1]);
 			std::cout << "\nAl destino:" << "\n";
-			mundo.tablero.imprimirInfo(movimiento[1], movimiento[0]);
+			mundo.tablero.imprimirId(movimiento[1], movimiento[0]);
 			if (mundo.tablero.mover(movimiento[0], movimiento[1], ficha_selecionada[0], ficha_selecionada[1]))
 			{
-				std::cout << "Desde Coordinador he movido y voy a cambiar el turno:" << "\n";
+				//std::cout << "Desde Coordinador he movido y voy a cambiar el turno:" << "\n";
 				mundo.cambiaTurno();
 			}
 			ficha_selecionada = NULL;
