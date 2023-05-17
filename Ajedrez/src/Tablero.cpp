@@ -110,19 +110,6 @@ bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [
 	std::cout << "Entro en Tablero::seleccionar Pieza" << "\n";
 	std::cout << "El turno en tablero es:"; imprimirTurno();
 	auto& iden = id[forigen][corigen];//es muy largo de escribir, así que referencia/alias
-	/*for (int i = 0; i<8; i++)
-		for (int j = 0; j < 8; j++)
-		{
-			if (id[i][j]!=0){
-
-				std::cout << "\n-------SOBRE LA ID----------" << "\n";
-
-				std::cout << "id[" << i << "][" << j << "] tipo:" << id[i][j]->getTipo() << " en x= " << id[i][j]->getColumna() << " | y=" << id[i][j]->getFila() << "\n";
-				std::cout << "\t color: " << id[i][j]->getColor() << "\n";
-			}
-
-		}*/
-	
 	if (iden) {//comprobar puntero no nulo (casilla no vacía)
 		if (iden->getColor() == turno) {//comprobar que coinciden el color de la pieza y el del turno
 			Color aux2 = iden->getColor();
@@ -140,11 +127,18 @@ bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [
 bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//selección de destino (una vez seleccionada pieza a mover)
 	auto& destino = id[fdestino][cdestino];
 	auto& origen = id[forigen][corigen];
+	//std::cout << "\n Entro a Tablero:: mover\n";
 	//NO BORRAR lO COMENTADO, PENDIENTE DE REVISAR IMPLEMENTACIÓN
-	/*if (piezaEnMedio(fdestino, cdestino, forigen, corigen))
-		return false;*/
-	//else
-	//{
+	if (piezaEnMedio(fdestino, cdestino, forigen, corigen))
+		return false;
+	else
+	{
+	if (!origen) //si no hay una pieza en origen
+	{
+		std::cout << "Intentas mover una pieza? Selecciona una casilla donde halla una. \n ";
+
+	}
+	else
 		if (destino) {//casilla ocupada
 			std::cout << "\ncasilla ocupada ";
 			if (destino->getColor() != turno) {//comprobar pieza color distinto
@@ -155,7 +149,7 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 					//realizar el movimiento
 					origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
 					destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
-					origen = 0;//casilla origen ahora vacía (no apunta a la pieza)
+					id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
 				}
 				else { return false; std::cout << "No la puedo comer :( \n "; }
 			}
@@ -170,11 +164,11 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 				imprimirInfo(cdestino, fdestino);
 				origen->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
 				destino = origen;//copia de dir. de memoria para que apunten ambos a la misma pieza
-				origen = 0;//casilla origen ahora vacía (no apunta a la pieza)
+				id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
 			}
 			else { return false; std::cout << "No me puedo mover... \n "; }
 		}
-	//}
+	}
 }
 
 void Tablero::dibuja() {
@@ -207,15 +201,83 @@ void Tablero::dibuja() {
 		}
 	}
 }
+bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen) {//selección de destino (una vez seleccionada pieza a mover)
+	if ((id[forigen][corigen]->getTipo()) == CABALLO)
+	{
+		std::cout << "Es un caballo ->No se buscan piezas en medio e\n";
+		return false;
+	}
+	else
+	{
+		//definir sentido del movimiento
+		int difY = fdestino - forigen;
+		int difX = cdestino - corigen;
+		int incrementoY = 0;
+		int incrementoX = 0;
+		char tipoMov = 'M';
+		if (difY) //...si hay variacion en las filas
+			incrementoY = difY / abs(difY); //...calculo el incremento...
+		else
+			tipoMov = 'H'; //...si no la hay, el movimiento horizontal
 
+		if (difX) //...si hay variacion en las columnas
+			incrementoX = difX / abs(difX); //...calculo el incremento...
+		else
+			tipoMov = 'V'; //...si no la hay movimiento vertical: difX = 0; difY!=0;
+
+		if (difY * difX)
+			tipoMov = 'D'; //movimiento diagonal
+
+		if (tipoMov == 'H')
+		{
+			for (int _columna = (corigen + incrementoX); _columna != cdestino; _columna += incrementoX)
+			{
+				if (casillaVacia(_columna,forigen)==0)
+				{
+					std::cout << "Mov horizontal -> Se encontró una pieza en medio en medio en: "; imprimirInfo(_columna, forigen);
+					return true;
+				}
+			}
+		}
+		else if (tipoMov == 'V')
+		{
+			for (int _fila = (forigen + incrementoY); _fila != fdestino; _fila+=incrementoY)
+			{
+				std::cout << "\tColumna fija: " << corigen + 1 << "; buscando pieza en la fila: " << _fila +1 << "\n";
+				if (casillaVacia(corigen,_fila)==0)
+				{
+					std::cout << "Mov vertical -> Se encontró una pieza en medio en: "; imprimirInfo(corigen, _fila);
+					return true;
+				}
+			}
+			return false;
+		}
+		else if (tipoMov == 'D') //movimiento diagonal
+		{
+			for (int _fila = forigen + incrementoY, _columna = corigen + incrementoX; (_fila != fdestino) && (_columna != cdestino); (_fila + incrementoY), (_columna + incrementoX))
+			{
+				if (casillaVacia(_columna, _fila) == 0)
+				{
+					std::cout << "Mov diagonal -> Se encontró una pieza en medio en: "; //imprimirInfo(_columna, _fila);
+					return true;
+				}
+			}
+			return false;
+
+		}
+		else return false;
+	}
+}
 
 bool Tablero::casillaVacia(int c, int f)
 {
-	auto& iden = id[c][f];
-	if (iden)
-		return false;
-	else
-		return true;
+	auto& iden = id[f][c];
+	if (iden) {
+		return false; std::cout << "---Casilla no vacía---\n";
+	}
+	else {
+		return true; std::cout << "---Casilla vacía---\n";
+	}
 }
 
 bool Tablero::colorDistinto(Pieza& pieza, Pieza& pieza2)
@@ -392,10 +454,10 @@ bool Tablero::jaqueMate(Rey& rey)
 }
 void Tablero::imprimirInfo(int i, int j)
 {
-	if (id[i][j]) 
+	if (id[j][i]) 
 	{
 		std::cout << "\n-------SOBRE LA ID----------" << "\n";
-		Tipo tip = id[i][j]->getTipo();
+		Tipo tip = id[j][i]->getTipo();
 		std::string _tipo, _color;
 		switch (tip)
 		{
@@ -418,7 +480,7 @@ void Tablero::imprimirInfo(int i, int j)
 				break;
 		}
 
-		switch (id[i][j]->getColor())
+		switch (id[j][i]->getColor())
 		{
 			case blanco:
 				_color = "blanco";
@@ -428,10 +490,10 @@ void Tablero::imprimirInfo(int i, int j)
 				break;
 		}
 
-		std::cout << "id[" << i << "][" << j << "] tipo:" << _tipo << " en x= " << id[i][j]->getColumna() << " | y=" << id[i][j]->getFila() << "\n";
+		std::cout << "id[" << i << "][" << j << "] tipo:" << _tipo << " en x= " << (id[j][i]->getColumna())+1 << " | y=" << (id[j][i]->getFila()) + 1 << "\n";
 		std::cout << "\t color: " << _color << "\n";
 	}
-	else std::cout << "\t PUNTERO NULO"<< "\n";
+	else { std::cout << "\t PUNTERO NULO, casilla vacia: x=" << i +1 << " | y=" << j +1 << "\n"; }
 }
 
 void Tablero::imprimirTurno()
@@ -446,37 +508,5 @@ void Tablero::imprimirTurno()
 
 }
 
-bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen) {//selección de destino (una vez seleccionada pieza a mover)
-	auto& destino = id[fdestino][cdestino];
-	auto& origen = id[forigen][corigen];
-	int _color = (int)origen->getColor(); //si color es 1, +1; si color es 2; -1
-	/*if (origen->getTipo() == PEON)
-	{
-		for (int fila = ((forigen - _color) * 2 + 3); fila < (((fdestino - _color) * (-2) + 3)); fila++)
-	*/
-	if (origen->getTipo() == CABALLO)
-		return false;
-	else
-	{
-		int contador = 0;
-		int difX = cdestino - corigen;
-		int difY = fdestino - forigen;
-		int direccionX = (int)(difX / abs(difX));
-		int direccionY = (int)(difY / abs(difY));
 
-		for (int fila = (forigen + direccionY); fila < fdestino; fila += direccionY)
-		{
-			for (int columna = (corigen + direccionX); columna < cdestino; columna += direccionX)
-			{
-				for (int i = 0; i < 32; i++)
-				{
-					if (((lista[i]->getFila()) == fila) && ((lista[i]->getColumna()) == columna))
-						contador++;
-				}
-			}
-		}
-		if (contador != 0) { std::cout << "No puedo mover, hay alguna pieza en medio\n"; return true; }
-		else { std::cout << "Puedo mover, camino libre\n"; return false; }
-	}
-}
 
