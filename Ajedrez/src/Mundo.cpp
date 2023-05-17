@@ -90,9 +90,9 @@ Casilla Mundo::getCasilla(int x, int y) { //Devuelve la casilla en función de la
 int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
 {//Implementación de una jugada
 		//NO BORRAR COSAS EN PRUEBAS
-	std::cout << "Entro en mundo::seleccionar ficha" << "\n";
-	std::cout << "En mundo, el turno es: ";
-	tablero.imprimirTurno();
+	std::cout << "\tEntro en mundo::seleccionar ficha" << "\n";
+	//std::cout << "En mundo, el turno es: ";
+	//tablero.imprimirTurno();
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT) * 0.92; //cantidad de pixeles de alto 
 	int window_width = glutGet(GLUT_WINDOW_WIDTH) * 0.7; //cantidad de pixeles de ancho
 
@@ -110,7 +110,7 @@ int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
 
 		position[0] = 7 - calculate_fila;
 		position[1] = calculate_columna;
-		std::cout << "Y selecciono" << "\n";
+		std::cout << "Seleccionada la pieza de c="<<position[0]+1<<" y f="<<position[1]+1 << "\n";
 
 		return position;
 	}
@@ -128,7 +128,7 @@ void Mundo::cambiaTurno()
 		tablero.setTurno(negro);
 	}
 	else tablero.setTurno(blanco);
-	std::cout << "desde Mundo, turno cambiado a: " << tablero.getTurno() << "\n";
+	//std::cout << "desde Mundo, turno cambiado a: "; tablero.imprimirTurno();
 }
 
 int Mundo::jaque()

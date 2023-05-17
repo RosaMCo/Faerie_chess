@@ -16,7 +16,6 @@ private:
 	Vector2D casilla[8][8];
 	Pieza* id[8][8];//matriz de punteros que contienen las direcciones de memoria de las piezas (para identificarlas)
 	Pieza* lista[32];//lista de piezas (puede o no contener punteros nulos), el máximo es el nº total de piezas permitidas (32)
-	Pieza* casillaVaciada[8][8];
 	Color turno;//turno de blancas o negras 
 	
 public:
@@ -47,5 +46,9 @@ public:
 
 	void imprimirInfo(int i, int j);
 	void imprimirTurno();
+	void imprimirTipo(Tipo tip);
+	void imprimirColor(Color col);
+	void comprobarAsignaciones();
+
 };
 

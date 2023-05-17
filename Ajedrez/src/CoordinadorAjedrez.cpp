@@ -124,19 +124,19 @@ void CoordinadorAjedrez::teclaEspecial(unsigned char key) //Moverse por el menu 
 void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 {
 	if (cursor == 1) {
-		std::cout << "turno en coordinador: ";
-		mundo.tablero.imprimirTurno();
+		//std::cout << "turno en coordinador: ";
+		//mundo.tablero.imprimirTurno();
 		if (action_click == false) {//al ser false estamos seleccionando ficha 
 			int* ficha_sel = mundo.SeleccionarFicha(button, state, x, y);
 			if (ficha_sel) {
-				std::cout << "mover ficha;sel" << ficha_sel[0] << "\n";
-				std::cout << "mover ficha;sel" << ficha_sel[1] << "\n";
+				//std::cout << "mover ficha;sel" << ficha_sel[0] << "\n";
+				//std::cout << "mover ficha;sel" << ficha_sel[1] << "\n";
 				action_click = true;
 				ficha_selecionada = ficha_sel;
 			}
 			else
 			{
-				std::cout << "creo que aqui me rayo y me paro\n\n";
+				std::cout << "Ninguna ficha seleccionada\n\n";
 				ficha_selecionada = NULL;
 				action_click = false;
 			}
@@ -149,13 +149,16 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 			int* movimiento = mundo.ValidarClick(x, y);
 			//std::cout << "mover ficha;movimiento" << movimiento[0] << "\n";
 			//std::cout << "mover ficha;movimiento" << movimiento[1] << "\n";
-			std::cout << "Voy a mover:" << "\n";
+			std::cout << "Voy a mover:"<< "\n";
 			mundo.tablero.imprimirInfo(ficha_selecionada[0], ficha_selecionada[1]);
 			
-			std::cout << "\nAl destino:" << "\n";
+			std::cout << "\nNueva direccion:" << "\n";
 			mundo.tablero.imprimirInfo(movimiento[0], movimiento[1]);
-			mundo.tablero.mover(movimiento[0], movimiento[1], ficha_selecionada[0], ficha_selecionada[1]);
-			mundo.cambiaTurno();
+			if (mundo.tablero.mover(movimiento[0], movimiento[1], ficha_selecionada[0], ficha_selecionada[1]))
+			{
+				std::cout << "Desde Coordinador he movido y voy a cambiar el turno:" << "\n";
+				mundo.cambiaTurno();
+			}
 			ficha_selecionada = NULL;
 			action_click = false;
 		}
