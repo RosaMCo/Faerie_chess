@@ -3,9 +3,9 @@
 Pieza::Pieza()
 {
 	//constructor de posicion
-	color = indefinido;
+	color = blanco;
 	tipo = INDEFINIDO;
-	fila = columna = -1;
+	fila = columna=0;
 	posicion.setPosicion(columna, fila);
 
 

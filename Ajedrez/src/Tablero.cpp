@@ -3,15 +3,15 @@
 #include <string>
 
 Tablero::Tablero() {
-	setTurno(blanco);//inician blancas
+	setTurno(Color::negro);//inician blancas
 	std::cout << "Incializo turno en: "<< turno; imprimirTurno();
-	for (int i = 0; i < 32; i++) {
+	/*for (int i = 0; i < 32; i++) {
 		lista[i] = 0;
-	}
-	for (int fila = 0; fila <= 7; fila++) {
-		for (int columna = 0; columna <= 7; columna++) {
+	}*/
+	for (int fila = 0; fila <8; fila++) {
+		for (int columna = 0; columna <8; columna++) {
 			casilla[fila][columna].setPosicion(columna * 20.0/8 - 10, fila * 20.0/8 - 2.5);//valores aleatorios de las casillas, cambiar a los concretos
-			id[fila][columna] = NULL;
+			id[fila][columna] = nullptr;
 		}
 	}
 
@@ -93,7 +93,7 @@ Tablero::Tablero() {
 		if (i < 31) {
 			Rey* r = new Rey(blanco, 0, i - 26);//fila 0, columna 4
 			lista[i] = r;
-			id[0][i - 26] = lista[i];;
+			id[0][i - 26] = lista[i];
 		}
 
 		else {
@@ -104,7 +104,7 @@ Tablero::Tablero() {
 		
 	}
 
-	//comprobarAsignaciones();
+	comprobarAsignaciones();
 }
 
 bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [pasar como const?]
@@ -506,9 +506,9 @@ void Tablero::imprimirTurno()
 {
 	std::string _turno;
 	if((int)turno==1)
-		_turno = "blancas";
+		_turno = "NEGRAS";
 	else if ((int)turno == 2)
-		_turno = "negras";
+		_turno = "BLANCAS";
 	else if ((int)turno == 0)
 		_turno = "indefinidas";
 	
@@ -554,34 +554,41 @@ void Tablero::imprimirTipo(Tipo tip)
 
 	std::cout<< " tipo: " << _tip << " ";
 }
+
 void Tablero::comprobarAsignaciones()
 {
 	std::cout << "\n\n<<<<<<<<<<<<<<<<<<<<<<<<<<<COMPRUEBO ASIGNACION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n";
-
-	for (int fil = 0; fil < 8; fil++)
+	for (int _fil = 0; _fil < 8; _fil++)
 	{
-		for (int col = 0; col < 8; col++)
+		//std::cout << "\n\nFILA = "<<_fil<<"\n\n";
+		for (int _col = 0; _col < 8; _col++)
 		{
+			//std::cout << "\n\nCOLUMNA = " << _col << "\n\n";
 			bool OK = 0;
 			int k = 0;
-			while (OK != 1)
+			if ((_fil == 0) || (_fil == 1) || (_fil == 6) || (_fil == 7))
 			{
-				OK = ((lista[k]->getColumna() == col) && (lista[k]->getFila() == fil));
-				k++;
+				while ((OK != 1)&&(k<32))
+				{
+					OK = ((lista[k]->getColumna() == _col) && (lista[k]->getFila() == _fil));
+					if(k<31)	k++;
+				}
+				//std::cout << "\n\nOK = " << OK << "\n\n";
+				std::cout << "\n\nLISTA[" << k << "] almacena que hay "; imprimirTipo(lista[k]->getTipo());
+				imprimirColor(lista[k]->getColor()); std::cout << "en (" << _col << " , " << _fil << ")";
+				OK = 0; k = 0;
 			}
-			std::cout << "\n\nLISTA[" << k << "] almacena que hay "; imprimirTipo(lista[k]->getTipo());
-			imprimirColor(lista[k]->getColor()); std::cout << "en (" << col << " , " << fil << ")";
-			OK = 0; k = 0;
-			if (id[fil][col])
+			else std::cout << "\nLISTA[" << _col << "][" << _fil << "] vacia ";
+			if (id[_fil][_col]!=nullptr)
 			{
-				std::cout << "\nID[" << id[fil][col]->getColumna() << "][" << id[fil][col]->getFila() << "] almacena que hay ";
-				imprimirTipo(id[fil][col]->getTipo()); imprimirColor(id[fil][col]->getColor());
+				std::cout << "\nID[" << id[_fil][_col]->getColumna() << "][" << id[_fil][_col]->getFila() << "] almacena que hay ";
+				imprimirTipo(id[_fil][_col]->getTipo()); imprimirColor(id[_fil][_col]->getColor());
 			}
 			else
-				std::cout << "\nID[" << col << "][" << fil << "] vacío ";
+				std::cout << "\nID[" << _col << "][" << _fil << "] vacia ";
 			
 		}
-	}
+	}std::cout << "------------FIN--------------\n";
 
  }
 
