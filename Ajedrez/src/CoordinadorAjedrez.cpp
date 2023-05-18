@@ -131,7 +131,7 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 			if (ficha_sel) {
 				//std::cout << "mover ficha;sel" << ficha_sel[0] << "\n";
 				//std::cout << "mover ficha;sel" << ficha_sel[1] << "\n";
-				std::cout << "Seleccion de cursor: c=" << ficha_sel[0]+1 << " f=" << ficha_sel[1]+1 << "\n";
+				std::cout << "Seleccion de cursor: c=" << ficha_sel[1]+1 << " f=" << ficha_sel[0]+1 << "\n";
 				action_click = true;
 				ficha_selecionada = ficha_sel;
 			}
@@ -150,17 +150,27 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 			int* movimiento = mundo.ValidarClick(x, y);
 			//std::cout << "mover ficha;movimiento" << movimiento[0] << "\n";
 			//std::cout << "mover ficha;movimiento" << movimiento[1] << "\n";
-			std::cout << "Voy a mover:"<< "\n";
-			mundo.tablero.imprimirId(ficha_selecionada[0], ficha_selecionada[1]);
-			std::cout << "\nAl destino:" << "\n";
-			mundo.tablero.imprimirId(movimiento[1], movimiento[0]);
-			if (mundo.tablero.mover(movimiento[0], movimiento[1], ficha_selecionada[0], ficha_selecionada[1]))
+			if (mundo.tablero.casillaVacia(ficha_selecionada[1], ficha_selecionada[0]))
 			{
-				//std::cout << "Desde Coordinador he movido y voy a cambiar el turno:" << "\n";
-				mundo.cambiaTurno();
+				ficha_selecionada = NULL;
+				action_click = false;
+				std::cout << "\nNo hay ninguna pieza en esta casilla. REALICE UNA SELECCION VALIDA:" << "\n";
 			}
-			ficha_selecionada = NULL;
-			action_click = false;
+				
+			else
+			{
+				std::cout << "Voy a mover:" << "\n";
+				mundo.tablero.imprimirId(ficha_selecionada[1], ficha_selecionada[0]);
+				std::cout << "\nAl destino:" << "\n";
+				mundo.tablero.imprimirId(movimiento[1], movimiento[0]);
+				if (mundo.tablero.mover(movimiento[0], movimiento[1], ficha_selecionada[0], ficha_selecionada[1]))
+				{
+					//std::cout << "Desde Coordinador he movido y voy a cambiar el turno:" << "\n";
+					mundo.cambiaTurno();
+				}
+				ficha_selecionada = NULL;
+				action_click = false;
+			}
 		}
 	}
 	//mundo.cambiaTurno();

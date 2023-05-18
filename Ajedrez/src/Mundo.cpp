@@ -103,20 +103,19 @@ int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
 	int calculate_columna = (x - glutGet(GLUT_WINDOW_WIDTH) * 0.15) / range_width;
 
 
-
 	int* position = new int[2];
-
-	if (tablero.selPieza(calculate_fila, calculate_columna)) {
+	
+	if (tablero.selPieza(7-calculate_fila, calculate_columna)) {
 
 		position[0] = 7 - calculate_fila;
 		position[1] = calculate_columna;
-		std::cout << "Cursor:Seleccionada la pieza de c="<<position[0]+1<<" y f="<<position[1]+1 << "\n";
+		std::cout << "Cursor:Seleccionada la pieza de c="<<position[1]+1<<" y f="<<position[0]+1 << "\n";
 
 		return position;
 	}
 	
 	else {
-		std::cout << "No es tu turno" << "\n";
+		std::cout << "Seleccion no valida" << "\n";
 		return NULL;
 	}
 
@@ -139,16 +138,16 @@ int Mundo::jaque()
 int* Mundo::ValidarClick( int x, int y)
 { 
 	//NO BORRAR COSAS EN PRUEBAS
-	/*std::cout << "coordenada x : " << x << "coordenada y : " << y << "\n";
-	std::cout << glutGet(GLUT_WINDOW_HEIGHT) * 0.92 << " maximo de altura\n";
+	std::cout << "coordenada x : " << x << " coordenada y : " << y << "\n";
+	/*std::cout << glutGet(GLUT_WINDOW_HEIGHT) * 0.92 << " maximo de altura\n";
 	std::cout << glutGet(GLUT_WINDOW_WIDTH) * 0.7 << " maximo de ancho\n";*/
 
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT) * 0.92; //cantidad de pixeles de alto 
 	int window_width = glutGet(GLUT_WINDOW_WIDTH) * 0.7; //cantidad de pixeles de ancho
-
+	//std::cout << "\nPIX ALTO = " << window_height << " PIX ANCHO = " << window_width;
 	float range_height = window_height / 8; //8 es el numero de filas
 	float range_width = window_width / 8;
-
+	//std::cout << "\n " << y << " PIX A " << window_width;
 	int calculate_fila = (y - glutGet(GLUT_WINDOW_HEIGHT) * 0.04) / range_height;
 	int calculate_columna = (x - glutGet(GLUT_WINDOW_WIDTH) * 0.15) / range_width;
 

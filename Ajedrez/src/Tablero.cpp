@@ -3,11 +3,9 @@
 #include <string>
 
 Tablero::Tablero() {
-	setTurno(Color::negro);//inician blancas
+	setTurno(Color::blanco);//inician blancas
 	std::cout << "Incializo turno en: "<< turno; imprimirTurno();
-	/*for (int i = 0; i < 32; i++) {
-		lista[i] = 0;
-	}*/
+	
 	for (int fila = 0; fila <8; fila++) {
 		for (int columna = 0; columna <8; columna++) {
 			casilla[fila][columna].setPosicion(columna * 20.0/8 - 10, fila * 20.0/8 - 2.5);//valores aleatorios de las casillas, cambiar a los concretos
@@ -104,7 +102,8 @@ Tablero::Tablero() {
 		
 	}
 
-	comprobarAsignaciones();
+	//comprobarAsignaciones();
+	//imprimirLista();
 }
 
 bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [pasar como const?]
@@ -113,13 +112,12 @@ bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [
 	auto& iden = id[forigen][corigen];//es muy largo de escribir, así que referencia/alias
 	if (iden) {//comprobar puntero no nulo (casilla no vacía)
 		if (iden->getColor() == turno) {//comprobar que coinciden el color de la pieza y el del turno
-			Color aux2 = iden->getColor();
-			std::cout << "Coinciden color y turno; hay una pieza de color" << aux2 << "\n";
+			std::cout << "Coinciden color y turno; hay una pieza de color" << iden->getColor() << "\n";
 			return true;
 		}
 		else {
-			return false; Color aux2 = iden->getColor();
-			std::cout << "La pieza es de color " << aux2 << "y el turno es "; imprimirTurno();std::cout << "por lo que no muevo" << "\n";
+			return false;
+			std::cout << "La pieza es de color " << iden->getColor() << "y el turno es "; imprimirTurno();std::cout << "por lo que no muevo" << "\n";
 		}
 	}
 	else { return false; std::cout << "La id no contiene nada. Casilla vacía" << "\n"; }
@@ -501,17 +499,34 @@ void Tablero::imprimirLista(int i, int j)
 		//else { std::cout << "\t No se encuentra ninguna pieza en la lista en: x=" << i + 1 << " | y=" << j + 1 << "\n"; }
 	}
 }
+void Tablero::imprimirLista()
+{
+	std::cout << "\n-------SOBRE LA LISTA----------" << "\n";
+	for (int k = 0; k < 32; k++)
+	{
+		std::cout << "lista[" << k << "] esta en c=" << (lista[k]->getColumna())+1 << " f=" << (lista[k]->getFila()) + 1;
+		imprimirTipo(lista[k]->getTipo()); std::cout << "\n";
+		imprimirColor(lista[k]->getColor()); std::cout << "\n";
+	}
+}
 
 void Tablero::imprimirTurno()
 {
 	std::string _turno;
-	if((int)turno==1)
-		_turno = "NEGRAS";
-	else if ((int)turno == 2)
+	switch (turno)
+	{
+	case indefinido:
+		break;
+	case blanco:
 		_turno = "BLANCAS";
-	else if ((int)turno == 0)
+		break;
+	case negro:
+		_turno = "NEGRAS";
+		break;
+	default:
 		_turno = "indefinidas";
-	
+		break;
+	}	
 	std::cout << "\t ******** Juegan las  " << _turno << " **************\n";
 
 }
@@ -519,12 +534,20 @@ void Tablero::imprimirTurno()
 void Tablero::imprimirColor(Color col)
 {
 	std::string _color;
-	if(col==blanco)
-		_color = "blanco";
-	else if(col==negro)
-		_color = "negro";
-	else if(col==indefinido)
+	switch (col)
+	{
+	case indefinido:
 		_color = "indefinido";
+		break;
+	case blanco:
+		_color = "blanco";
+		break;
+	case negro:
+		_color = "negro";
+		break;
+	default:
+		break;
+	}
 	std::cout << " color: " << _color << " ";
 
 }
@@ -558,37 +581,16 @@ void Tablero::imprimirTipo(Tipo tip)
 void Tablero::comprobarAsignaciones()
 {
 	std::cout << "\n\n<<<<<<<<<<<<<<<<<<<<<<<<<<<COMPRUEBO ASIGNACION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n";
-	for (int _fil = 0; _fil < 8; _fil++)
+	for (int k = 0; k < 32; k++)
 	{
-		//std::cout << "\n\nFILA = "<<_fil<<"\n\n";
-		for (int _col = 0; _col < 8; _col++)
-		{
-			//std::cout << "\n\nCOLUMNA = " << _col << "\n\n";
-			bool OK = 0;
-			int k = 0;
-			if ((_fil == 0) || (_fil == 1) || (_fil == 6) || (_fil == 7))
-			{
-				while ((OK != 1)&&(k<32))
-				{
-					OK = ((lista[k]->getColumna() == _col) && (lista[k]->getFila() == _fil));
-					if(k<31)	k++;
-				}
-				//std::cout << "\n\nOK = " << OK << "\n\n";
-				std::cout << "\n\nLISTA[" << k << "] almacena que hay "; imprimirTipo(lista[k]->getTipo());
-				imprimirColor(lista[k]->getColor()); std::cout << "en (" << _col << " , " << _fil << ")";
-				OK = 0; k = 0;
-			}
-			else std::cout << "\nLISTA[" << _col << "][" << _fil << "] vacia ";
-			if (id[_fil][_col]!=nullptr)
-			{
-				std::cout << "\nID[" << id[_fil][_col]->getColumna() << "][" << id[_fil][_col]->getFila() << "] almacena que hay ";
-				imprimirTipo(id[_fil][_col]->getTipo()); imprimirColor(id[_fil][_col]->getColor());
-			}
-			else
-				std::cout << "\nID[" << _col << "][" << _fil << "] vacia ";
-			
-		}
-	}std::cout << "------------FIN--------------\n";
+		std::cout << "\n\n\===============" << k << "===============";
+		int _columna = lista[k]->getColumna();
+		int _fila = lista[k]->getFila();
+		imprimirId(_columna, _fila);
+		imprimirLista(_columna, _fila);
+
+	}
+	std::cout << "\n-------------FIN--------------\n";
 
  }
 

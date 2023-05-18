@@ -47,6 +47,7 @@ public:
 	bool actualizarId(int fdestino, int cdestino, int forigen, int corigen);
 	void imprimirId(int i, int j);
 	void imprimirLista(int i, int j);
+	void imprimirLista();
 	void imprimirTurno();
 	void imprimirTipo(Tipo tip);
 	void imprimirColor(Color col);
