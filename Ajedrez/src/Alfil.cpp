@@ -1,5 +1,6 @@
 #include "Alfil.h"
 #include"freeglut.h"
+#include <iostream>
 
 
 //Para las piezas de tipo alfil, torre y reina, quiza fuera más conveniente sacar la posición actual(con fila y columna)
@@ -15,24 +16,45 @@ Alfil::Alfil(Color col, int f, int c) {
 
 bool Alfil::mover(int nc, int nf) 
 {
+	//std::cout << "Entro a mover alfil\n";
 	if ((nc < 0) || (nc > 7) || (nf < 0) || (nf > 7))
+	{
+		std::cout << "Se sale del tablero\n";
 		return false;
+	}
 	else
 	{
+		std::cout <<"No se sale del tablero\n";
+		std::cout << "nc= "<<nc<<" columna = "<<columna<<" abs(nc - columna) = "<< abs(nc - columna)<<"\n";
+		if (abs(nc - columna) == abs(nf - fila))
+		{
+			//std::cout << "MOVIMIENTO DIAGONAL\n";
+			return true;
+		}
+		else
+		{
+			//std::cout << "MOVIMIENTO NO DIAGONAL\n";
+			return false;
+		}
+		/*//El afil se mueve hacia arriba 
 
-		//El afil se mueve hacia arriba 
-
-		if (nf - fila <= 7) {
+		if ((nf - fila) <= 7) 
+		{
 			//Se mueve hacia la derecha
-			if (nc - columna <= 7)
+			if ((nc - columna) <= 7)
+			{
 				return true;
+			}
 			//Se mueve hacia la izquierda 
-			if (nc + columna <= 7)
+			if ((nc + columna) <= 7)
+			{
 				return true;
+			}
 		}
 
 		//El alfil se mueve hacia abajo
-		else if (nf + fila <= 7) {
+		else if (nf + fila <= 7) 
+		{
 			//Se mueve hacia la derecha
 			if (nc - columna <= 7)
 				return true;
@@ -42,7 +64,7 @@ bool Alfil::mover(int nc, int nf)
 		}
 
 		//falta comprobar que en caso de que la casilla final sea la misma que otra ficha, comemos esa ficha 
-		else return false;
+		else return false;*/
 	}
 }
 

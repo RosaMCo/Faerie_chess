@@ -147,37 +147,43 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 		return false;
 	else
 	{
-	if (!origen) //si no hay una pieza en origen
-	{
-		std::cout << "Intentas mover una pieza? Selecciona una casilla donde halla una. \n ";
-		return false;
+		if (!origen) //si no hay una pieza en origen
+		{
+			std::cout << "Intentas mover una pieza? Selecciona una casilla donde halla una. \n ";
+			return false;
 
-	}
-	else
-		if (destino) {//casilla ocupada
-			std::cout << "\ncasilla ocupada ";
-			if (destino->getColor() != turno) {//comprobar pieza color distinto
-				std::cout << "por pieza de distinto color \n ";
-				if (origen->comer(cdestino, fdestino)) {//llamar a comer de la pieza seleccionada
-					std::cout << "La puedo comer!! \n ";
-					//llamar a destructor de la pieza destino (delete)
+		}
+		else
+		{
+			if (destino) //casilla ocupada
+			{
+				std::cout << "\ncasilla ocupada ";
+				if (destino->getColor() != turno) {//comprobar pieza color distinto
+					std::cout << "por pieza de distinto color \n ";
+					if (origen->comer(cdestino, fdestino)) //llamar a comer de la pieza seleccionada
+					{
+						std::cout << "La puedo comer!! \n ";
+						//llamar a destructor de la pieza destino (delete)
+						//realizar el movimiento
+						return actualizarId(fdestino, cdestino, forigen, corigen);
+					}
+					else { return false; std::cout << "No la puedo comer :( \n "; }
+				}
+				else { return false; std::cout << "por pieza del mismo color \n "; }
+			}
+
+			else //casilla vacía
+			{
+				std::cout << "La casilla destino esta vacia \n ";
+				if (origen->mover(cdestino, fdestino)) //llamar a mover de la pieza seleccionada
+				{
 					//realizar el movimiento
+					std::cout << "Me muevo a  \n ";
+					imprimirId(cdestino, fdestino);
 					return actualizarId(fdestino, cdestino, forigen, corigen);
 				}
-				else { return false; std::cout << "No la puedo comer :( \n "; }
+				else { return false; std::cout << "No me puedo mover... \n "; }
 			}
-			else { return false; std::cout << "por pieza del mismo color \n "; }
-		}
-
-		else {//casilla vacía
-			std::cout << "La casilla destino esta vacia \n ";
-			if (origen->mover(cdestino, fdestino)) {//llamar a mover de la pieza seleccionada
-				//realizar el movimiento
-				std::cout << "Me muevo a  \n ";
-				imprimirId(cdestino, fdestino);
-				return actualizarId(fdestino,cdestino,forigen,corigen);
-			}
-			else { return false; std::cout << "No me puedo mover... \n "; }
 		}
 	}
 }
@@ -192,7 +198,7 @@ bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen)
 		id[fdestino][cdestino] = id[forigen][corigen];//copia de dir. de memoria para que apunten ambos a la misma pieza
 		id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
 		std::cout << "\nID ACTUALIZADA; Ahora nueva posicion:"; imprimirId(cdestino, fdestino); std::cout<<"\t\tLa posicion anterior: "; imprimirId(corigen, forigen);
-		std::cout << "\nLISTA ACTUALIZADA; Ahora:"; imprimirLista(cdestino, fdestino);
+		std::cout << "\nLISTA ACTUALIZADA: "; imprimirLista(cdestino, fdestino);
 		return true;
 		
 	}
@@ -259,7 +265,7 @@ bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen)
 		else
 			tipoMov = 'V'; //...si no la hay movimiento vertical: difX = 0; difY!=0;
 
-		if (difY * difX)
+		if (abs(difY) == abs(difX))
 			tipoMov = 'D'; //movimiento diagonal
 
 		if (tipoMov == 'H')
@@ -288,13 +294,18 @@ bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen)
 		}
 		else if (tipoMov == 'D') //movimiento diagonal
 		{
-			for (int _fila = forigen + incrementoY, _columna = corigen + incrementoX; (_fila != fdestino) && (_columna != cdestino); (_fila + incrementoY), (_columna + incrementoX))
+			int _fila = forigen + incrementoY;
+			int _columna = corigen + incrementoX;
+			while ((_fila != fdestino) || (_columna != cdestino))
 			{
 				if (casillaVacia(_columna, _fila) == 0)
 				{
 					std::cout << "Mov diagonal -> Se encontró una pieza en medio en: "; //imprimirId(_columna, _fila);
 					return true;
 				}
+				_fila += incrementoY;
+				_columna += incrementoX;
+
 			}
 			return false;
 
