@@ -43,7 +43,7 @@ void Rey::dibuja(float ix, float iy)
 	glDisable(GL_TEXTURE_2D);
 }
 
-bool Rey::mover(Color col,int nc, int nf)
+bool Rey::mover(int nc, int nf)
 {
 	if ((nc < 0) || (nc > 7) || (nf < 0) || (nf > 7))
 		return false;

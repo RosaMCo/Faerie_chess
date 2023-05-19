@@ -13,7 +13,8 @@ Alfil::Alfil(Color col, int f, int c) {
 
 }
 
-bool Alfil::mover(Color col, int nc, int nf) {
+bool Alfil::mover(int nc, int nf) 
+{
 	if ((nc < 0) || (nc > 7) || (nf < 0) || (nf > 7))
 		return false;
 	else

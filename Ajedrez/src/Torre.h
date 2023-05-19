@@ -10,12 +10,10 @@ public:
     Torre(Color color, int fila, int columna);
 
     //true si el movimiento es permitido; nx y ny son los nuevos valores de x e y
-   // bool mover(int nx, int ny);
-    bool mover(Color col, int nc, int nf); //solo para usar su formato virtual referido a los peones
+    bool mover(int nx, int ny);
     void dibuja(float ix, float iy);
-   // bool comer(int nx, int ny) { return mover(nx, ny); }
+    bool comer(int nx, int ny) { return mover(nx, ny); }
     bool getMovIni() { return movIni; }
     bool getMovIniLargo() { return 0; } //solo para poder usar su formato virtual en Pieza y para poder comer al paso en los peones
-    bool comer(Color col, int nc, int nf) { return mover(col, nc, nf); }; //solo para poder usar su formato virtual en Pieza y para poder definir comer en los peones
 
 };

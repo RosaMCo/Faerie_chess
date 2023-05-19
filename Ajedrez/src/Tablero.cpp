@@ -158,7 +158,7 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 			std::cout << "\ncasilla ocupada ";
 			if (destino->getColor() != turno) {//comprobar pieza color distinto
 				std::cout << "por pieza de distinto color \n ";
-				if (origen->comer((origen->getColor()),cdestino, fdestino)) {//llamar a comer de la pieza seleccionada
+				if (origen->comer(cdestino, fdestino)) {//llamar a comer de la pieza seleccionada
 					std::cout << "La puedo comer!! \n ";
 					//llamar a destructor de la pieza destino (delete)
 					//realizar el movimiento
@@ -171,7 +171,7 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 
 		else {//casilla vacía
 			std::cout << "La casilla destino esta vacia \n ";
-			if (origen->mover((origen->getColor()), cdestino, fdestino)) {//llamar a mover de la pieza seleccionada
+			if (origen->mover(cdestino, fdestino)) {//llamar a mover de la pieza seleccionada
 				//realizar el movimiento
 				std::cout << "Me muevo a  \n ";
 				imprimirId(cdestino, fdestino);
@@ -357,7 +357,7 @@ bool Tablero::amenaza(Pieza& pieza)
 	{
 		if (colorDistinto((*lista[i]), pieza)) //si tienen colores distintos
 		{
-				if (lista[i]->comer((lista[i]->getColor()), _columna, _fila)) // incluir comer al paso
+				if (lista[i]->comer(_columna, _fila)) // incluir comer al paso
 				return true;
 			else return false;
 		}
@@ -478,7 +478,7 @@ bool Tablero::jaqueMate(Rey& rey)
 		for (int i = 0; i < 8; i++)
 			for (int j = 0; j < 8; j++)
 			{
-				if ((rey.mover((rey.getColor()), i, j)) && casillaVacia(i, j))//..y el rey se puede mover a una casilla vacía...
+				if ((rey.mover(i, j)) && casillaVacia(i, j))//..y el rey se puede mover a una casilla vacía...
 					return false; //...no hay jaque mate
 				else return false;
 			}

@@ -11,13 +11,13 @@ Peon::Peon(Color col, int f, int c) {
 
 }
 
-bool Peon::mover(Color col, int nc, int nf) {
+bool Peon::mover(int nc, int nf) {
 	std::cout << "Entro en mover de peon\n";
 	if ((nc < 0) || (nc > 7) || (nf < 0) || (nf > 7))
 		return false;
 	else
 	{
-		if (col == blanco)
+		if (color == blanco)
 		{
 			if (mov_ini == 1) {
 				if ((nc == columna) && ((nf - fila) <= 2)) 
@@ -40,7 +40,7 @@ bool Peon::mover(Color col, int nc, int nf) {
 				else return false;
 			}
 		}
-		else if (col == negro)
+		else if (color == negro)
 		{
 			if (mov_ini == 1) {
 				if ((nc == columna) && ((nf - fila) >= -2)) 
@@ -90,13 +90,13 @@ bool Peon::mover(Color col, int nc, int nf) {
 	}
 }
 
-bool Peon::comer(Color col,int nc, int nf) {
+bool Peon::comer(int nc, int nf) {
 	//std::cout << "Entro en comer de peon\n";
 	if ((nc < 0) || (nc > 7) || (nf < 0) || (nf > 7))
 		return false;
 	else
 	{
-		if (col == blanco)
+		if (color == blanco)
 		{
 			if ((((nc - columna) == 1) || ((nc - columna) == -1)) && (nf == fila - 1))
 			{
@@ -105,7 +105,7 @@ bool Peon::comer(Color col,int nc, int nf) {
 			}
 			else return false;
 		}
-		else if (col == negro)
+		else if (color == negro)
 		{
 			if ((((nc - columna) == 1) || ((nc - columna) == -1)) && (nf == fila + 1))
 			{
