@@ -40,8 +40,10 @@ public:
 	//bool getNext();
 	//mover y comer virtuales
 	//revisar si está bien hecho
-	virtual bool mover(int nx, int ny) = 0;
-	virtual bool comer(int nx, int ny) = 0;
+	//virtual bool mover(int nx, int ny) = 0;
+	//virtual bool comer(int nx, int ny)=0;
+	virtual bool comer(Color col, int nc, int nf) = 0;
+	virtual bool mover(Color col, int nc, int nf) = 0;
 	virtual bool getMovIniLargo() = 0;
 
 };

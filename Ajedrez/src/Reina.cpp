@@ -42,7 +42,7 @@ void Reina::dibuja(float ix, float iy)
 
 }
 
-bool Reina::mover(int nc, int nf)
+bool Reina::mover(Color col,int nc, int nf)
 {
 	if ((nc < 0) || (nc > 7) || (nf < 0) || (nf > 7))
 		return false;

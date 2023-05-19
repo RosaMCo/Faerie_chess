@@ -37,5 +37,3 @@ void setNext();
 bool getOcupado();
 bool getNext();
 */
-
-

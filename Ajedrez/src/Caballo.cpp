@@ -6,7 +6,7 @@ Caballo::Caballo(Color col, int f, int c) {
 	columna = c;
 	setTipo(CABALLO);
 }
-bool Caballo::mover(int nc, int nf)
+bool Caballo::mover(Color col,int nc, int nf)
 	{
 		if (nc < 0 || nf < 0 || nc > 7 || nf > 7)
 		{

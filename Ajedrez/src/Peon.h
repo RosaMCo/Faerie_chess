@@ -8,8 +8,10 @@ private:
     bool movIniLargo;
 public:
     Peon(Color col, int f, int c);
-    bool mover(int nc, int nf);//true si el movimiento es permitido; nx y ny son los nuevos valores de x e y
-    bool comer(int nc, int nf);//true si se puede comer
+    bool mover(Color col, int nc, int nf);//true si el movimiento es permitido; nx y ny son los nuevos valores de x e y
+   // bool mover(int nc, int nf) { return false; } //no usado
+    bool comer(Color col,int nc, int nf);//true si se puede comer
+    //bool comer(int nc, int nf) { return false; } //no usado
     //en-passant (forma especial de comer, si me apaño)
     void dibuja(float ix, float iy);
     bool getMovIniLargo() { return movIniLargo; }

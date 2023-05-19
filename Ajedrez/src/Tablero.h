@@ -25,6 +25,7 @@ public:
 	void dibuja();
 	Color getTurno() { return turno; }
 	void setTurno(Color tur) {turno = tur;}
+	//Pieza* getPieza(int c, int f) { return id[f][c]; }
 	//validar enroque
 	//comer al paso
 	bool colorDistinto(Pieza& pieza, Pieza& pieza2);
