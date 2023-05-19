@@ -91,32 +91,50 @@ bool Peon::mover(int nc, int nf) {
 }
 
 bool Peon::comer(int nc, int nf) {
-	//std::cout << "Entro en comer de peon\n";
+	std::cout << "Entro en comer de peon\n";
+	bool comer = false;
 	if ((nc < 0) || (nc > 7) || (nf < 0) || (nf > 7))
+	{
+		std::cout << "sale del tablero\n"; comer = false;
 		return false;
+	}
 	else
 	{
+		std::cout << "no sale del tablero\n";
+		//std::cout << "color = "<<color<<"\n";
 		if (color == blanco)
 		{
-			if ((((nc - columna) == 1) || ((nc - columna) == -1)) && (nf == fila - 1))
+			//std::cout << "color de peon que se mueve es blanco\n";
+			//std::cout << "columna= " << columna << " fila=" << fila << "\n";
+			if(((nc-columna) == 1)|| (nc - columna))
 			{
-				std::cout << "Desde peon, la puedo comer \n ";
-				return true;
+				//std::cout << "distancia en x de +-1\n";
+				if (nf == (fila - 1))
+				{
+					//std::cout << "sentido en y de +1, correcto\n";
+					std::cout << "Desde peon, la puedo comer \n "; 
+					return true;
+				}
 			}
-			else return false;
+			else { return false; std::cout << "Desde peon, NO la puedo comer \n "; }
 		}
 		else if (color == negro)
 		{
-			if ((((nc - columna) == 1) || ((nc - columna) == -1)) && (nf == fila + 1))
+			if (((nc - columna) == 1) || (nc - columna))
 			{
-				std::cout << "Desde peon, la puedo comer \n ";
-				return true;
+				//std::cout << "distancia en x de +-1\n";
+				if (nf == (fila + 1))
+				{
+					//std::cout << "sentido en y de +1, correcto\n";
+					std::cout << "Desde peon, la puedo comer \n "; 
+					return true;
+				}
 			}
 			else return false;
 		}
 		else
 		{
-			std::cout << "color del peon indefinido\n";
+			std::cout << "color del peon indefinido\n"; comer = false;
 			return false;
 		}
 	}
