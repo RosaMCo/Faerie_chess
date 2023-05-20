@@ -26,6 +26,11 @@ bool Peon::mover(int nc, int nf) {
 					mov_ini = 0;
 					return true;
 				}
+				else if ((nc == columna) && (nf - fila == 1)) {
+					movIniLargo = 0;
+					mov_ini = 0;
+					return true;
+				}
 			}
 
 			else {
@@ -45,6 +50,11 @@ bool Peon::mover(int nc, int nf) {
 				if ((nc == columna) && ((nf - fila) == -2)) 
 				{
 					movIniLargo = 1;
+					mov_ini = 0;
+					return true;
+				}
+				else if ((nc == columna) && (nf - fila == -1)) {
+					movIniLargo = 0;
 					mov_ini = 0;
 					return true;
 				}
@@ -114,7 +124,9 @@ bool Peon::comer(int nc, int nf) {
 					return true;
 				}
 			}
-			else { return false; std::cout << "Desde peon, NO la puedo comer \n "; }
+			else { 
+				std::cout << "Desde peon, NO la puedo comer \n ";
+				return false;  }
 		}
 		else if (color == negro)
 		{
@@ -128,7 +140,10 @@ bool Peon::comer(int nc, int nf) {
 					return true;
 				}
 			}
-			else return false;
+			else {
+				std::cout << "Desde peon, NO la puedo comer \n ";
+				return false;
+			}
 		}
 		else
 		{
