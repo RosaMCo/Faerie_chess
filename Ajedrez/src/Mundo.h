@@ -34,6 +34,6 @@ public:
 	//Casilla getCasilla(int x, int y);
 	//bool validarTurno(Color turn);
 	void cambiaTurno();
-	int jaque();
+	bool jaque();
 	Color getTurno() { return tablero.getTurno(); }
 };

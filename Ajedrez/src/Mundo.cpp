@@ -130,7 +130,7 @@ void Mundo::cambiaTurno()
 	//std::cout << "desde Mundo, turno cambiado a: "; tablero.imprimirTurno();
 }
 
-int Mundo::jaque()
+bool Mundo::jaque()
 {
 	return tablero.jaque(tablero.getTurno());
 }
