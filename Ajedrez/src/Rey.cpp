@@ -1,5 +1,7 @@
 #include "Rey.h"
-#include"freeglut.h"
+#include "freeglut.h"
+#include <iostream>
+
 Rey::Rey(Color col, int f, int c)
 {
 	setColor(col);
@@ -49,12 +51,13 @@ bool Rey::mover(int nc, int nf)
 		return false;
 	else
 	{
-		if ((abs(columna - nc) == 1) || (abs(fila - nf) == 1))
+		if (((abs(columna - nc) == 1) || (abs(fila - nf) == 1))||((columna==nc)&&(fila!=nf))||((fila == nf)&&(columna!=nc)))
 		{
+			std::cout << "movimiento de rey permitido\n";
 			movIni = 1;
 			return true;
 		}
-		else return false;
+		else { return false; std::cout << "movimiento de rey NO permitido\n"; }
 		//El rey se mueve uno para arriba
 		/*if (nc == fila + 1)
 			//El rey se mueve uno para arriba y uno a la izq, es decir,

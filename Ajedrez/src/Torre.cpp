@@ -14,6 +14,15 @@ bool Torre::mover(int nx, int ny) {
 		return false;
 	else
 	{
+		if (((columna == nx) && (fila != ny)) || ((columna != nx) && (fila == ny)))
+		{
+			movIni = 1;
+			return true;
+		}
+		else return false;
+	}
+	/*else
+	{
 		//Movimiento arriba 
 		if (nx == columna && ny - fila <= 7) {
 			return true;
@@ -39,7 +48,7 @@ bool Torre::mover(int nx, int ny) {
 		}
 
 		else return false;
-	}
+	}*/
 }
 
 void Torre::dibuja(float ix, float iy)

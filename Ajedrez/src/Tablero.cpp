@@ -234,7 +234,7 @@ bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen)
 		id[fdestino][cdestino] = id[forigen][corigen];//copia de dir. de memoria para que apunten ambos a la misma pieza
 		id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
 		std::cout << "\nID ACTUALIZADA; Ahora nueva posicion:"; imprimirId(cdestino, fdestino); std::cout<<"\t\tLa posicion anterior: "; imprimirId(corigen, forigen);
-		std::cout << "\nLISTA ACTUALIZADA: "; imprimirLista(cdestino, fdestino);
+		std::cout << "\nLISTA ACTUALIZADA: "; //imprimirLista(cdestino, fdestino);
 		return true;
 		
 	}
@@ -309,11 +309,13 @@ bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen)
 			for (int _columna = (corigen + incrementoX); _columna != cdestino; _columna += incrementoX)
 			{
 				if (casillaVacia(_columna,forigen)==0)
+				//if(id[forigen,_columna])
 				{
 					std::cout << "Mov horizontal -> Se encontró una pieza en medio en medio en: "; imprimirId(_columna, forigen);
 					return true;
 				}
 			}
+			return false;
 		}
 		else if (tipoMov == 'V')
 		{
