@@ -14,5 +14,6 @@ public:
     void dibuja(float ix, float iy);
     bool getMovIniLargo() { return movIniLargo; }
     bool getMovIni() { return 0; } //no usado, sólo para incluirlo en el virtual de Pieza y aplicarlo en el enroque
+    void setMovIni(bool nuevo) {} //no usado, sólo para incluirlo en el virtual de Pieza y aplicarlo en el enroque
 };
 

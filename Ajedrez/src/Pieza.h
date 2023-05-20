@@ -44,6 +44,7 @@ public:
 	virtual bool comer(int nx, int ny) = 0;
 	virtual bool getMovIniLargo() = 0;
 	virtual bool getMovIni() = 0;
+	virtual void setMovIni(bool nuevo) = 0;
 
 };
 

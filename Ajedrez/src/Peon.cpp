@@ -17,7 +17,29 @@ bool Peon::mover(int nc, int nf) {
 		return false;
 	else
 	{
-		if (color == blanco)
+		int incrementoInicial = (color == blanco) ? 2 : -2;
+		int incremento = (color == blanco) ? 1 : -1;
+		if ((nc == columna))
+		{
+
+			if ((mov_ini) && (nf-fila==incrementoInicial))
+			{
+				mov_ini = 0;
+				movIniLargo = 1;
+				return true;
+			}
+			else if (nf-fila==incremento)
+			{
+				mov_ini = 0;
+				movIniLargo = 0;
+				return true;
+			}
+			else return false;
+
+		}
+		else return false;
+
+		/*if (color == blanco)
 		{
 			if (mov_ini == 1) {
 				if ((nc == columna) && (nf - fila == 2)) 
@@ -108,7 +130,13 @@ bool Peon::comer(int nc, int nf) {
 	}
 	else
 	{
-		std::cout << "no sale del tablero\n";
+		int incremento = (color == blanco) ? 1 : -1;
+		if ((abs(nc - columna) == abs(nf - fila)) && (nf - fila == incremento))
+			return true;
+		else
+			return false;
+
+		/*std::cout << "no sale del tablero\n";
 		//std::cout << "color = "<<color<<"\n";
 		if (color == blanco)
 		{
@@ -149,7 +177,7 @@ bool Peon::comer(int nc, int nf) {
 		{
 			std::cout << "color del peon indefinido\n"; comer = false;
 			return false;
-		}
+		}*/
 	}
 }
 

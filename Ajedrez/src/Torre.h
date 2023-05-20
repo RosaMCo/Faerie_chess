@@ -14,6 +14,7 @@ public:
     void dibuja(float ix, float iy);
     bool comer(int nx, int ny) { return mover(nx, ny); }
     bool getMovIni() { return movIni; }
+    void setMovIni(bool nuevo) { movIni = nuevo; }
     bool getMovIniLargo() { return 0; } //solo para poder usar su formato virtual en Pieza y para poder comer al paso en los peones
 
 };
