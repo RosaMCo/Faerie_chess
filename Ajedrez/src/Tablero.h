@@ -40,9 +40,9 @@ public:
 
 	bool amenaza(Pieza& pieza); //true si pieza puede ser comida, no incluye comer al paso
 
-	void enroqueLargo(Torre& torre, Rey& rey);
-	void enroqueCorto(Torre& torre, Rey& rey);
-	void enroque(Torre& torre, Rey& rey);
+	bool enroque(Pieza& torre, Pieza& rey, char tipo);
+	//bool enroqueCorto(Pieza& torre, Pieza& rey);
+	bool enroque(int fdestino, int cdestino, int forigen, int corigen);
 
 	//bool jaque(Rey& rey);
 	bool jaque(Color turno);

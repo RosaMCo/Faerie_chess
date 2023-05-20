@@ -186,7 +186,19 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 					}
 					else { return false; std::cout << "No la puedo comer :( \n "; }
 				}
-				else { return false; std::cout << "por pieza del mismo color \n "; }
+				else 
+				{
+					/*if (enroque(fdestino, cdestino, forigen, corigen))
+					{
+						std::cout << "Piezas del mismo color y enroque HECHO :) \n ";
+						return true;
+					}
+					else
+					{*/
+						return false; std::cout << "Piezas del mismo color y enroque no valido \n ";
+					//}
+						 
+				}
 			}
 
 			else //casilla vacía
@@ -307,7 +319,7 @@ bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen)
 		{
 			for (int _fila = (forigen + incrementoY); _fila != fdestino; _fila+=incrementoY)
 			{
-				std::cout << "\tColumna fija: " << corigen + 1 << "; buscando pieza en la fila: " << _fila +1 << "\n";
+				//std::cout << "\tColumna fija: " << corigen + 1 << "; buscando pieza en la fila: " << _fila +1 << "\n";
 				if (casillaVacia(corigen,_fila)==0)
 				{
 					std::cout << "Mov vertical -> Se encontró una pieza en medio en: "; imprimirId(corigen, _fila);
@@ -402,92 +414,121 @@ bool Tablero::comerAlPaso(int fdestino, int cdestino, int forigen, int corigen)
 }
 
 
-bool Tablero::amenaza(Pieza& pieza)
+bool Tablero::amenaza(Pieza& pieza)//no aplicado a comer al paso
 {
 	int _columna = pieza.getColumna();
 	int _fila = pieza.getFila();
-	for (int i = 0; i < 32; i++)
+	for (int j = 0; j < 7; j++)
 	{
-		if (colorDistinto((*lista[i]), pieza)) //si tienen colores distintos
+		for (int i = 0; i < 7; i++)
 		{
-				if (lista[i]->comer(_columna, _fila)) // incluir comer al paso
-				return true;
-			else return false;
+			if (id[j][i])
+			{
+				if (colorDistinto(*id[j][i], pieza) && (id[j][i])->comer(_columna, _fila))
+				{
+					return true;
+				}
+			}
+			
 		}
-		else return false;
 	}
 
 }
 bool Tablero::jaque(Color turno)
 {
-	if (lista[30]->getColor() == turno) //blancas
+	for (int fila = 0; fila < 8; fila++)
 	{
-		return amenaza(*lista[30]);
-	}
-
-	if (lista[31]->getColor() == turno) //negras
-	{
-		return amenaza(*lista[31]);
-	}
-}
-
-/*bool Tablero::jaque(Rey& rey)
-{
-	if (amenaza(rey))
-		return true;
-	else
-		return false;
-}*/
-
-void Tablero::enroque(Torre& torre, Rey& rey)
-{
-	if (((rey.getMovIni() == 0) && (torre.getMovIni() == 0)) && (colorDistinto(torre, rey) == 0))//si nunca se han movido y son del mismo color
-	{
-		if (amenaza(rey) == 0) //si el rey no está en jaque
+		for (int columna = 0; columna < 8; columna++)
 		{
-			if (torre.getColumna() == 0) //torres de la izquierda
-				enroqueLargo(torre, rey);
-			if (torre.getColumna() == 7)
-				enroqueCorto(torre, rey); //torres de la derecha
+			if ((id[fila][columna]->getTipo() == REY) && (id[fila][columna]->getColor() == turno))
+				return amenaza(*id[fila][columna]);
 		}
 	}
 }
 
-void Tablero::enroqueLargo(Torre& torre, Rey& rey)
-{
-	Rey _rey = rey;
-	//1. Compruebo que no haya piezas entre medias
-	int contador = 0;
-	int _fila = torre.getFila();//1.1 tomo la fila en la que esté la torre
 
-	for (int i = 0; i < 32; i++)
+bool Tablero::enroque(int fdestino, int cdestino, int forigen, int corigen)
+{
+	auto& origen = id[forigen][corigen];
+	auto& destino = id[fdestino][cdestino];
+	Pieza* rey;
+	Pieza* torre;
+	if (origen && destino)
 	{
-		if ((lista[i]->getFila()) == _fila) //1.2 si la fila de alguna pieza coincide con la de la torre
-			for (int _columna = 1; _columna < 4; _columna++) //las columnas de las casillas entre torre y rey
+		if (((origen->getTipo() == REY) && (destino->getTipo() == TORRE)) || ((origen->getTipo() == TORRE) && (destino->getTipo() == REY)))
+		{
+			if (colorDistinto(*origen, *destino) == false)
 			{
-				if ((lista[i]->getColumna()) == _columna) //1.3 si además de la fila, está entre las columnas entre medias
-					contador++; //1.4 si hay pieza entre medias, sumo contador 
-				//2. Compruebo que ninguna de las columnas por las que pasará el rey quede atacada
-				if (_columna > 1)//2.1 En el enroque largo, la casilla de la derecha de la torre sí puede ser atacada
-					_rey.setPosicion(_columna, _fila);
-				if (amenaza(rey))
-					contador++;//2.2 Si alguna de las casillas está amenazada, sumo contador
+				switch (origen->getTipo())
+				{
+				case REY:
+					rey = origen;
+					torre = destino;
+					break;
+				case TORRE:
+					rey = destino;
+					torre = origen;
+					break;
+				default:
+					break;
+				}
+				if (((rey->getMovIni() == false) && (torre->getMovIni() == false))) //si son del mismo color y nunca se han movido se sobreentiende que están en la misma fila.
+				{
+					if (amenaza(*rey) == 0) //si el rey no está en jaque
+					{
+						if (piezaEnMedio(fdestino,cdestino,forigen,corigen))
+							return false;
+						else
+						{
+							if (torre->getColumna() == 0) //torres de la izquierda
+								return (enroque(*torre, *rey,'L'));
+							if (torre->getColumna() == 7)
+								return (enroque(*torre, *rey,'C')); //torres de la derecha
+						}
+					}
+				}
+
 			}
-	}
-	if (contador == 0) //no hay piezas entremedias, ninguna de las casillas por las que pasará el rey está amenazada.
-	{
-		_rey.setPosicion(2, _fila);
-		if ((amenaza(_rey)) == 0)
-		{
-			rey.setPosicion(2, _fila);
-			torre.setPosicion(3, _fila);
 		}
-		//FALTA ACTUALIZAR ID
+
 	}
+	else return false;
+	
+}
+
+bool Tablero::enroque(Pieza& torre, Pieza& rey,char tipo)
+{
+	auto& _rey = rey;
+	int _fila = torre.getFila();//tomo la fila en la que esté la torre
+	int inicio = 2, fin = 4; //para enroque largo
+	if (tipo == 'C') //enroque corto
+	{
+		inicio = fin;
+		fin = 6;
+	}
+	for (int _columna = inicio; _columna = fin; _columna++)
+	{
+		_rey.setPosicion(_columna, _fila);//Compruebo que ninguna de las columnas por las que pasará el rey quede atacada
+		if (amenaza(_rey))
+			return false;
+	}
+	if (tipo == 'C')
+	{
+		if ((actualizarId(_fila, 6, rey.getFila(), rey.getColumna()))&&(actualizarId(_fila, 5, torre.getFila(), torre.getColumna())))
+				return true;
+		else return false;
+	}
+	else //enroque largo
+	{
+		if ((actualizarId(_fila, 2, rey.getFila(), rey.getColumna()))&& (actualizarId(_fila, 3, torre.getFila(), torre.getColumna())))
+			return true;
+		else return false;
+	}
+
 
 }
 
-void Tablero::enroqueCorto(Torre& torre, Rey& rey)
+/*bool Tablero::enroqueCorto(Pieza& torre, Pieza& rey)
 {
 	Rey _rey = rey;
 	//1. Compruebo que no haya piezas entre medias
@@ -519,7 +560,7 @@ void Tablero::enroqueCorto(Torre& torre, Rey& rey)
 		//FALTA ACTUALIZAR ID
 
 	}
-}
+}*/
 
 
 bool Tablero::jaqueMate(Rey& rey)
@@ -552,7 +593,7 @@ void Tablero::imprimirId(int i, int j)
 void Tablero::imprimirLista(int i, int j)
 {
 	std::cout << "\n-------SOBRE LA LISTA----------" << "\n";
-	for (int k = 0; k < 32; k++)
+	for (int k = 0; k < numero; k++)
 	{
 		if ((lista[k]->getColumna() == i)&&(lista[k]->getFila() == j))
 		{
@@ -565,7 +606,7 @@ void Tablero::imprimirLista(int i, int j)
 void Tablero::imprimirLista()
 {
 	std::cout << "\n-------SOBRE LA LISTA----------" << "\n";
-	for (int k = 0; k < 32; k++)
+	for (int k = 0; k < numero; k++)
 	{
 		std::cout << "lista[" << k << "] esta en c=" << (lista[k]->getColumna())+1 << " f=" << (lista[k]->getFila()) + 1;
 		imprimirTipo(lista[k]->getTipo()); std::cout << "\n";
@@ -644,7 +685,7 @@ void Tablero::imprimirTipo(Tipo tip)
 void Tablero::comprobarAsignaciones()
 {
 	std::cout << "\n\n<<<<<<<<<<<<<<<<<<<<<<<<<<<COMPRUEBO ASIGNACION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n";
-	for (int k = 0; k < 32; k++)
+	for (int k = 0; k < numero; k++)
 	{
 		std::cout << "\n\n\===============" << k << "===============";
 		int _columna = lista[k]->getColumna();

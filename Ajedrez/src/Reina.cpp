@@ -48,7 +48,13 @@ bool Reina::mover(int nc, int nf)
 		return false;
 	else
 	{
-		//La reina utiliza los movimientos de la torre y del alfil 
+		if ((abs(nc - columna) == abs(nf - fila)) || ((columna == nc) && (fila != nf)) || ((columna != nc) && (fila == nf)))
+			return true;
+		else
+			return false;
+	}
+
+		/*//La reina utiliza los movimientos de la torre y del alfil 
 		//Para la torre: La reina debe moverse hacia la derecha "O" a la izquierda:
 		if ((nf == fila) && (nc == columna))
 			return false; //No se puede mover distinta fila y columna
@@ -72,6 +78,6 @@ bool Reina::mover(int nc, int nf)
 		//Como se puede observar, las posiciones de las columnas y filas deben ser iguales para que cumpla la función del movimiento alfil en la reina
 		else
 			return false;
-	}
+	}*/
 	
 }
