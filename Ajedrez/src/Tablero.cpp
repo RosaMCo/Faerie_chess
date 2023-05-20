@@ -16,7 +16,7 @@ Tablero::Tablero() {
 	
 
 	//los números mágicos son offsets para colocar las piezas en el tablero
-	/*for (int i = 0; i < 16; i++) {//creación de peones
+	for (int i = 0; i < 16; i++) {//creación de peones
 
 		if (i < 8) {//blancos
 			Peon* p = new Peon(blanco, 1, i);//fila 1, todas las columnas
@@ -30,7 +30,7 @@ Tablero::Tablero() {
 			lista[i] = p;
 			id[6][i - 8] = lista[i];
 		}
-	}*/
+	}
 
 	for (int i = 16; i < 20; i++) {//creación de torres
 		if (i < 18) {//blancas
