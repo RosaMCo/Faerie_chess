@@ -16,7 +16,7 @@ Tablero::Tablero() {
 	
 
 	//los números mágicos son offsets para colocar las piezas en el tablero
-	for (int i = 0; i < 16; i++) {//creación de peones
+	/*for (int i = 0; i < 16; i++) {//creación de peones
 
 		if (i < 8) {//blancos
 			Peon* p = new Peon(blanco, 1, i);//fila 1, todas las columnas
@@ -30,7 +30,7 @@ Tablero::Tablero() {
 			lista[i] = p;
 			id[6][i - 8] = lista[i];
 		}
-	}
+	}*/
 
 	for (int i = 16; i < 20; i++) {//creación de torres
 		if (i < 18) {//blancas
@@ -188,15 +188,15 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 				}
 				else 
 				{
-					/*if (enroque(fdestino, cdestino, forigen, corigen))
+					if (enroque(fdestino, cdestino, forigen, corigen))
 					{
 						std::cout << "Piezas del mismo color y enroque HECHO :) \n ";
 						return true;
 					}
 					else
-					{*/
+					{
 						return false; std::cout << "Piezas del mismo color y enroque no valido \n ";
-					//}
+					}
 						 
 				}
 			}
@@ -420,20 +420,24 @@ bool Tablero::amenaza(Pieza& pieza)//no aplicado a comer al paso
 {
 	int _columna = pieza.getColumna();
 	int _fila = pieza.getFila();
-	for (int j = 0; j < 7; j++)
+	for (int j = 0; j < 8; j++)
 	{
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 8; i++)
 		{
 			if (id[j][i])
 			{
-				if (colorDistinto(*id[j][i], pieza) && (id[j][i])->comer(_columna, _fila))
+				if ((colorDistinto(*id[j][i], pieza)) && ((i != _columna) && (j != _fila)))
 				{
-					return true;
+					if (id[j][i]->comer(_columna, _fila))
+						return true;
+					
 				}
 			}
 			
 		}
+		
 	}
+	return false;
 
 }
 bool Tablero::jaque(Color turno)
@@ -508,7 +512,7 @@ bool Tablero::enroque(Pieza& torre, Pieza& rey,char tipo)
 		inicio = fin;
 		fin = 6;
 	}
-	for (int _columna = inicio; _columna = fin; _columna++)
+	for (int _columna = inicio; _columna == fin; _columna++)
 	{
 		_rey.setPosicion(_columna, _fila);//Compruebo que ninguna de las columnas por las que pasará el rey quede atacada
 		if (amenaza(_rey))
