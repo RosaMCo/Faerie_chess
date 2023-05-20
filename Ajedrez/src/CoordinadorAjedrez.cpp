@@ -55,6 +55,46 @@ void CoordinadorAjedrez::dibuja()
 	else if (estado == JUEGO)
 	{
 		mundo.dibuja();
+		
+	}
+	else if(estado == JAQUEBLANCO)
+	{
+		mundo.dibuja();
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("fuentes/fuente2.otf", 16);
+		ETSIDI::printxy("JAQUE AL REY BLANCO!!!", -1, 8);
+
+	}
+	else if (estado == JAQUENEGRO)
+	{
+		mundo.dibuja();
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("fuentes/fuente2.otf", 16);
+		ETSIDI::printxy("JAQUE AL REY NEGRO!!!", -1, 8);
+
+	}
+	else if (estado==FIN)
+	{
+		mundo.dibuja();
+
+		glDisable(GL_LIGHTING);
+		glBegin(GL_POLYGON);
+		glColor3ub(205, 92, 92);
+		glVertex3f(1, 2, 0.1);
+		glVertex3f(1, 6, 0.1);
+		glVertex3f(7, 6, 0.1);
+		glVertex3f(7, 2, 0.1);
+		glEnd();
+		glEnable(GL_LIGHTING);
+
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("fuentes/fuente2.otf", 16);
+		ETSIDI::printxy("ENHORABUENA HAS GANADO!!!!", 2, 5);
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("fuentes/fuente2.otf", 12);
+		ETSIDI::printxy("PULSE LA TECLA -C- PARA CONTINUAR", 3, 4);
+		ETSIDI::printxy("PULSE LA TECLA -S- PARA SALIR", 3, 3);
+
 	}
 	else if (estado == TIENDA)
 	{
@@ -87,6 +127,8 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 				tienda.inicializa();
 				estado = TIENDA;
 				cursor = 1;
+				if (key == 'c')
+					estado = INICIO;
 			}
 
 			else if (key == '4')
@@ -188,33 +230,26 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 void CoordinadorAjedrez::jaque()
 {
 	//Si estamos jugando a la partida de ajedrez
-	if (estado == JUEGO)
-	{
-		if (mundo.jaque() == 1)
-		{
-			estado == JAQUEBLANCO;
+	if (estado == JUEGO) {
+		if (mundo.jaque()==blanco) {
+			estado = JAQUEBLANCO;
 			JaqueBlanco = true;
 		}
-		else if (mundo.jaque() == 2)
-		{
-			estado = JAQUEBLANCO;
+		else if (mundo.jaque() == negro) {
+			estado = JAQUENEGRO;
 			JaqueNegro = true;
 		}
-		else if (mundo.jaque() == 3 || mundo.jaque() == 4)
-		{
+		else if (mundo.jaque() == blanco || mundo.jaque() == negro) {
 			estado = FIN;
 		}
-		
 	}
-	//Cuando deja de haber jaque entonces se reanuda el juego
-	else if (estado == JAQUEBLANCO || estado == JAQUENEGRO)
-	{
-		if (mundo.jaque() == 0)
-		{
-			JaqueBlanco = false;
+	else if (estado == JAQUEBLANCO || estado == JAQUENEGRO) {
+		if (mundo.jaque() == 0) {
 			JaqueNegro = false;
+			JaqueBlanco = false;
 			estado = JUEGO;
 		}
+		else if (mundo.jaque() == blanco || mundo.jaque() == negro) { estado = FIN; }
 	}
 }
 
