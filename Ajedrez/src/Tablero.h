@@ -17,8 +17,6 @@ private:
 	Pieza* id[8][8];//matriz de punteros que contienen las direcciones de memoria de las piezas (para identificarlas)
 	Pieza* lista[32];//lista de piezas (puede o no contener punteros nulos), el máximo es el nº total de piezas permitidas (32)
 	Color turno;//turno de blancas o negras 
-	//int numBlancas;
-	//int numNegras;
 	int numero;
 	
 public:
@@ -41,7 +39,6 @@ public:
 	bool amenaza(Pieza& pieza); //true si pieza puede ser comida, no incluye comer al paso
 
 	bool enroque(Pieza& torre, Pieza& rey, char tipo);
-	//bool enroqueCorto(Pieza& torre, Pieza& rey);
 	bool enroque(int fdestino, int cdestino, int forigen, int corigen);
 
 	//bool jaque(Rey& rey);

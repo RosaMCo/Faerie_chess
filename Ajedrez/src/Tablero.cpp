@@ -102,8 +102,6 @@ Tablero::Tablero() {
 		
 	}
 	numero = 32;
-	//numBlancas = 16;
-	//numNegras = 16;
 	//comprobarAsignaciones();
 	//imprimirLista();
 }
@@ -428,8 +426,12 @@ bool Tablero::amenaza(Pieza& pieza)//no aplicado a comer al paso
 			{
 				if ((colorDistinto(*id[j][i], pieza)) && ((i != _columna) && (j != _fila)))
 				{
-					if (id[j][i]->comer(_columna, _fila))
+					if ((id[j][i]->comer(_columna, _fila)) && (piezaEnMedio(j, i, _fila, _columna) == 0))
+					{
+						std::cout << "----Puede comer al rey el"; imprimirTipo(id[j][i]->getTipo()); imprimirColor(id[j][i]->getColor());
+						std::cout << " de x= " << i << " y= " << j << "estando supuestamente el rey en x= " << _columna << " y= " << _fila << "\n";
 						return true;
+					}
 					
 				}
 			}
@@ -459,43 +461,67 @@ bool Tablero::enroque(int fdestino, int cdestino, int forigen, int corigen)
 	auto& destino = id[fdestino][cdestino];
 	Pieza* rey;
 	Pieza* torre;
+	std::cout << "->Enroque general\n";
 	if (origen && destino)
 	{
+		std::cout << "->Hay piezas en seleccion\n";
+		std::cout << "->En origen: "; imprimirTipo(origen->getTipo());
+		std::cout << "->En destino: "; imprimirTipo(destino->getTipo());
 		if (((origen->getTipo() == REY) && (destino->getTipo() == TORRE)) || ((origen->getTipo() == TORRE) && (destino->getTipo() == REY)))
 		{
+			std::cout << "->Una es rey y la otra torre\n";
 			if (colorDistinto(*origen, *destino) == false)
 			{
+				std::cout << "->Su color es igual\n";
+				std::cout << "->En origen: "; imprimirTipo(origen->getTipo());
+				std::cout << "->En destino: "; imprimirTipo(destino->getTipo());
 				switch (origen->getTipo())
 				{
 				case REY:
-					rey = origen;
+					rey = origen; std::cout << " rey es el origen, torre es el destino\n";
 					torre = destino;
 					break;
 				case TORRE:
-					rey = destino;
+					rey = destino; std::cout << " torre es el origen, rey es el destino\n";
 					torre = origen;
 					break;
 				default:
 					break;
 				}
+				std::cout << "-> Miro si es el movimiento inicial: ";
 				if (((rey->getMovIni() == false) && (torre->getMovIni() == false))) //si son del mismo color y nunca se han movido se sobreentiende que están en la misma fila.
 				{
+					std::cout << "es el movimiento inicial de ambos\n-> Rey en jaque? ";
 					if (amenaza(*rey) == 0) //si el rey no está en jaque
 					{
-						if (piezaEnMedio(fdestino,cdestino,forigen,corigen))
-							return false;
+						std::cout << "Rey no en jaque actualmente\n";
+						if (piezaEnMedio(fdestino, cdestino, forigen, corigen))
+						{
+							return false; std::cout << "...pero hay una pieza en medio\n";
+						}
 						else
 						{
+							std::cout << "...y no hay pieza en medio\n";
 							if (torre->getColumna() == 0) //torres de la izquierda
-								return (enroque(*torre, *rey,'L'));
+							{
+								std::cout << "La columna de la torre es " << torre->getColumna() << " || Llamo a enroque largo\n";
+								return (enroque(*torre, *rey, 'L'));
+							}
 							if (torre->getColumna() == 7)
-								return (enroque(*torre, *rey,'C')); //torres de la derecha
+							{
+								std::cout << "La columna de la torre es " << torre->getColumna() << " |Llamo a enroque corto\n";
+								return (enroque(*torre, *rey, 'C'));//torres de la derecha
+							}
 						}
 					}
+					else return false;
 				}
+				else return false;
 
 			}
+			else return false;
 		}
+		else return false;
 
 	}
 	else return false;
@@ -533,40 +559,6 @@ bool Tablero::enroque(Pieza& torre, Pieza& rey,char tipo)
 
 
 }
-
-/*bool Tablero::enroqueCorto(Pieza& torre, Pieza& rey)
-{
-	Rey _rey = rey;
-	//1. Compruebo que no haya piezas entre medias
-	int contador = 0;
-	int _fila = torre.getFila();//1.1 tomo la fila en la que esté la torre
-
-	for (int i = 0; i < 32; i++)
-	{
-		if ((lista[i]->getFila()) == _fila) //1.2 si la fila de alguna pieza coincide con la de la torre
-			for (int _columna = 6; _columna > 4; _columna--) //las columnas de las casillas entre torre y rey
-			{
-				if ((lista[i]->getColumna()) == _columna) //1.3 si además de la fila, está entre las columnas entre medias
-					contador++; //1.4 si hay pieza entre medias, sumo contador 
-
-				_rey.setPosicion(_columna, _fila);//2. Compruebo que ninguna de las columnas por las que pasará el rey quede atacada
-				if (amenaza(rey))
-					contador++;//2.2 Si alguna de las casillas está amenazada, sumo contador
-			}
-	}
-	if (contador == 0) //no hay piezas entremedias, ninguna de las casillas por las que pasará el rey está amenazada.
-	{
-		_rey.setPosicion(6, _fila);
-		if ((amenaza(_rey)) == 0)
-		{
-			rey.setPosicion(6, _fila);
-			torre.setPosicion(5, _fila);
-		}
-
-		//FALTA ACTUALIZAR ID
-
-	}
-}*/
 
 
 bool Tablero::jaqueMate(Rey& rey)
