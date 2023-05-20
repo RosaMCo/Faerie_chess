@@ -49,8 +49,14 @@ bool Rey::mover(int nc, int nf)
 		return false;
 	else
 	{
+		if ((abs(columna - nc) == 1) || (abs(fila - nf) == 1))
+		{
+			movIni = 1;
+			return true;
+		}
+		else return false;
 		//El rey se mueve uno para arriba
-		if (nc == fila + 1)
+		/*if (nc == fila + 1)
 			//El rey se mueve uno para arriba y uno a la izq, es decir,
 			//diagonal
 			if (nf == columna - 1)
@@ -108,7 +114,7 @@ bool Rey::mover(int nc, int nf)
 				return true;
 			}
 			else
-				return false;
+				return false;*/
 
 	}
 

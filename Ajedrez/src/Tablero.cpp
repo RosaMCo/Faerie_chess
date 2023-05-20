@@ -101,9 +101,36 @@ Tablero::Tablero() {
 		}
 		
 	}
-
+	numero = 32;
+	//numBlancas = 16;
+	//numNegras = 16;
 	//comprobarAsignaciones();
 	//imprimirLista();
+}
+
+
+void Tablero::eliminarPieza(int c, int f)
+{
+	for (int i = 0; i < numero; i++)
+	{
+		if ((i < 0) || (i >= numero))
+			return;
+		if ((lista[i]->getColumna() == c) && (lista[i])->getFila() == f)
+		{
+			int eliminadaX = lista[i]->getColumna();
+			int eliminadaY = lista[i]->getFila();
+			//std::cout << "-----------Quiero eliminar:-------------\n"; imprimirId(eliminadaX, eliminadaY); imprimirLista(eliminadaX, eliminadaY);
+			delete lista[i];
+			std::cout << "Eliminada!!!!!!!!!!!!!!!!!!!!!!\nNueva ID:";
+			//id[eliminadaY][eliminadaX] = nullptr;
+			numero--;
+			for (int j = i; j < numero; j++)
+			{
+				lista[j] = lista[j + 1];
+			}
+			return;
+		}
+	}
 }
 
 bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [pasar como const?]
@@ -122,16 +149,7 @@ bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [
 	}
 	else { return false; std::cout << "La id no contiene nada. Casilla vacía" << "\n"; }
 }
-/*Pieza* Tablero::getPieza(int c, int f)
-{
-	for (int k = 0; k < 32; k++)
-	{
-		if ((lista[k]->getColumna() == c) && (lista[k]->getFila() == f))
-		{
-			return lista[k];
-		}
-	}
-}*/
+
 
 bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//selección de destino (una vez seleccionada pieza a mover)
 	std::cout << "\n->Entro en mover de tablero\n";
@@ -155,17 +173,16 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 		}
 		else
 		{
-			if (destino) //casilla ocupada
+			if (destino)  //casilla ocupada
 			{
 				std::cout << "\ncasilla ocupada ";
 				if (destino->getColor() != turno) {//comprobar pieza color distinto
 					std::cout << "por pieza de distinto color \n ";
-					if (origen->comer(cdestino, fdestino)) //llamar a comer de la pieza seleccionada
+					if (origen->comer(cdestino, fdestino))//llamar a comer de la pieza seleccionada
 					{
 						std::cout << "La puedo comer!! \n ";
-						//llamar a destructor de la pieza destino (delete)
-						//realizar el movimiento
-						return actualizarId(fdestino, cdestino, forigen, corigen);
+						eliminarPieza(cdestino, fdestino);
+						return(actualizarId(fdestino, cdestino, forigen, corigen));						
 					}
 					else { return false; std::cout << "No la puedo comer :( \n "; }
 				}
@@ -175,14 +192,21 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 			else //casilla vacía
 			{
 				std::cout << "La casilla destino esta vacia \n ";
-				if (origen->mover(cdestino, fdestino)) //llamar a mover de la pieza seleccionada
+				if (comerAlPaso(fdestino, cdestino, forigen, corigen))
 				{
-					//realizar el movimiento
-					std::cout << "Me muevo a  \n ";
-					imprimirId(cdestino, fdestino);
-					return actualizarId(fdestino, cdestino, forigen, corigen);
+					return true;
 				}
-				else { return false; std::cout << "No me puedo mover... \n "; }
+				else //llamar a mover de la pieza seleccionada
+				{
+					if (origen->mover(cdestino, fdestino))//realizar el movimiento
+					{
+						std::cout << "Me muevo a  \n ";
+						imprimirId(cdestino, fdestino);
+						return actualizarId(fdestino, cdestino, forigen, corigen);
+					}
+					else { return false; std::cout << "No me puedo mover... \n "; }
+				}
+				
 			}
 		}
 	}
@@ -192,9 +216,9 @@ bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen)
 	std::cout << "\nestoy actualizando la id...";
 	//auto& destino = id[fdestino][cdestino];
 	//auto& origen = id[forigen][corigen];
-	if (id[forigen][corigen])
+	if (id[forigen][corigen])//si hay pieza, id no nula
 	{
-		id[forigen][corigen]->setPosicion(cdestino, fdestino);//actualizar posición de la pieza
+		id[forigen][corigen]->setPosicion(cdestino, fdestino);//actualizar posición de la pieza 
 		id[fdestino][cdestino] = id[forigen][corigen];//copia de dir. de memoria para que apunten ambos a la misma pieza
 		id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
 		std::cout << "\nID ACTUALIZADA; Ahora nueva posicion:"; imprimirId(cdestino, fdestino); std::cout<<"\t\tLa posicion anterior: "; imprimirId(corigen, forigen);
@@ -332,33 +356,51 @@ bool Tablero::colorDistinto(Pieza& pieza, Pieza& pieza2)
 	else return false;
 }
 
-bool Tablero::comerAlPaso(Peon& peon)
-{
-	for (int i = 0; i < 32; i++)
-	{
-		if (colorDistinto((*lista[i]), peon)) //si la pieza es de distinto color...
-		{
-			if (((lista[i]->getTipo()) == PEON)) //...y es un peon...
-				if (lista[i]->getMovIniLargo()) //que se ha movido dos casillas en el primer movimiento...
-				{
-					int columna = peon.getColumna();
-					int fila = peon.getFila();
-					int columna2 = lista[i]->getColumna();
-					int fila2 = lista[i]->getFila();
 
-					if (fila2 == fila) //...si ambos peones se encuentran en la misma fila
-						if ((columna == columna2 - 1) || (columna == columna2 + 1)) //y en una columna a la derecha o a la izquierda
-							if (casillaVacia(columna2, fila2 - 1)) //y la casilla que está detrás del peon que se pretende comer al paso está vacía...
+bool Tablero::comerAlPaso(int fdestino, int cdestino, int forigen, int corigen)
+{
+	auto& origen = id[forigen][corigen];
+	auto& destino = id[fdestino][cdestino];
+	int incremento = (origen->getColor()) == blanco ? -1 : 1; //si el origen es blanco, nos interesa el incremento del contrario, esto es el negro, que se mueve decrementando filas
+	auto& peonAComer = id[fdestino + incremento][cdestino];
+	if (peonAComer)
+	{
+		if (colorDistinto(*origen, *peonAComer))//si las piezas son de distinto color...
+		{
+			if ((origen->getTipo() == PEON) && (peonAComer->getTipo() == PEON))//...y son peones...
+			{
+				if (peonAComer->getMovIniLargo()) // si el peon a comer se ha movido dos casillas en el primer movimiento...
+				{
+					if ((forigen == (fdestino + incremento)) && (abs(corigen - cdestino) == 1))//...si ambos peones se encuentran en la misma fila y a una columna de diferencia...
+					{
+						if (casillaVacia(cdestino, fdestino)) //y la casilla que está detrás del peon que se pretende comer al paso está vacía...
+						{
+							eliminarPieza(cdestino, (fdestino + incremento));
+							if (actualizarId(fdestino, cdestino, forigen, corigen))
 							{
-								peon.setPosicion(columna2, fila + 1);
-								return true; //....podremos comer al paso
+								std::cout << "comida al paso!\n";
+								return true;
+							}
+							else
+							{
+								std::cout << "comer al paso no completado\n";
+								return false;
 							}
 
+						}
+						else return false;
+					}
+					else return false;
 				}
+				else return false;
+			}
+			else return false;
 		}
 		else return false;
 	}
+	else return false;
 }
+
 
 bool Tablero::amenaza(Pieza& pieza)
 {

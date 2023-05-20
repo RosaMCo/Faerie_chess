@@ -20,13 +20,12 @@ bool Peon::mover(int nc, int nf) {
 		if (color == blanco)
 		{
 			if (mov_ini == 1) {
-				if ((nc == columna) && ((nf - fila) <= 2)) 
+				if ((nc == columna) && (nf - fila == 2)) 
 				{
 					movIniLargo = 1;
 					mov_ini = 0;
 					return true;
 				}
-				else return false;
 			}
 
 			else {
@@ -43,13 +42,12 @@ bool Peon::mover(int nc, int nf) {
 		else if (color == negro)
 		{
 			if (mov_ini == 1) {
-				if ((nc == columna) && ((nf - fila) >= -2)) 
+				if ((nc == columna) && ((nf - fila) == -2)) 
 				{
 					movIniLargo = 1;
 					mov_ini = 0;
 					return true;
 				}
-				else return false;
 			}
 
 			else {
@@ -68,7 +66,7 @@ bool Peon::mover(int nc, int nf) {
 			std::cout << "color de peon no definido\n";
 			return false;
 		}
-		if (mov_ini == 1) {
+		/*if (mov_ini == 1) {
 			if (nc == columna && nf - fila <= 2) {
 				movIniLargo = 1;
 				mov_ini = 0;
@@ -86,7 +84,7 @@ bool Peon::mover(int nc, int nf) {
 
 			else return false;
 		}
-		//return false;
+		//return false;*/
 	}
 }
 
