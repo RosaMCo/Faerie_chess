@@ -25,7 +25,7 @@ int Reglas::Inicializa()
       
    }
     // Al final, se cierra el archivo
-   
+   system("pause");
    exit(0);
     
     
