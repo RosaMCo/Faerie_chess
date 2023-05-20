@@ -61,7 +61,7 @@ void CoordinadorAjedrez::dibuja()
 	{
 		mundo.dibuja();
 		ETSIDI::setTextColor(1, 1, 1);
-		ETSIDI::setFont("fuentes/fuente2.otf", 16);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 16);
 		ETSIDI::printxy("JAQUE AL REY BLANCO!!!", -1, 8);
 
 	}
@@ -69,7 +69,7 @@ void CoordinadorAjedrez::dibuja()
 	{
 		mundo.dibuja();
 		ETSIDI::setTextColor(1, 1, 1);
-		ETSIDI::setFont("fuentes/fuente2.otf", 16);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 16);
 		ETSIDI::printxy("JAQUE AL REY NEGRO!!!", -1, 8);
 
 	}
@@ -88,10 +88,10 @@ void CoordinadorAjedrez::dibuja()
 		glEnable(GL_LIGHTING);
 
 		ETSIDI::setTextColor(1, 1, 1);
-		ETSIDI::setFont("fuentes/fuente2.otf", 16);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 16);
 		ETSIDI::printxy("ENHORABUENA HAS GANADO!!!!", 2, 5);
 		ETSIDI::setTextColor(1, 1, 1);
-		ETSIDI::setFont("fuentes/fuente2.otf", 12);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 12);
 		ETSIDI::printxy("PULSE LA TECLA -C- PARA CONTINUAR", 3, 4);
 		ETSIDI::printxy("PULSE LA TECLA -S- PARA SALIR", 3, 3);
 
@@ -230,26 +230,31 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 void CoordinadorAjedrez::jaque()
 {
 	//Si estamos jugando a la partida de ajedrez
-	if (estado == JUEGO) {
-		if (mundo.jaque()==blanco) {
-			estado = JAQUEBLANCO;
-			JaqueBlanco = true;
+	if (estado == JUEGO) 
+	{
+		if (mundo.jaque() == true) {
+			if (mundo.getTurno() == negro)
+			{
+				estado == JAQUEBLANCO;
+				JaqueBlanco = true;
+			}
+			else if (mundo.getTurno() == blanco)
+			{
+				estado == JAQUENEGRO;
+				JaqueNegro = true;
+			}
+
 		}
-		else if (mundo.jaque() == negro) {
-			estado = JAQUENEGRO;
-			JaqueNegro = true;
-		}
-		else if (mundo.jaque() == blanco || mundo.jaque() == negro) {
-			estado = FIN;
-		}
+
 	}
-	else if (estado == JAQUEBLANCO || estado == JAQUENEGRO) {
-		if (mundo.jaque() == 0) {
+	else if (estado == JAQUEBLANCO || estado == JAQUENEGRO)
+	{
+		if (mundo.jaque() == false) {
 			JaqueNegro = false;
 			JaqueBlanco = false;
 			estado = JUEGO;
 		}
-		else if (mundo.jaque() == blanco || mundo.jaque() == negro) { estado = FIN; }
 	}
+		
 }
 
