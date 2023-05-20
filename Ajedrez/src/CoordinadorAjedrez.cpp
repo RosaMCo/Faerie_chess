@@ -102,7 +102,11 @@ void CoordinadorAjedrez::dibuja()
 	}
 	else if (estado == REGLAS)
 	{
-		//PONER INSTRUCCIONES EN UN TXT?
+		
+
+		
+
+		
 	}
 }
 void CoordinadorAjedrez::cambiaTurno()
@@ -129,6 +133,15 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 				cursor = 1;
 				if (key == 'c')
 					estado = INICIO;
+			}
+			else if (key == '3')
+			{
+				reglas.Inicializa();
+				
+				estado == REGLAS;
+				if (key == 'c')
+					estado = INICIO;
+
 			}
 
 			else if (key == '4')
@@ -233,12 +246,13 @@ void CoordinadorAjedrez::jaque()
 	if (estado == JUEGO) 
 	{
 		if (mundo.jaque() == true) {
-			if (mundo.getTurno() == negro)
+			mundo.getTurno();
+			if(mundo.getTurno()==blanco)
 			{
 				estado == JAQUEBLANCO;
 				JaqueBlanco = true;
 			}
-			else if (mundo.getTurno() == blanco)
+			else if (mundo.getTurno() == 1)
 			{
 				estado == JAQUENEGRO;
 				JaqueNegro = true;

@@ -2,6 +2,8 @@
 #include "Mundo.h"
 #include "Tienda.h"
 #include "freeglut.h"
+#include"Reglas.h"
+
 
 class CoordinadorAjedrez
 {
@@ -20,6 +22,7 @@ public:
 protected:
 	Mundo mundo;
 	Tienda tienda;
+	Reglas reglas;
 	enum Estado { INICIO, JUEGO, TIENDA, REGLAS, GAMEOVER, FIN,JAQUEBLANCO, JAQUENEGRO};
 	Estado estado;
 	//Variables de jaque desactivadas
