@@ -9,6 +9,7 @@
 #include "Reina.h"
 #include "Rey.h"
 #include"Regente.h"
+#include "Cortesana.h"
 //enum Color {indefinido, blanco, negro};
 
 class Tablero
