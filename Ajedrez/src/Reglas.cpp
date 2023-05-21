@@ -1,6 +1,6 @@
 #include "Reglas.h"
 
-int Reglas::Inicializa()
+void Reglas::Inicializa()
 {
     unsigned char bufer[TAMANIO_BUFER];
     FILE* archivo;
@@ -26,7 +26,19 @@ int Reglas::Inicializa()
    }
     // Al final, se cierra el archivo
    system("pause");
-   exit(0);
-    
+pregunta1: 
+   cout << "Desea salir? Pulse Y/N: ";
+   cin >> opcion;
+   switch (opcion)
+   {
+   case 'Y':exit(0) ; break;
+   case'y':exit(0); break;
+   case 'N': system("pause");  goto pregunta1; break;
+   case'n':system("pause"); goto pregunta1; break;
+   default: goto pregunta1; break;
+      
+   }
+       
+
     
 }
