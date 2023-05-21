@@ -8,6 +8,7 @@
 #include "Alfil.h"
 #include "Reina.h"
 #include "Rey.h"
+#include"Regente.h"
 //enum Color {indefinido, blanco, negro};
 
 class Tablero
