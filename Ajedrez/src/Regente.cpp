@@ -45,12 +45,14 @@ bool Regente::mover(int nc, int nf)
 
 	if (((abs(columna - nc) == 2) || (abs(fila - nf) == 2)))
 	{
-			
+
 		return true;
 	}
 	else if (((abs(nf - fila) == 2) && (abs(nc - columna) == 2)) || ((abs(nf - fila) == 2) && (abs(nc - columna) == 2)))
 	{
 		return true;
 	}
+	else if (((abs(nf - fila) == 1) && (abs(nc - columna) == 2)) || ((abs(nf - fila) == 2) && (abs(nc - columna) == 1)))
+		return true;
 	else { return false; std::cout << "movimiento del regente NO permitido\n"; }
 }
