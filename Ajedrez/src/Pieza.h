@@ -2,7 +2,7 @@
 #include "Vector2D.h"
 #include "ETSIDI.h"
 enum Color {indefinido,blanco,negro};
-enum Tipo { PEON, TORRE, ALFIL, CABALLO, REINA, REY, INDEFINIDO };
+enum Tipo { PEON, TORRE, ALFIL, CABALLO, REINA, REY, INDEFINIDO, CAMPESINO };
 class Pieza
 {
 protected:
@@ -44,6 +44,7 @@ public:
 	virtual bool comer(int nx, int ny) = 0;
 	virtual bool getMovIniLargo() = 0;
 	virtual bool getMovIni() = 0;
+	virtual void setMovIni(bool nuevo) = 0;
 
 };
 

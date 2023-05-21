@@ -275,6 +275,7 @@ void Tablero::dibuja() {
 		}
 	}
 }
+
 bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen) {//selección de destino (una vez seleccionada pieza a mover)
 	if ((id[forigen][corigen]->getTipo()) == CABALLO)
 	{
@@ -426,13 +427,17 @@ bool Tablero::amenaza(Pieza& pieza)//no aplicado a comer al paso
 			{
 				if ((colorDistinto(*id[j][i], pieza)) && ((i != _columna) && (j != _fila)))
 				{
-					if ((id[j][i]->comer(_columna, _fila)) && (piezaEnMedio(j, i, _fila, _columna) == 0))
+					if (piezaEnMedio(j, i, _fila, _columna) == 0)
 					{
-						std::cout << "----Puede comer al rey el"; imprimirTipo(id[j][i]->getTipo()); imprimirColor(id[j][i]->getColor());
-						std::cout << " de x= " << i << " y= " << j << "estando supuestamente el rey en x= " << _columna << " y= " << _fila << "\n";
-						return true;
+						
+						if ((id[j][i]->comer(_columna, _fila)))
+						{
+							std::cout << "----Puede comer al rey el"; imprimirTipo(id[j][i]->getTipo()); imprimirColor(id[j][i]->getColor());
+							std::cout << " de x= " << i << " y= " << j << "estando supuestamente el rey en x= " << _columna << " y= " << _fila << "\n";
+							std::cout << "...Y Pieza en medio: "<< piezaEnMedio(j, i, _fila, _columna)<<"\n";
+							return true;
+						}
 					}
-					
 				}
 			}
 			
@@ -546,14 +551,22 @@ bool Tablero::enroque(Pieza& torre, Pieza& rey,char tipo)
 	}
 	if (tipo == 'C')
 	{
-		if ((actualizarId(_fila, 6, rey.getFila(), rey.getColumna()))&&(actualizarId(_fila, 5, torre.getFila(), torre.getColumna())))
-				return true;
+		if ((actualizarId(_fila, 6, rey.getFila(), rey.getColumna())) && (actualizarId(_fila, 5, torre.getFila(), torre.getColumna())))
+		{
+			torre.setMovIni(0);
+			rey.setMovIni(0);
+			return true;
+		}
 		else return false;
 	}
 	else //enroque largo
 	{
-		if ((actualizarId(_fila, 2, rey.getFila(), rey.getColumna()))&& (actualizarId(_fila, 3, torre.getFila(), torre.getColumna())))
+		if ((actualizarId(_fila, 2, rey.getFila(), rey.getColumna())) && (actualizarId(_fila, 3, torre.getFila(), torre.getColumna())))
+		{
+			torre.setMovIni(0);
+			rey.setMovIni(0);
 			return true;
+		}
 		else return false;
 	}
 

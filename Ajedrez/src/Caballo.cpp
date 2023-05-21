@@ -12,10 +12,12 @@ bool Caballo::mover(int nc, int nf)
 		{
 			return false;
 		}
-		if (((nc = columna - 1) && (nf = fila - 2)) || ((nc = columna + 1) && (nf = fila - 2)) || ((nc = columna + 2) && (nf = fila - 1)) || ((nc = columna + 2) && (nf = fila + 1)) || ((nc = columna + 1) && (nf = fila + 2)) || ((nc = columna - 1) && (nf = fila + 2)) || ((nc = columna - 2) && (nf = fila + 1)) || ((nc = columna - 2) && (nf = fila + 1)))
+		if (((abs(nf - fila) == 1) && (abs(nc - columna) == 2)) || ((abs(nf - fila) == 2) && (abs(nc - columna) == 1)))
+			return true;
+		/*if (((nc = columna - 1) && (nf = fila - 2)) || ((nc = columna + 1) && (nf = fila - 2)) || ((nc = columna + 2) && (nf = fila - 1)) || ((nc = columna + 2) && (nf = fila + 1)) || ((nc = columna + 1) && (nf = fila + 2)) || ((nc = columna - 1) && (nf = fila + 2)) || ((nc = columna - 2) && (nf = fila + 1)) || ((nc = columna - 2) && (nf = fila + 1)))
 		{
 			return true;
-		}
+		}*/
 		else return false;
 }
 
