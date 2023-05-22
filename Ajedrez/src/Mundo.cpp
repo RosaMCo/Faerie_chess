@@ -130,9 +130,10 @@ void Mundo::cambiaTurno()
 	//std::cout << "desde Mundo, turno cambiado a: "; tablero.imprimirTurno();
 }
 
-bool Mundo::jaque()
+char Mundo::jaque()
 {
-	return tablero.jaque(tablero.getTurno());
+	//return tablero.jaqueMate(tablero.getTurno());
+	return 'N';
 }
 
 int* Mundo::ValidarClick( int x, int y)

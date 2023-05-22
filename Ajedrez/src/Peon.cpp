@@ -121,7 +121,7 @@ bool Peon::mover(int nc, int nf) {
 }
 
 bool Peon::comer(int nc, int nf) {
-	std::cout << "Entro en comer de peon\n";
+	//std::cout << "Entro en comer de peon\n";
 	bool comer = false;
 	if ((nc < 0) || (nc > 7) || (nf < 0) || (nf > 7))
 	{

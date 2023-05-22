@@ -73,8 +73,29 @@ void CoordinadorAjedrez::dibuja()
 		ETSIDI::printxy("JAQUE AL REY NEGRO!!!", -1, 8);
 
 	}
+	else if (estado == GAMEOVER)
+	{
+		Color col = mundo.getTurno();
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("fuentes/Bitwise.ttf", 16);
+		switch (col)
+		{
+		case indefinido:
+			break;
+		case blanco:
+			ETSIDI::printxy("PIERDEN LAS BLANCAS", -1, 8);
+			break;
+		case negro:
+			ETSIDI::printxy("PIERDEN LAS NEGRAS", -1, 8);
+			break;
+		default:
+			break;
+		}
+		estado = FIN;
+	}
 	else if (estado==FIN)
 	{
+		Color col = mundo.getTurno();
 		mundo.dibuja();
 
 		glDisable(GL_LIGHTING);
@@ -89,7 +110,20 @@ void CoordinadorAjedrez::dibuja()
 
 		ETSIDI::setTextColor(1, 1, 1);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 16);
-		ETSIDI::printxy("ENHORABUENA HAS GANADO!!!!", 2, 5);
+		switch (col)
+		{
+		case indefinido:
+			break;
+		case blanco:
+			ETSIDI::printxy("ENHORABUENA, JUGADOR NEGRO, HAS GANADO!!!!", 2, 5);
+			break;
+		case negro:
+			ETSIDI::printxy("ENHORABUENA, JUGADOR BLANCO, HAS GANADO!!!!", 2, 5);
+			break;
+		default:
+			break;
+		}
+		//ETSIDI::printxy("ENHORABUENA HAS GANADO!!!!", 2, 5);
 		ETSIDI::setTextColor(1, 1, 1);
 		ETSIDI::setFont("fuentes/Bitwise.ttf", 12);
 		ETSIDI::printxy("PULSE LA TECLA -C- PARA CONTINUAR", 3, 4);
@@ -245,25 +279,34 @@ void CoordinadorAjedrez::jaque()
 	//Si estamos jugando a la partida de ajedrez
 	if (estado == JUEGO) 
 	{
-		if (mundo.jaque() == true) {
+		if (mundo.jaque() == 'J')
+		{
 			mundo.getTurno();
-			if(mundo.getTurno()==blanco)
+			if (mundo.getTurno() == blanco)
 			{
 				estado == JAQUEBLANCO;
 				JaqueBlanco = true;
 			}
-			else if (mundo.getTurno() == 1)
+			else if (mundo.getTurno() == negro)
 			{
 				estado == JAQUENEGRO;
 				JaqueNegro = true;
 			}
 
 		}
+		else if (mundo.jaque() == 'M')
+		{
+			mundo.getTurno();
+			estado == GAMEOVER;
+
+		}
+		else estado = JUEGO;
 
 	}
 	else if (estado == JAQUEBLANCO || estado == JAQUENEGRO)
 	{
-		if (mundo.jaque() == false) {
+		if (mundo.jaque()=='N')
+		{
 			JaqueNegro = false;
 			JaqueBlanco = false;
 			estado = JUEGO;

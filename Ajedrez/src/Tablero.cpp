@@ -233,6 +233,8 @@ bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen)
 		id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
 		std::cout << "\nID ACTUALIZADA; Ahora nueva posicion:"; imprimirId(cdestino, fdestino); std::cout<<"\t\tLa posicion anterior: "; imprimirId(corigen, forigen);
 		std::cout << "\nLISTA ACTUALIZADA: "; //imprimirLista(cdestino, fdestino);
+		char _jaque = jaqueMate(turno);
+		std::cout << "\n\n % %%%%%%%%%%%%%% ESTADO DE JAQUE : " << _jaque << "% %%%%%%%%%%%%%%\n";
 		return true;
 		
 	}
@@ -276,14 +278,18 @@ void Tablero::dibuja() {
 	}
 }
 
-bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen) {//selección de destino (una vez seleccionada pieza a mover)
-	if ((id[forigen][corigen]->getTipo()) == CABALLO)
+bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen, int NojaqueMate) {//selección de destino (una vez seleccionada pieza a mover)
+	//if (NojaqueMate||PermitirMov)
+	if(NojaqueMate)
 	{
-		std::cout << "Es un caballo ->No se buscan piezas en medio e\n";
-		return false;
+		if ((id[forigen][corigen]->getTipo()) == CABALLO)
+		{
+			std::cout << "Es un caballo ->No se buscan piezas en medio e\n";
+				return false;
+		}
 	}
-	else
-	{
+	//else
+	//{
 		//definir sentido del movimiento
 		int difY = fdestino - forigen;
 		int difX = cdestino - corigen;
@@ -348,7 +354,7 @@ bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen)
 
 		}
 		else return false;
-	}
+	//}
 }
 
 bool Tablero::casillaVacia(int c, int f)
@@ -415,7 +421,7 @@ bool Tablero::comerAlPaso(int fdestino, int cdestino, int forigen, int corigen)
 }
 
 
-bool Tablero::amenaza(Pieza& pieza)//no aplicado a comer al paso
+bool Tablero::amenaza(Pieza& pieza, int NojaqueMate)//no aplicado a comer al paso
 {
 	int _columna = pieza.getColumna();
 	int _fila = pieza.getFila();
@@ -427,14 +433,14 @@ bool Tablero::amenaza(Pieza& pieza)//no aplicado a comer al paso
 			{
 				if ((colorDistinto(*id[j][i], pieza)) && ((i != _columna) && (j != _fila)))
 				{
-					if (piezaEnMedio(j, i, _fila, _columna) == 0)
+					if (piezaEnMedio(j, i, _fila, _columna, NojaqueMate) == 0)
 					{
 						
 						if ((id[j][i]->comer(_columna, _fila)))
 						{
 							std::cout << "----Puede comer al rey el"; imprimirTipo(id[j][i]->getTipo()); imprimirColor(id[j][i]->getColor());
 							std::cout << " de x= " << i << " y= " << j << "estando supuestamente el rey en x= " << _columna << " y= " << _fila << "\n";
-							std::cout << "...Y Pieza en medio: "<< piezaEnMedio(j, i, _fila, _columna)<<"\n";
+							std::cout << "...Y Pieza en medio: "<< piezaEnMedio(j, i, _fila, _columna,NojaqueMate)<<"\n";
 							return true;
 						}
 					}
@@ -447,17 +453,28 @@ bool Tablero::amenaza(Pieza& pieza)//no aplicado a comer al paso
 	return false;
 
 }
-bool Tablero::jaque(Color turno)
+Pieza* Tablero::jaque(Color turn)
 {
 	for (int fila = 0; fila < 8; fila++)
 	{
 		for (int columna = 0; columna < 8; columna++)
 		{
-			if ((id[fila][columna]->getTipo() == REY) && (id[fila][columna]->getColor() == turno))
-				return amenaza(*id[fila][columna]);
+			if (id[fila][columna]) 
+			{
+				if ((id[fila][columna]->getTipo() == REY) && (id[fila][columna]->getColor() != turn)) //si el rey del contrario...
+				{
+					if (amenaza(*id[fila][columna])) //....esta amenazado
+					{
+						std::cout << "JAQUE AL REY "; imprimirColor(id[fila][columna]->getColor());
+						return id[fila][columna];
+					}
+				}
+			}
 		}
 	}
+	return nullptr;
 }
+
 
 
 bool Tablero::enroque(int fdestino, int cdestino, int forigen, int corigen)
@@ -500,7 +517,7 @@ bool Tablero::enroque(int fdestino, int cdestino, int forigen, int corigen)
 					if (amenaza(*rey) == 0) //si el rey no está en jaque
 					{
 						std::cout << "Rey no en jaque actualmente\n";
-						if (piezaEnMedio(fdestino, cdestino, forigen, corigen))
+						if (piezaEnMedio(fdestino, cdestino, forigen, corigen,0))
 						{
 							return false; std::cout << "...pero hay una pieza en medio\n";
 						}
@@ -574,22 +591,58 @@ bool Tablero::enroque(Pieza& torre, Pieza& rey,char tipo)
 }
 
 
-bool Tablero::jaqueMate(Rey& rey)
+char Tablero::jaqueMate(Color turn)
 {
-	int _columna = rey.getColumna();
-	int _fila = rey.getFila();
-	if (amenaza(rey))//si está en jaque..
+	Pieza* rey = jaque(turn);//si pueden hacer jaque al rey contrario
+	
 	{
-		for (int i = 0; i < 8; i++)
+		int contador = 0;
+		if (rey)//si el rey contrario está en jaque...
+		{
+			int reyX = rey->getColumna();
+			int reyY = rey->getFila();
 			for (int j = 0; j < 8; j++)
 			{
-				if ((rey.mover(i, j)) && casillaVacia(i, j))//..y el rey se puede mover a una casilla vacía...
-					return false; //...no hay jaque mate
-				else return false;
+				for (int i = 0; i < 8; i++)
+				{
+					if (rey->mover(i, j))//...si el rey contrario se puede mover a un lugar donde hay pieza
+					{
+						if (id[j][i])//..a un lugar donde hay pieza
+						{
+							if (id[j][i]->getColor() == turn)//...del color de la atacante...
+							{
+								/*Color _color = turn == blanco ? negro : blanco;
+								Rey* _rey = new Rey(_color, j, i);//fila 0, columna 4*/
+								//rey->setPosicion(i, j);
+								//if(amenaza(*rey,0)==0)//que no le hace quedar en jaque de nuevo
+									contador++;
+								//rey->setPosicion(reyX, reyY);
+								//delete _rey;
+							}
+						}
+						else//...o a una casilla vacía que no le hace quedar en amenaza de nuevo
+						{
+							/*Color _color = turn == blanco ? negro : blanco;
+							Rey* _rey = new Rey(_color, j, i);//fila 0, columna 4
+							_rey->setPosicion(i, j);
+							if (amenaza(*_rey, 0) == 0)//que no le hace quedar en jaque de nuevo
+								contador++;
+							delete _rey;*/
+							//rey->setPosicion(i, j);
+							//if (amenaza(*rey, 0) == 0)//que no le hace quedar en jaque de nuevo
+								contador++;
+							//rey->setPosicion(reyX, reyY);
+						}
+					}
+
+				}
 			}
+			if (contador == 0) { return 'M'; std::cout << "JAQUE MATE DESDE TABLERO::JaqueMate\n"; }
+			else { return 'J';  std::cout << "JAQUE MATE DESDE TABLERO::JaqueMate\n"; }
+		}
+		else return 'N';
 	}
-	else
-		return true;
+	
 }
 void Tablero::imprimirId(int i, int j)
 {

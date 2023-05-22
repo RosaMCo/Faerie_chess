@@ -35,17 +35,17 @@ public:
 	//comer al paso
 	bool colorDistinto(Pieza& pieza, Pieza& pieza2);
 	bool casillaVacia(int c, int f);
-	bool piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen);
+	bool piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen, int NojaqueMate = 1);
 	//void actualizarId(int fdestino, int cdestino, int forigen, int corigen);
 
-	bool amenaza(Pieza& pieza); //true si pieza puede ser comida, no incluye comer al paso
+	bool amenaza(Pieza& pieza, int NojaqueMate = 1); //true si pieza puede ser comida, no incluye comer al paso
 
 	bool enroque(Pieza& torre, Pieza& rey, char tipo);
 	bool enroque(int fdestino, int cdestino, int forigen, int corigen);
 
 	//bool jaque(Rey& rey);
-	bool jaque(Color turno);
-	bool jaqueMate(Rey& rey);
+	Pieza* jaque(Color turn);
+	char jaqueMate(Color turn);
 
 	bool comerAlPaso(int fdestino, int cdestino, int forigen, int corigen);
 
