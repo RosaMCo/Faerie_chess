@@ -44,7 +44,7 @@ void Tienda::dibuja()
 		ETSIDI::printxy("¿Eres blanco o negro?", -5, 9);
 		ETSIDI::printxy("-1- Blanco		-2- Negro", -5, 8);
 	}
-	else if (comprador == BLANCO|| comprador == NEGRO){
+	else {
 		ETSIDI::setTextColor(0, 1, 1);
 		ETSIDI::setFont("bin/fuentes/Bitwise.ttf", 12);
 		ETSIDI::printxy("Elige la pieza que quieres sustituir ", -5, 9);
@@ -55,9 +55,26 @@ void Tienda::dibuja()
 	ETSIDI::printxy("CHESS WINX", 2, 1);
 }
 
-void Tienda::compra()
+void Tienda::compra(int precio)
 {
-
+	if (comprador == BLANCO) {
+		if (puntos_blanco >= precio) {
+			puntos_blanco -= precio;
+			std::cout << "Puntos blanco: " << puntos_blanco << std::endl;
+		}
+		else {
+			std::cout << "No tienes dinero para comprar eso!" << std::endl;
+		}
+	}
+	else if (comprador == NEGRO) {
+		if (puntos_negro >= precio) {
+			puntos_negro -= precio;
+			std::cout << "Puntos negro: " << puntos_negro << std::endl;
+		}
+		else {
+			std::cout << "No tienes dinero para comprar eso!" << std::endl;
+		}
+	}
 }
 
 void Tienda::tecla(unsigned char key) {
@@ -76,14 +93,16 @@ void Tienda::tecla(unsigned char key) {
 	else {
 		switch (key) {
 		case '1':
-	
+			compra(2);
 			break;
 		case '2':
-	
+			compra(3);
 			break;
 		case '3':
+			compra(3);
 			break;
 		case '4':
+			compra(5);
 			break;
 		case 'c':
 			comprador = NO_SEL;

@@ -16,7 +16,7 @@ public:
 	Tienda();
 	virtual ~Tienda() {};
 	void dibuja();
-	void compra();
+	void compra(int precio);
 	void inicializa();
 	void tecla(unsigned char key);
 
