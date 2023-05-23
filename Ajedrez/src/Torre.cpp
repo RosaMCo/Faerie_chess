@@ -10,7 +10,7 @@ Torre::Torre(Color col, int f, int c) {
 }
 
 bool Torre::mover(int nx, int ny) {
-	if ((nx < 0) || (nx > 7) || (nx < 0) || (ny > 7))
+	if ((nx < 0) || (nx > 7) || (ny < 0) || (ny > 7))
 		return false;
 	else
 	{
