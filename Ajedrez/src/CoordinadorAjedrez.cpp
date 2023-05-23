@@ -202,6 +202,9 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 	else if (estado == JUEGO) {
 		mundo.tecla(key);
 	}
+	else if (estado == TIENDA) {
+		tienda.tecla(key);
+	}
 }
 
 void CoordinadorAjedrez::teclaEspecial(unsigned char key) //Moverse por el menu presionando una tecla
