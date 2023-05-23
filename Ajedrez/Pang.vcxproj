@@ -26,6 +26,7 @@
     <ClCompile Include="src\CoordinadorAjedrez.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
     <ClCompile Include="src\Ajedrez.cpp" />
+    <ClCompile Include="src\Obelisco.cpp" />
     <ClCompile Include="src\Peon.cpp" />
     <ClCompile Include="src\Pieza.cpp" />
     <ClCompile Include="src\Reglas.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="src\Casilla.h" />
     <ClInclude Include="src\CoordinadorAjedrez.h" />
     <ClInclude Include="src\Mundo.h" />
+    <ClInclude Include="src\Obelisco.h" />
     <ClInclude Include="src\Peon.h" />
     <ClInclude Include="src\Pieza.h" />
     <ClInclude Include="src\Reglas.h" />
