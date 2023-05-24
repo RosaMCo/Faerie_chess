@@ -132,8 +132,8 @@ void Mundo::cambiaTurno()
 
 char Mundo::jaque()
 {
-	//return tablero.jaqueMate(tablero.getTurno());
-	return 'N';
+	return tablero.jaqueMate(tablero.getTurno());
+	//return 'N';
 }
 
 int* Mundo::ValidarClick( int x, int y)

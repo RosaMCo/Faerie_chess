@@ -1,5 +1,6 @@
 #include "Reina.h"
 #include "freeglut.h"
+#include <iostream>
 
 
 Reina::Reina(Color col, int f, int c)
@@ -48,10 +49,26 @@ bool Reina::mover(int nc, int nf)
 		return false;
 	else
 	{
+		if (nc == 0 && nf == 3)
+		{
+			std::cout << "\n";
+		}
 		if ((abs(nc - columna) == abs(nf - fila)) || ((columna == nc) && (fila != nf)) || ((columna != nc) && (fila == nf)))
-			return true;
+		{
+			if (nc == 0 && nf == 3)
+			{
+				std::cout << "\n";
+			}
+			return true;//mov reina
+		}
 		else
-			return false;
+		{
+			if (nc == 0 && nf == 3)
+			{
+				std::cout << "\n";
+			}return false;//mov reina
+		}
+			
 	}
 
 		/*//La reina utiliza los movimientos de la torre y del alfil 

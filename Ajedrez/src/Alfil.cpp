@@ -24,8 +24,8 @@ bool Alfil::mover(int nc, int nf)
 	}
 	else
 	{
-		std::cout <<"No se sale del tablero\n";
-		std::cout << "nc= "<<nc<<" columna = "<<columna<<" abs(nc - columna) = "<< abs(nc - columna)<<"\n";
+		//std::cout <<"No se sale del tablero\n";
+		//std::cout << "nc= "<<nc<<" columna = "<<columna<<" abs(nc - columna) = "<< abs(nc - columna)<<"\n";
 		if (abs(nc - columna) == abs(nf - fila))
 		{
 			//std::cout << "MOVIMIENTO DIAGONAL\n";

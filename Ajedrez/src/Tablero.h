@@ -20,6 +20,7 @@ private:
 	Pieza* lista[32];//lista de piezas (puede o no contener punteros nulos), el máximo es el nº total de piezas permitidas (32)
 	Color turno;//turno de blancas o negras 
 	int numero;
+	Pieza* _id[8][8]; //copia de la id para poder anticiparse a movimientos
 	
 public:
 	Tablero();
@@ -34,7 +35,7 @@ public:
 	//validar enroque
 	//comer al paso
 	bool colorDistinto(Pieza& pieza, Pieza& pieza2);
-	bool casillaVacia(int c, int f);
+	bool casillaVacia(int c, int f,int NoJaqueMate=1);
 	bool piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen, int NojaqueMate = 1);
 	//void actualizarId(int fdestino, int cdestino, int forigen, int corigen);
 
@@ -50,13 +51,14 @@ public:
 	bool comerAlPaso(int fdestino, int cdestino, int forigen, int corigen);
 
 	bool actualizarId(int fdestino, int cdestino, int forigen, int corigen);
-	void imprimirId(int i, int j);
+	void imprimirId(int i, int j,int NojaqueMate=1);
 	void imprimirLista(int i, int j);
 	void imprimirLista();
 	void imprimirTurno();
 	void imprimirTipo(Tipo tip);
 	void imprimirColor(Color col);
 	void comprobarAsignaciones();
+	Pieza* dameCopiaId(int c, int f);
 
 };
 

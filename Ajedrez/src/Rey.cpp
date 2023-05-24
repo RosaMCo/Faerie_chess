@@ -51,7 +51,7 @@ bool Rey::mover(int nc, int nf)
 		return false;
 	else
 	{
-		if (((abs(columna - nc) == 1) || (abs(fila - nf) == 1))||((columna==nc)&&(abs(fila-nf)==1))||((fila == nf)&&(abs(columna-nc)==1)))
+		if (((abs(columna - nc) == 1) && (abs(fila - nf) == 1))||((columna==nc)&&(abs(fila-nf)==1))||((fila == nf)&&(abs(columna-nc)==1)))
 		{
 			//std::cout << "movimiento de rey permitido\n";
 			movIni = 1;

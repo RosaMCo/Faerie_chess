@@ -10,6 +10,7 @@ Tablero::Tablero() {
 		for (int columna = 0; columna <8; columna++) {
 			casilla[fila][columna].setPosicion(columna * 20.0/8 - 10, fila * 20.0/8 - 2.5);//valores aleatorios de las casillas, cambiar a los concretos
 			id[fila][columna] = nullptr;
+			_id[fila][columna] = nullptr;
 		}
 	}
 
@@ -279,7 +280,6 @@ void Tablero::dibuja() {
 }
 
 bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen, int NojaqueMate) {//selección de destino (una vez seleccionada pieza a mover)
-	//if (NojaqueMate||PermitirMov)
 	if(NojaqueMate)
 	{
 		if ((id[forigen][corigen]->getTipo()) == CABALLO)
@@ -288,9 +288,9 @@ bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen,
 				return false;
 		}
 	}
-	//else
-	//{
-		//definir sentido del movimiento
+	if (cdestino == 0 && fdestino == 3) { 
+		std::cout << "\n"; }
+
 		int difY = fdestino - forigen;
 		int difX = cdestino - corigen;
 		int incrementoY = 0;
@@ -313,7 +313,7 @@ bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen,
 		{
 			for (int _columna = (corigen + incrementoX); _columna != cdestino; _columna += incrementoX)
 			{
-				if (casillaVacia(_columna,forigen)==0)
+				if (casillaVacia(_columna,forigen,NojaqueMate)==0)
 				//if(id[forigen,_columna])
 				{
 					std::cout << "Mov horizontal -> Se encontró una pieza en medio en medio en: "; imprimirId(_columna, forigen);
@@ -327,7 +327,7 @@ bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen,
 			for (int _fila = (forigen + incrementoY); _fila != fdestino; _fila+=incrementoY)
 			{
 				//std::cout << "\tColumna fija: " << corigen + 1 << "; buscando pieza en la fila: " << _fila +1 << "\n";
-				if (casillaVacia(corigen,_fila)==0)
+				if (casillaVacia(corigen,_fila,NojaqueMate)==0)
 				{
 					std::cout << "Mov vertical -> Se encontró una pieza en medio en: "; imprimirId(corigen, _fila);
 					return true;
@@ -341,29 +341,41 @@ bool Tablero::piezaEnMedio(int fdestino, int cdestino, int forigen, int corigen,
 			int _columna = corigen + incrementoX;
 			while ((_fila != fdestino) || (_columna != cdestino))
 			{
-				if (casillaVacia(_columna, _fila) == 0)
+				if (cdestino == 0 && fdestino == 3) 
+				{ std::cout << "\n"; }
+				if (casillaVacia(_columna, _fila,NojaqueMate) == 0)
 				{
-					std::cout << "Mov diagonal -> Se encontró una pieza en medio en: "; //imprimirId(_columna, _fila);
-					return true;
+					if (cdestino == 0 && fdestino == 3)
+					{
+						std::cout << "\n";
+					}
+					//std::cout << "Mov diagonal -> Se encontro una pieza en medio en: "; //imprimirId(_columna, _fila);
+					return true; //pieza en medio
 				}
 				_fila += incrementoY;
 				_columna += incrementoX;
 
 			}
-			return false;
+			if (cdestino == 0 && fdestino == 3)
+			{
+				std::cout << "\n";
+			}
+			return false;//pieza en medio
 
 		}
 		else return false;
 	//}
 }
 
-bool Tablero::casillaVacia(int c, int f)
+bool Tablero::casillaVacia(int c, int f,int NojaqueMate)
 {
-	auto& iden = id[f][c];
-	if (iden) {
+	auto& iden = NojaqueMate == 1 ? id[f][c] : _id[f][c];
+	if (iden) 
+	{
 		return false; std::cout << "---Casilla no vacía---\n";
 	}
-	else {
+	else 
+	{
 		return true; std::cout << "---Casilla vacía---\n";
 	}
 }
@@ -429,20 +441,68 @@ bool Tablero::amenaza(Pieza& pieza, int NojaqueMate)//no aplicado a comer al pas
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			if (id[j][i])
+			if (i == 0 && j == 3) {
+				std::cout << "\n";
+			}
+			if(NojaqueMate)
 			{
-				if ((colorDistinto(*id[j][i], pieza)) && ((i != _columna) && (j != _fila)))
+				if (i == 0 && j == 3) {
+					std::cout << "\n";
+				}
+				if (id[j][i])
 				{
-					if (piezaEnMedio(j, i, _fila, _columna, NojaqueMate) == 0)
+					if ((colorDistinto(*id[j][i], pieza)) && ((i != _columna) && (j != _fila)))
 					{
-						
-						if ((id[j][i]->comer(_columna, _fila)))
+						if (piezaEnMedio(j, i, _fila, _columna, NojaqueMate) == 0)
 						{
-							std::cout << "----Puede comer al rey el"; imprimirTipo(id[j][i]->getTipo()); imprimirColor(id[j][i]->getColor());
-							std::cout << " de x= " << i << " y= " << j << "estando supuestamente el rey en x= " << _columna << " y= " << _fila << "\n";
-							std::cout << "...Y Pieza en medio: "<< piezaEnMedio(j, i, _fila, _columna,NojaqueMate)<<"\n";
-							return true;
+
+							if ((id[j][i]->comer(_columna, _fila)))
+							{
+								std::cout << "----Puede comer al rey el"; imprimirTipo(id[j][i]->getTipo()); imprimirColor(id[j][i]->getColor());
+								std::cout << " de x= " << i+1 << " y= " << j+1 << "estando supuestamente el rey en x= " << _columna+1 << " y= " << _fila+1 << "\n";
+								std::cout << "...Y Pieza en medio: " << piezaEnMedio(j, i, _fila, _columna, NojaqueMate) << "\n";
+								return true; //amenaza no jaque
+							}
 						}
+					}
+				}
+			}
+			else
+			{
+				if (i == 0 && j == 3) {
+					std::cout << "En amenaza después de que el rey se mueva : \n"; imprimirId(i, j, NojaqueMate);
+				}
+				if (_id[j][i])
+				{
+					if (i == 0 && j == 3) {
+						std::cout << "\n";
+					}
+					if ((colorDistinto(*_id[j][i], pieza)) && ((i != _columna) && (j != _fila)))
+					{
+						if (i == 0 && j == 3) { 
+							std::cout << "\n";
+						}
+						if (piezaEnMedio(j, i, _fila, _columna, NojaqueMate) == 0)
+						{
+							if (i == 0 && j == 3) {
+								imprimirId(i,j,0)
+									; 
+							}
+							if ((_id[j][i]->comer(_columna, _fila)))
+							{
+								if (i == 0 && j == 3) { std::cout << "\n"; }
+								std::cout << "----Puede comer al rey el"; imprimirTipo(_id[j][i]->getTipo()); imprimirColor(_id[j][i]->getColor());
+								std::cout << " de x= " << i+1 << " y= " << j+1 << "estando supuestamente el rey en x= " << _columna+1 << " y= " << _fila+1 << "\n";
+								std::cout << "...Y Pieza en medio: " << piezaEnMedio(j, i, _fila, _columna, NojaqueMate) << "\n";
+								return true; //amenaza jaque
+							}
+						}
+					}
+				}
+				else {
+					if (i == 0 && j == 3) {
+						std::cout << "\n"; //en jaque, puntero nulo
+						imprimirId(i, j, NojaqueMate);
 					}
 				}
 			}
@@ -450,7 +510,7 @@ bool Tablero::amenaza(Pieza& pieza, int NojaqueMate)//no aplicado a comer al pas
 		}
 		
 	}
-	return false;
+	return false; //amenaza(jaque y no jaque)
 
 }
 Pieza* Tablero::jaque(Color turn)
@@ -466,6 +526,7 @@ Pieza* Tablero::jaque(Color turn)
 					if (amenaza(*id[fila][columna])) //....esta amenazado
 					{
 						std::cout << "JAQUE AL REY "; imprimirColor(id[fila][columna]->getColor());
+						imprimirId(columna, fila);
 						return id[fila][columna];
 					}
 				}
@@ -473,6 +534,105 @@ Pieza* Tablero::jaque(Color turn)
 		}
 	}
 	return nullptr;
+}
+
+char Tablero::jaqueMate(Color turn)
+{
+	Pieza* rey = jaque(turn);//si pueden hacer jaque al rey contrario
+	{
+		Color atacante = turn == blanco ? blanco : negro;
+		int contador = 0;
+		if (rey)//si el rey contrario está en jaque...
+		{
+			int reyX = rey->getColumna();
+			int reyY = rey->getFila();
+		    std::cout << "El rey que le llega al jaqueMate es: "; imprimirId(reyX, reyY);
+			for (int j = 0; j < 8; j++)
+			{
+				for (int i = 0; i < 8; i++)
+				{
+					if (rey->mover(i, j))//...si el rey contrario se puede mover a un lugar donde hay pieza
+					{
+						if (casillaVacia(i, j) == 0)//..a un lugar donde hay pieza
+						{
+							if (id[j][i]->getColor() == atacante)//...del color de la atacante...
+							{
+								std::cout << "Estudio si el rey vuelve a quedar en jaque en x= " << i + 1 << " y=" << j + 1 << "\n";
+								for (int y = 0; y < 8; y++)
+									for (int x = 0; x < 8; x++)
+										_id[y][x] = dameCopiaId(x, y);
+								std::cout << "::::::::ACTUALIZANDO POSICION DE REY::::::\n";
+								_id[reyY][reyX]->setPosicion(i, j);//Movemos el rey a la posición que podría moverse
+								std::cout << "\t1. Seteo posición de x=" << reyX + 1 << " y=" << reyY + 1 << " a x=" << i + 1 << " y=" << j + 1 << "\n";
+								imprimirId(reyX, reyY,0);
+								std::cout << "\t2. Copio dirección del antiguo rey al nuevo\n\t\t antes la _id[j][i]:\n"; imprimirId(i, j,0);
+								_id[j][i] = _id[reyY][reyX];//copia de dir. de memoria para que apunten ambos a la misma pieza
+								std::cout << "\t\t ahora la :id[j][i]:\n"; imprimirId(j, i, 0);
+								std::cout << "\t\t3. Borro la antigua posicion del rey. Ahora:\n"; imprimirId(reyX, reyY);
+								_id[reyY][reyX] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
+								std::cout << "\nActualizo mov del rey para estudiar el supuesto, ahora:\n";
+								imprimirId(i,j,0); imprimirId(reyX,reyY,0);
+								if (amenaza(*_id[j][i], 0) == 0)//que no le hace quedar en jaque de nuevo
+								{
+									std::cout << "No es jaque mate porque el rey"; imprimirColor(_id[j][i]->getColor()); std::cout << "se puede mover a : x = " << i + 1 << " y = " << j + 1 << "y allí estará a salvo\n";
+									contador++;
+								}
+								//rey->setPosicion(reyX, reyY);
+								//delete _rey;
+							}
+						}
+						else//...o a una casilla vacía que no le hace quedar en amenaza de nuevo
+						{
+							/*Color _color = turn == blanco ? negro : blanco;
+							Rey* _rey = new Rey(_color, j, i);//fila 0, columna 4
+							_rey->setPosicion(i, j);
+							if (amenaza(*_rey, 0) == 0)//que no le hace quedar en jaque de nuevo
+								contador++;
+							delete _rey;*/
+							//rey->setPosicion(i, j);
+							//if (amenaza(*rey, 0) == 0)//que no le hace quedar en jaque de nuevo
+							//std::cout << "No es jaque mate porque el rey"; imprimirColor(rey->getColor()); std::cout << "se puede mover a : x = " << i +1<< " y = " << j+1 << "\n";
+								//contador++;
+							//rey->setPosicion(reyX, reyY);
+							std::cout << "Estudio si el rey vuelve a quedar en jaque en x= " << i + 1 << " y=" << j + 1 << "\n";
+							std::cout << "\n";
+							for (int y = 0; y < 8; y++)
+								for (int x = 0; x < 8; x++)
+								{
+									_id[y][x] = dameCopiaId(x, y); if(x==0&&y==3)imprimirId(x, y, 0);
+								}
+							std::cout << "::::::::ACTUALIZANDO POSICION DE REY::::::\n";
+							_id[reyY][reyX]->setPosicion(i, j);//Movemos el rey a la posición que podría moverse
+							_id[j][i] = _id[reyY][reyX];
+							std::cout << "\t1. Seteo posición de x=" << reyX + 1 << " y=" << reyY + 1 << " a x=" << i + 1 << " y=" << j + 1 << "\n";
+							imprimirId(reyX, reyY, 0);
+							/*std::cout << "\t2. Copio dirección del antiguo rey al nuevo\n\t\t antes la _id[j][i]:\n"; imprimirId(i, j, 0);
+							_id[j][i] = _id[reyY][reyX];//copia de dir. de memoria para que apunten ambos a la misma pieza
+							std::cout << "\t\t ahora la :id[j][i]:\n"; imprimirId(j, i, 0);
+							std::cout << "\t\t3. Borro la antigua posicion del rey. Ahora:\n"; imprimirId(reyX, reyY);
+							_id[reyY][reyX] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
+							std::cout << "\nActualizo mov del rey para estudiar el supuesto, ahora:\n";
+							imprimirId(i, j, 0); imprimirId(reyX, reyY, 0);*/
+							if (amenaza((*_id[j][i]), 0))//que no le hace quedar en jaque de nuevo
+							{
+								std::cout << "Debería ser JAQUE MATE\n";
+							}
+							else
+							{
+								std::cout << "No es jaque mate porque el rey"; imprimirColor(_id[j][i]->getColor()); std::cout << "se puede mover a : x = " << i + 1 << " y = " << j + 1 << "y allí estará a salvo\n";
+								contador++;
+							}
+						}
+					}
+
+				}
+			}
+			if (contador == 0) { return 'M'; std::cout << "JAQUE MATE DESDE TABLERO::JaqueMate\n"; }
+			else { return 'J';  std::cout << "JAQUE MATE DESDE TABLERO::JaqueMate\n"; }
+		}
+		else return 'N';
+	}
+
 }
 
 
@@ -591,68 +751,31 @@ bool Tablero::enroque(Pieza& torre, Pieza& rey,char tipo)
 }
 
 
-char Tablero::jaqueMate(Color turn)
-{
-	Pieza* rey = jaque(turn);//si pueden hacer jaque al rey contrario
-	
-	{
-		int contador = 0;
-		if (rey)//si el rey contrario está en jaque...
-		{
-			int reyX = rey->getColumna();
-			int reyY = rey->getFila();
-			for (int j = 0; j < 8; j++)
-			{
-				for (int i = 0; i < 8; i++)
-				{
-					if (rey->mover(i, j))//...si el rey contrario se puede mover a un lugar donde hay pieza
-					{
-						if (id[j][i])//..a un lugar donde hay pieza
-						{
-							if (id[j][i]->getColor() == turn)//...del color de la atacante...
-							{
-								/*Color _color = turn == blanco ? negro : blanco;
-								Rey* _rey = new Rey(_color, j, i);//fila 0, columna 4*/
-								//rey->setPosicion(i, j);
-								//if(amenaza(*rey,0)==0)//que no le hace quedar en jaque de nuevo
-									contador++;
-								//rey->setPosicion(reyX, reyY);
-								//delete _rey;
-							}
-						}
-						else//...o a una casilla vacía que no le hace quedar en amenaza de nuevo
-						{
-							/*Color _color = turn == blanco ? negro : blanco;
-							Rey* _rey = new Rey(_color, j, i);//fila 0, columna 4
-							_rey->setPosicion(i, j);
-							if (amenaza(*_rey, 0) == 0)//que no le hace quedar en jaque de nuevo
-								contador++;
-							delete _rey;*/
-							//rey->setPosicion(i, j);
-							//if (amenaza(*rey, 0) == 0)//que no le hace quedar en jaque de nuevo
-								contador++;
-							//rey->setPosicion(reyX, reyY);
-						}
-					}
 
-				}
-			}
-			if (contador == 0) { return 'M'; std::cout << "JAQUE MATE DESDE TABLERO::JaqueMate\n"; }
-			else { return 'J';  std::cout << "JAQUE MATE DESDE TABLERO::JaqueMate\n"; }
-		}
-		else return 'N';
-	}
-	
-}
-void Tablero::imprimirId(int i, int j)
+void Tablero::imprimirId(int i, int j, int NojaqueMate)
 {
-	if (id[j][i]) 
+	if (NojaqueMate)
 	{
-		std::cout << "\n-------SOBRE LA ID----------" << "\n";
-		std::cout << "id[" << i << "][" << j << "] "; imprimirTipo(id[j][i]->getTipo()); std::cout<< " en x= " << (id[j][i]->getColumna()) + 1 << " | y=" << (id[j][i]->getFila()) + 1 << "\n";
-		imprimirColor(id[j][i]->getColor()); std::cout<< "\n";
+		if (id[j][i])
+		{
+			std::cout << "\n-------SOBRE LA ID----------" << "\n";
+			std::cout << "id[" << i << "][" << j << "] "; imprimirTipo(id[j][i]->getTipo()); std::cout << " en x= " << (id[j][i]->getColumna()) + 1 << " | y=" << (id[j][i]->getFila()) + 1 << "\n";
+			imprimirColor(id[j][i]->getColor()); std::cout << "\n";
+		}
+		else { std::cout << "\t PUNTERO NULO, casilla vacia: x=" << i + 1 << " | y=" << j + 1 << "\n"; }
 	}
-	else { std::cout << "\t PUNTERO NULO, casilla vacia: x=" << i +1 << " | y=" << j +1 << "\n"; }
+	else
+	{
+		if (_id[j][i])
+		{
+			std::cout << "\n-------SOBRE LA COPIA ID----------" << "\n";
+			std::cout << "id[" << i << "][" << j << "] "; imprimirTipo(_id[j][i]->getTipo()); std::cout << " en x= " << (_id[j][i]->getColumna()) + 1 << " | y=" << (_id[j][i]->getFila()) + 1 << "\n";
+			imprimirColor(_id[j][i]->getColor()); std::cout << "\n";
+		}
+		else { std::cout << "\t PUNTERO NULO, casilla vacia: x=" << i + 1 << " | y=" << j + 1 << "\n"; }
+
+	}
+
 }
 void Tablero::imprimirLista(int i, int j)
 {
@@ -761,4 +884,48 @@ void Tablero::comprobarAsignaciones()
 	std::cout << "\n-------------FIN--------------\n";
 
  }
+Pieza* Tablero::dameCopiaId(int c, int f)
+{
+	Pieza* _lista[32];
+	for (int k = 0; k < numero; k++)
+	{
+		Tipo _tipo = lista[k]->getTipo();
+		Color _color = lista[k]->getColor();
+		int _x = lista[k]->getColumna();
+		int _y = lista[k]->getFila();
+		switch (_tipo)
+		{
+		case PEON:
+			_lista[k] = new Peon(_color, _y, _x);
+			break;
+		case TORRE:
+			_lista[k] = new Torre(_color, _y, _x);
+			break;
+		case ALFIL:
+			_lista[k] = new Alfil(_color, _y, _x);
+			break;
+		case CABALLO:
+			_lista[k] = new Caballo(_color, _y, _x);
+			break;
+		case REINA:
+			_lista[k] = new Reina(_color, _y, _x);
+			break;
+		case REY:
+			_lista[k] = new Rey(_color, _y, _x);
+			break;
+		case INDEFINIDO:
+			break;
+		case CAMPESINO:
+			//_lista[k] = new Campesino(_color, _y, _x);
+			break;
+		case REGENTE:
+			//_lista[k] = new Regente(_color, _y, _x);
+			break;
+		default:
+			break;
+		}
+		_id[_y][_x] = _lista[k];
+	}
+	return _id[c][f];
+}
 
