@@ -580,6 +580,38 @@ void Tablero::intercambioPieza(Intercambio tipo) {//es fea, pero funcional
 			}
 		}
 	}
+	else if (tipo == REY_REGENTE_B) {
+		for (int i = 0; i < 8; i++) {
+			if (id[0][i]->getTipo() == REY) {
+				Regente* r = new Regente(blanco, 0, i);
+				for (int j = 0; i < 32; j++) {
+					if (lista[j]->getFila() == 0 && lista[j]->getColumna() == i) {
+						delete lista[j];
+						lista[j] = r;
+						id[0][i] = r;
+						std::cout << "Regente blanco listo" << endl;
+						return;
+					}
+				}
+			}
+		}
+	}
+	else if (tipo == REY_REGENTE_N) {
+	for (int i = 0; i < 8; i++) {
+		if (id[7][i]->getTipo() == REY) {
+			Regente* r = new Regente(negro, 7, i);
+			for (int j = 0; i < 32; j++) {
+				if (lista[j]->getFila() == 7 && lista[j]->getColumna() == i) {
+					delete lista[j];
+					lista[j] = r;
+					id[7][i] = r;
+					std::cout << "Regente negro listo" << endl;
+					return;
+				}
+			}
+		}
+	}
+	}
 }
 
 

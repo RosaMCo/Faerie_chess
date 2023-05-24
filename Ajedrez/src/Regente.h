@@ -5,6 +5,7 @@
 using namespace std;
 class Regente:public Pieza
 {
+public:
 	Regente(Color color, int fila, int columna);
 	
 
@@ -12,6 +13,9 @@ class Regente:public Pieza
 	void dibuja(float ix, float iy);
 	bool mover(int nc, int nf);
 	bool comer(int nc, int nf) { return mover(nc, nf); }
+	bool getMovIniLargo() { return 0; }
+	bool getMovIni() { return 0; } //no usado, sólo para incluirlo en el virtual de Pieza y aplicarlo en el enroque
+	void setMovIni(bool nuevo) {} //no usado, sólo para incluirlo en el virtual de Pieza y aplicarlo en el enroque
 
 };
 
