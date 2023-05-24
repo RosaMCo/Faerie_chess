@@ -515,6 +515,38 @@ void Tablero::intercambioPieza(Intercambio tipo) {//es fea, pero funcional
 			}
 		}
 	}
+	else if (tipo == TORRE_OBELISCO_B) {
+		for (int i = 0; i < 8; i++) {
+			if (id[0][i]->getTipo() == TORRE) {
+				Obelisco* o = new Obelisco(blanco, 0, i);
+				for (int j = 0; i < 32; j++) {
+					if (lista[j]->getFila() == 0 && lista[j]->getColumna() == i) {
+						delete lista[j];
+						lista[j] = o;
+						id[0][i] = o;
+						std::cout << "Obelisco blanco listo" << endl;
+						return;
+					}
+				}
+			}
+		}
+	}
+	else if (tipo == TORRE_OBELISCO_N) {
+		for (int i = 0; i < 8; i++) {
+			if (id[7][i]->getTipo() == TORRE) {
+				Obelisco* o = new Obelisco(negro, 7, i);
+				for (int j = 0; i < 32; j++) {
+					if (lista[j]->getFila() == 7 && lista[j]->getColumna() == i) {
+						delete lista[j];
+						lista[j] = o;
+						id[7][i] = o;
+						std::cout << "Obelisco negro listo" << endl;
+						return;
+					}
+				}
+			}
+		}
+	}
 }
 
 
