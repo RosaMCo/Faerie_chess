@@ -21,6 +21,7 @@ private:
 	Color turno;//turno de blancas o negras 
 	int numero;
 	Pieza* _id[8][8]; //copia de la id para poder anticiparse a movimientos
+	char estado_jaque;//para informar a mundo (y por tanto al coordinador) de si hay jaque, jaque mate o nada
 	
 public:
 	Tablero();
@@ -31,6 +32,7 @@ public:
 	void dibuja();
 	Color getTurno() { return turno; }
 	void setTurno(Color tur) {turno = tur;}
+	char getEstadoJaque() { return estado_jaque; }
 	//Pieza* getPieza(int c, int f) { return id[f][c]; }
 	//validar enroque
 	//comer al paso

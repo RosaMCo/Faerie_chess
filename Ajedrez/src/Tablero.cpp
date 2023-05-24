@@ -235,6 +235,7 @@ bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen)
 		std::cout << "\nID ACTUALIZADA; Ahora nueva posicion:"; imprimirId(cdestino, fdestino); std::cout<<"\t\tLa posicion anterior: "; imprimirId(corigen, forigen);
 		std::cout << "\nLISTA ACTUALIZADA: "; //imprimirLista(cdestino, fdestino);
 		char _jaque = jaqueMate(turno);
+		estado_jaque = _jaque;
 		std::cout << "\n\n % %%%%%%%%%%%%%% ESTADO DE JAQUE : " << _jaque << "% %%%%%%%%%%%%%%\n";
 		return true;
 		

@@ -80,6 +80,7 @@ void OnMouseDown(int button, int state, int x, int y)
 	{
 		
 		ajedrez.jugada(button, state, x, y);
+		ajedrez.jaque();
 	}
 }
 

@@ -61,75 +61,43 @@ void CoordinadorAjedrez::dibuja()
 	{
 		mundo.dibuja();
 		ETSIDI::setTextColor(1, 1, 1);
-		ETSIDI::setFont("fuentes/Bitwise.ttf", 16);
-		ETSIDI::printxy("JAQUE AL REY BLANCO!!!", -1, 8);
+		ETSIDI::setFont("bin/fuentes/Bitwise.ttf", 16);
+		ETSIDI::printxy("JAQUE AL REY BLANCO!!!", -5, 8);
 
 	}
 	else if (estado == JAQUENEGRO)
 	{
 		mundo.dibuja();
 		ETSIDI::setTextColor(1, 1, 1);
-		ETSIDI::setFont("fuentes/Bitwise.ttf", 16);
-		ETSIDI::printxy("JAQUE AL REY NEGRO!!!", -1, 8);
+		ETSIDI::setFont("bin/fuentes/Bitwise.ttf", 16);
+		ETSIDI::printxy("JAQUE AL REY NEGRO!!!", -5, 8);
 
 	}
 	else if (estado == GAMEOVER)
 	{
 		Color col = mundo.getTurno();
-		ETSIDI::setTextColor(1, 1, 1);
-		ETSIDI::setFont("fuentes/Bitwise.ttf", 16);
-		switch (col)
-		{
-		case indefinido:
-			break;
-		case blanco:
-			ETSIDI::printxy("PIERDEN LAS BLANCAS", -1, 8);
-			break;
-		case negro:
-			ETSIDI::printxy("PIERDEN LAS NEGRAS", -1, 8);
-			break;
-		default:
-			break;
-		}
-		estado = FIN;
-	}
-	else if (estado==FIN)
-	{
-		Color col = mundo.getTurno();
 		mundo.dibuja();
-
-		glDisable(GL_LIGHTING);
-		glBegin(GL_POLYGON);
-		glColor3ub(205, 92, 92);
-		glVertex3f(1, 2, 0.1);
-		glVertex3f(1, 6, 0.1);
-		glVertex3f(7, 6, 0.1);
-		glVertex3f(7, 2, 0.1);
-		glEnd();
-		glEnable(GL_LIGHTING);
-
 		ETSIDI::setTextColor(1, 1, 1);
-		ETSIDI::setFont("fuentes/Bitwise.ttf", 16);
+		ETSIDI::setFont("bin/fuentes/Bitwise.ttf", 16);
 		switch (col)
 		{
 		case indefinido:
 			break;
 		case blanco:
-			ETSIDI::printxy("ENHORABUENA, JUGADOR NEGRO, HAS GANADO!!!!", 2, 5);
+			ETSIDI::printxy("PIERDEN LAS BLANCAS", -3, 8);
+			ETSIDI::printxy("ENHORABUENA, JUGADOR NEGRO, HAS GANADO!!!!", -8, 5);
 			break;
 		case negro:
-			ETSIDI::printxy("ENHORABUENA, JUGADOR BLANCO, HAS GANADO!!!!", 2, 5);
+			ETSIDI::printxy("PIERDEN LAS NEGRAS", -3, 8);
+			ETSIDI::printxy("ENHORABUENA, JUGADOR BLANCO, HAS GANADO!!!!", -8, 5);
 			break;
 		default:
 			break;
 		}
-		//ETSIDI::printxy("ENHORABUENA HAS GANADO!!!!", 2, 5);
-		ETSIDI::setTextColor(1, 1, 1);
-		ETSIDI::setFont("fuentes/Bitwise.ttf", 12);
-		ETSIDI::printxy("PULSE LA TECLA -C- PARA CONTINUAR", 3, 4);
-		ETSIDI::printxy("PULSE LA TECLA -S- PARA SALIR", 3, 3);
-
+		ETSIDI::printxy("PULSA -C- PARA CONTINUAR", -5, 3);
+		//estado = FIN;
 	}
+	
 	else if (estado == TIENDA)
 	{
 		tienda.dibuja();
@@ -151,59 +119,44 @@ void CoordinadorAjedrez::cambiaTurno()
 void CoordinadorAjedrez::tecla(unsigned char key)
 {
 	if (estado == INICIO) {
-		if (estado == INICIO)
+		if (key == '1')
 		{
-			if (key == '1')
-			{
-				mundo.inicializa();
-				estado = JUEGO;
-				cursor = 1;
-			}
-
-			else if (key == '2')
-			{
-				tienda.inicializa();
-				estado = TIENDA;
-				cursor = 1;
-				if (key == 'c')
-					estado = INICIO;
-			}
-			else if (key == '3')
-			{
-				reglas.Inicializa();
-				
-				estado == REGLAS;
-				if (key == 'c')
-					estado = INICIO;
-
-			}
-
-			else if (key == '4')
-			{
-				exit(0);
-			}
-			
+			mundo.inicializa();
+			estado = JUEGO;
+			cursor = 1;
 		}
-		else if (estado == JUEGO)
+
+		else if (key == '2')
 		{
-			mundo.tecla(key);
-		}
-		else if (estado == GAMEOVER)
-		{
+			tienda.inicializa();
+			estado = TIENDA;
+			cursor = 1;
 			if (key == 'c')
 				estado = INICIO;
 		}
-		else if (estado == FIN)
+		else if (key == '3')
 		{
+			reglas.Inicializa();
+
+			estado = REGLAS;
 			if (key == 'c')
 				estado = INICIO;
+
 		}
+
+		else if (key == '4')
+		{
+			exit(0);
+		}
+
 	}
 	else if (estado == JUEGO) {
 		mundo.tecla(key);
 	}
-	else if (estado == TIENDA) {
-		tienda.tecla(key);
+	else if (estado == GAMEOVER)
+	{
+		if (key == 'c')
+			estado = INICIO;
 	}
 }
 
@@ -287,12 +240,12 @@ void CoordinadorAjedrez::jaque()
 			mundo.getTurno();
 			if (mundo.getTurno() == blanco)
 			{
-				estado == JAQUEBLANCO;
+				estado = JAQUEBLANCO;
 				JaqueBlanco = true;
 			}
 			else if (mundo.getTurno() == negro)
 			{
-				estado == JAQUENEGRO;
+				estado = JAQUENEGRO;
 				JaqueNegro = true;
 			}
 
@@ -300,7 +253,7 @@ void CoordinadorAjedrez::jaque()
 		else if (mundo.jaque() == 'M')
 		{
 			mundo.getTurno();
-			estado == GAMEOVER;
+			estado = GAMEOVER;
 
 		}
 		else estado = JUEGO;
