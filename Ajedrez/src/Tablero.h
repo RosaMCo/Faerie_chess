@@ -10,6 +10,9 @@
 #include "Rey.h"
 #include"Regente.h"
 #include "Cortesana.h"
+#include "Campesino.h"
+#include "Obelisco.h"
+
 //enum Color {indefinido, blanco, negro};
 enum Intercambio {
 	NADA, PEON_CAMPESINO_B, PEON_CAMPESINO_N, TORRE_OBELISCO_B, TORRE_OBELISCO_N,

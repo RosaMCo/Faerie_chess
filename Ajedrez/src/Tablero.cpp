@@ -482,8 +482,39 @@ bool Tablero::comerAlPaso(int fdestino, int cdestino, int forigen, int corigen)
 	*/
 }
 
-void Tablero::intercambioPieza(Intercambio tipo) {
-	
+void Tablero::intercambioPieza(Intercambio tipo) {//es fea, pero funcional
+	if (tipo == PEON_CAMPESINO_B) {
+		for (int i = 0; i < 8; i++) {
+			if (id[1][i]->getTipo() == PEON) {
+				Campesino* p = new Campesino(blanco, 1, i);
+				for (int j = 0; i < 32; j++) {
+					if (lista[j]->getFila() == 1 && lista[j]->getColumna() == i) {
+						delete lista[j];
+						lista[j] = p;
+						id[1][i] = p;
+						std::cout << "Campesino blanco listo" << endl;
+						return;
+					}
+				}
+			}
+		}
+	}
+	else if (tipo == PEON_CAMPESINO_N) {
+		for (int i = 0; i < 8; i++) {
+			if (id[6][i]->getTipo() == PEON) {
+				Campesino* p = new Campesino(negro, 6, i);
+				for (int j = 0; i < 32; j++) {
+					if (lista[j]->getFila() == 6 && lista[j]->getColumna() == i) {
+						delete lista[j];
+						lista[j] = p;
+						id[6][i] = p;
+						std::cout << "Campesino negro listo" << endl;
+						return;
+					}
+				}
+			}
+		}
+	}
 }
 
 

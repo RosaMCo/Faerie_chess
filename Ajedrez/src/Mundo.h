@@ -38,5 +38,6 @@ public:
 	//bool validarTurno(Color turn);
 	void cambiaTurno();
 	char jaque();
+	void intercambio(Intercambio tipo) { tablero.intercambioPieza(tipo); }
 	Color getTurno() { return tablero.getTurno(); }
 };

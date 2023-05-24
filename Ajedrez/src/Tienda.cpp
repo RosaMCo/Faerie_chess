@@ -93,23 +93,28 @@ Intercambio Tienda::tecla(unsigned char key) {
 	}
 	else {
 		switch (key) {
+			char temp;//almacena temporalmente el valor de retorno de compra()
 		case '1'://sustitución de peón por campesino
-			if (compra(2) == BLANCO) return PEON_CAMPESINO_B;
-			else if (compra(2) == NEGRO) PEON_CAMPESINO_N;
+			temp = compra(2);
+			if (temp == BLANCO) return PEON_CAMPESINO_B;
+			else if (temp == NEGRO) return PEON_CAMPESINO_N;
 			break;
 		case '2'://sustitución de torre por obelisco
-			if (compra(3)==BLANCO) return TORRE_OBELISCO_B;
-			else if (compra(3) == NEGRO) return TORRE_OBELISCO_N;
+			temp = compra(3);
+			if (temp == BLANCO) return TORRE_OBELISCO_B;
+			else if (temp == NEGRO) return TORRE_OBELISCO_N;
 			break;
 		case '3'://sustitución de alfil por cortesana
-			if (compra(3)==BLANCO) return ALFIL_CORTESANA_B;
-			else if (compra(3) == NEGRO) return ALFIL_CORTESANA_N;
+			temp = compra(3);
+			if (temp == BLANCO) return ALFIL_CORTESANA_B;
+			else if (temp == NEGRO) return ALFIL_CORTESANA_N;
 			break;
 		case '4'://sustitución de rey por regente
-			if (compra(5)==BLANCO) return REY_REGENTE_B;
-			else if (compra(5) == NEGRO) return REY_REGENTE_N;
+			temp = compra(5);
+			if (temp == BLANCO) return REY_REGENTE_B;
+			else if (temp == NEGRO) return REY_REGENTE_N;
 			break;
-		case 'c'://atrás
+		case 'r'://atrás
 			comprador = NO_SEL;
 			
 			break;

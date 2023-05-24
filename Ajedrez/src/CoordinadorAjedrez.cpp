@@ -153,7 +153,8 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 		mundo.tecla(key);
 	}
 	else if (estado == TIENDA) {
-		intercambio = tienda.tecla(key);
+		mundo.intercambio(tienda.tecla(key));
+		if (key == 'c') estado = INICIO;
 	}
 	else if (estado == GAMEOVER)
 	{
