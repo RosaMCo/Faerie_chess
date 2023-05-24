@@ -121,7 +121,7 @@ void Tablero::eliminarPieza(int c, int f)
 			//std::cout << "-----------Quiero eliminar:-------------\n"; imprimirId(eliminadaX, eliminadaY); imprimirLista(eliminadaX, eliminadaY);
 			delete lista[i];
 			std::cout << "Eliminada!!!!!!!!!!!!!!!!!!!!!!\nNueva ID:";
-			//id[eliminadaY][eliminadaX] = nullptr;
+			id[eliminadaY][eliminadaX] = nullptr;
 			numero--;
 			for (int j = i; j < numero; j++)
 			{
@@ -485,6 +485,7 @@ bool Tablero::comerAlPaso(int fdestino, int cdestino, int forigen, int corigen)
 
 bool Tablero::amenaza(Pieza& pieza, int NojaqueMate)//no aplicado a comer al paso
 {
+	
 	int _columna = pieza.getColumna();
 	int _fila = pieza.getFila();
 	for (int j = 0; j < 8; j++)
