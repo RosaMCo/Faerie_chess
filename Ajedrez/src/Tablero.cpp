@@ -393,6 +393,54 @@ bool Tablero::comerAlPaso(int fdestino, int cdestino, int forigen, int corigen)
 {
 	auto& origen = id[forigen][corigen];
 	auto& destino = id[fdestino][cdestino];
+	auto& izq = id[forigen][corigen - 1];
+	auto& dcha = id[forigen][corigen + 1];
+	int incremento = (origen->getColor()) == blanco ? -1 : 1; //si el origen es blanco, nos interesa el incremento del contrario, esto es el negro, que se mueve decrementando filas
+	if (origen->getTipo() == PEON) {
+		if (corigen - 1 >= 0 && izq) {//casilla a la izq existe y tiene algo dentro
+			if (izq->getTipo() == PEON && izq->getColor() != origen->getColor()) {//la casilla contiene un peón del color contrario
+				if (izq->getMovIniLargo()) {//si peón contrario vulnerable
+					eliminarPieza(cdestino, (fdestino + incremento));
+					if (actualizarId(fdestino, cdestino, forigen, corigen))
+					{
+						std::cout << "comida al paso!\n";
+						return true;
+					}
+					else
+					{
+						std::cout << "comer al paso no completado\n";
+						return false;
+					}
+				}
+				return false;
+				
+			}
+			return false;
+		}
+		else if (corigen + 1 <= 7 && dcha) {//casilla a la dcha existe y tiene algo dentro
+			if (dcha->getTipo() == PEON && dcha->getColor() != origen->getColor()) {//la casilla contiene un peón del color contrario
+				if (dcha->getMovIniLargo()) {//si peón contrario vulnerable
+					eliminarPieza(cdestino, (fdestino + incremento));
+					if (actualizarId(fdestino, cdestino, forigen, corigen))
+					{
+						std::cout << "comida al paso!\n";
+						return true;
+					}
+					else
+					{
+						std::cout << "comer al paso no completado\n";
+						return false;
+					}
+				}
+				return false;
+
+			}
+			return false;
+		}
+		return false;
+	}
+	return false;
+	/*
 	int incremento = (origen->getColor()) == blanco ? -1 : 1; //si el origen es blanco, nos interesa el incremento del contrario, esto es el negro, que se mueve decrementando filas
 	auto& peonAComer = id[fdestino + incremento][cdestino];
 	if (peonAComer)
@@ -431,6 +479,7 @@ bool Tablero::comerAlPaso(int fdestino, int cdestino, int forigen, int corigen)
 		else return false;
 	}
 	else return false;
+	*/
 }
 
 
