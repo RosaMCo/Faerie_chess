@@ -23,8 +23,9 @@ protected:
 	Mundo mundo;
 	Tienda tienda;
 	Reglas reglas;
-	enum Estado { INICIO, JUEGO, TIENDA, REGLAS, GAMEOVER, FIN,JAQUEBLANCO, JAQUENEGRO};
+	enum Estado { INICIO, JUEGO, TIENDA, REGLAS, GAMEOVER, FIN, JAQUEBLANCO, JAQUENEGRO };
 	Estado estado;
+	Intercambio intercambio;//para el intercambio de piezas
 	//Variables de jaque desactivadas
 	bool JaqueBlanco = false;
 	bool JaqueNegro = false;

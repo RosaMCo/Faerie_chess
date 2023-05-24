@@ -482,6 +482,10 @@ bool Tablero::comerAlPaso(int fdestino, int cdestino, int forigen, int corigen)
 	*/
 }
 
+void Tablero::intercambioPieza(Intercambio tipo) {
+	
+}
+
 
 bool Tablero::amenaza(Pieza& pieza, int NojaqueMate)//no aplicado a comer al paso
 {

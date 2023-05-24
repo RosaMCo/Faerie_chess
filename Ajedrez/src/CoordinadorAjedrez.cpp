@@ -128,7 +128,6 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 
 		else if (key == '2')
 		{
-			tienda.inicializa();
 			estado = TIENDA;
 			cursor = 1;
 			if (key == 'c')
@@ -152,6 +151,9 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 	}
 	else if (estado == JUEGO) {
 		mundo.tecla(key);
+	}
+	else if (estado == TIENDA) {
+		intercambio = tienda.tecla(key);
 	}
 	else if (estado == GAMEOVER)
 	{

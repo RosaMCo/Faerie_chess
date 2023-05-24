@@ -6,6 +6,9 @@
 #include "Pieza.h"
 
 #define HOME -10
+
+
+
 class Mundo
 {
 private:

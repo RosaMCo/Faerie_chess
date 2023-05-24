@@ -11,6 +11,10 @@
 #include"Regente.h"
 #include "Cortesana.h"
 //enum Color {indefinido, blanco, negro};
+enum Intercambio {
+	NADA, PEON_CAMPESINO_B, PEON_CAMPESINO_N, TORRE_OBELISCO_B, TORRE_OBELISCO_N,
+	ALFIL_CORTESANA_B, ALFIL_CORTESANA_N, REY_REGENTE_B, REY_REGENTE_N
+};
 
 class Tablero
 {
@@ -51,6 +55,7 @@ public:
 	char jaqueMate(Color turn);
 
 	bool comerAlPaso(int fdestino, int cdestino, int forigen, int corigen);
+	void intercambioPieza(Intercambio tipo);
 
 	bool actualizarId(int fdestino, int cdestino, int forigen, int corigen);
 	void imprimirId(int i, int j,int NojaqueMate=1);

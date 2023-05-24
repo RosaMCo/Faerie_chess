@@ -6,10 +6,7 @@ Tienda::Tienda()
 	puntos_negro = 10;
 	comprador = NO_SEL;
 }
-void Tienda::inicializa()
-{
 
-}
 
 void Tienda::dibuja()
 {
@@ -55,29 +52,33 @@ void Tienda::dibuja()
 	ETSIDI::printxy("CHESS WINX", 2, 1);
 }
 
-void Tienda::compra(int precio)
+Comprador Tienda::compra(int precio)
 {
 	if (comprador == BLANCO) {
 		if (puntos_blanco >= precio) {
 			puntos_blanco -= precio;
 			std::cout << "Puntos blanco: " << puntos_blanco << std::endl;
+			return BLANCO;
 		}
 		else {
 			std::cout << "No tienes dinero para comprar eso!" << std::endl;
+			return NO_SEL;
 		}
 	}
 	else if (comprador == NEGRO) {
 		if (puntos_negro >= precio) {
 			puntos_negro -= precio;
 			std::cout << "Puntos negro: " << puntos_negro << std::endl;
+			return NEGRO;
 		}
 		else {
 			std::cout << "No tienes dinero para comprar eso!" << std::endl;
+			return NO_SEL;
 		}
 	}
 }
 
-void Tienda::tecla(unsigned char key) {
+Intercambio Tienda::tecla(unsigned char key) {
 	if (comprador==NO_SEL) {
 		switch (key) {
 		case '1':
@@ -92,23 +93,28 @@ void Tienda::tecla(unsigned char key) {
 	}
 	else {
 		switch (key) {
-		case '1':
-			compra(2);
+		case '1'://sustitución de peón por campesino
+			if (compra(2) == BLANCO) return PEON_CAMPESINO_B;
+			else if (compra(2) == NEGRO) PEON_CAMPESINO_N;
 			break;
-		case '2':
-			compra(3);
+		case '2'://sustitución de torre por obelisco
+			if (compra(3)==BLANCO) return TORRE_OBELISCO_B;
+			else if (compra(3) == NEGRO) return TORRE_OBELISCO_N;
 			break;
-		case '3':
-			compra(3);
+		case '3'://sustitución de alfil por cortesana
+			if (compra(3)==BLANCO) return ALFIL_CORTESANA_B;
+			else if (compra(3) == NEGRO) return ALFIL_CORTESANA_N;
 			break;
-		case '4':
-			compra(5);
+		case '4'://sustitución de rey por regente
+			if (compra(5)==BLANCO) return REY_REGENTE_B;
+			else if (compra(5) == NEGRO) return REY_REGENTE_N;
 			break;
-		case 'c':
+		case 'c'://atrás
 			comprador = NO_SEL;
+			
 			break;
 		}
 		
 	}
-	
+	return NADA;
 }
