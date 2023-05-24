@@ -482,7 +482,20 @@ bool Tablero::comerAlPaso(int fdestino, int cdestino, int forigen, int corigen)
 	*/
 }
 
-void Tablero::intercambioPieza(Intercambio tipo) {//es fea, pero funcional
+void Tablero::promocionPeon(Pieza* peon) {//meter el puntero de la pieza a promocionar? o mejor posicion?
+	string seleccion;
+	cout << "Escribe el nombre de la pieza a la que quieres promocionar" << endl;
+	cout << "Disponibles: reina, caballo, alfil, torre, campesino, cortesana y obelisco" << endl;
+	cin >> seleccion;
+	
+	if (seleccion == "reina") {
+		
+	}
+}
+
+void Tablero::intercambioPieza(Intercambio tipo) {//es fea (mucho código repetido), pero funcional 
+
+	//Peón a campesino
 	if (tipo == PEON_CAMPESINO_B) {
 		for (int i = 0; i < 8; i++) {
 			if (id[1][i]->getTipo() == PEON) {
@@ -515,6 +528,8 @@ void Tablero::intercambioPieza(Intercambio tipo) {//es fea, pero funcional
 			}
 		}
 	}
+
+	//Torre a obelisco
 	else if (tipo == TORRE_OBELISCO_B) {
 		for (int i = 0; i < 8; i++) {
 			if (id[0][i]->getTipo() == TORRE) {
@@ -547,6 +562,8 @@ void Tablero::intercambioPieza(Intercambio tipo) {//es fea, pero funcional
 			}
 		}
 	}
+
+	//Alfil a cortesana
 	else if (tipo == ALFIL_CORTESANA_B) {
 		for (int i = 0; i < 8; i++) {
 			if (id[0][i]->getTipo() == ALFIL) {
@@ -563,7 +580,6 @@ void Tablero::intercambioPieza(Intercambio tipo) {//es fea, pero funcional
 			}
 		}
 	}
-
 	else if (tipo == ALFIL_CORTESANA_N) {
 		for (int i = 0; i < 8; i++) {
 			if (id[7][i]->getTipo() == ALFIL) {
@@ -580,6 +596,8 @@ void Tablero::intercambioPieza(Intercambio tipo) {//es fea, pero funcional
 			}
 		}
 	}
+
+	//Rey a regente
 	else if (tipo == REY_REGENTE_B) {
 		for (int i = 0; i < 8; i++) {
 			if (id[0][i]->getTipo() == REY) {
@@ -597,20 +615,20 @@ void Tablero::intercambioPieza(Intercambio tipo) {//es fea, pero funcional
 		}
 	}
 	else if (tipo == REY_REGENTE_N) {
-	for (int i = 0; i < 8; i++) {
-		if (id[7][i]->getTipo() == REY) {
-			Regente* r = new Regente(negro, 7, i);
-			for (int j = 0; i < 32; j++) {
-				if (lista[j]->getFila() == 7 && lista[j]->getColumna() == i) {
-					delete lista[j];
-					lista[j] = r;
-					id[7][i] = r;
-					std::cout << "Regente negro listo" << endl;
-					return;
+		for (int i = 0; i < 8; i++) {
+			if (id[7][i]->getTipo() == REY) {
+				Regente* r = new Regente(negro, 7, i);
+				for (int j = 0; i < 32; j++) {
+					if (lista[j]->getFila() == 7 && lista[j]->getColumna() == i) {
+						delete lista[j];
+						lista[j] = r;
+						id[7][i] = r;
+						std::cout << "Regente negro listo" << endl;
+						return;
+					}
 				}
 			}
 		}
-	}
 	}
 }
 

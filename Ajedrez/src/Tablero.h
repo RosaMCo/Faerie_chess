@@ -58,6 +58,7 @@ public:
 	char jaqueMate(Color turn);
 
 	bool comerAlPaso(int fdestino, int cdestino, int forigen, int corigen);
+	void promocionPeon(Pieza*peon);//se graduan las piezas antes que nosotros ;_;
 	void intercambioPieza(Intercambio tipo);
 
 	bool actualizarId(int fdestino, int cdestino, int forigen, int corigen);
