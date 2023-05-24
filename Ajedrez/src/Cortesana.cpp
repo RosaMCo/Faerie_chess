@@ -1,5 +1,12 @@
 #include "Cortesana.h"
 
+Cortesana::Cortesana(Color col, int f, int c) {
+	setColor(col);
+	setTipo(CORTESANA);
+	fila = f;
+	columna = c;
+}
+
 void Cortesana::dibuja(float ix, float iy)
 {
 	if (color == blanco)

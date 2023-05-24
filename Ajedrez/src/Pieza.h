@@ -2,7 +2,7 @@
 #include "Vector2D.h"
 #include "ETSIDI.h"
 enum Color {indefinido,blanco,negro};
-enum Tipo { PEON, TORRE, ALFIL, CABALLO, REINA, REY, INDEFINIDO, CAMPESINO, REGENTE, OBELISCO };
+enum Tipo { PEON, TORRE, ALFIL, CABALLO, REINA, REY, INDEFINIDO, CAMPESINO, REGENTE, OBELISCO, CORTESANA };
 class Pieza
 {
 protected:

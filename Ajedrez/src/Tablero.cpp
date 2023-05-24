@@ -547,6 +547,39 @@ void Tablero::intercambioPieza(Intercambio tipo) {//es fea, pero funcional
 			}
 		}
 	}
+	else if (tipo == ALFIL_CORTESANA_B) {
+		for (int i = 0; i < 8; i++) {
+			if (id[0][i]->getTipo() == ALFIL) {
+				Cortesana* c = new Cortesana(blanco, 0, i);
+				for (int j = 0; i < 32; j++) {
+					if (lista[j]->getFila() == 0 && lista[j]->getColumna() == i) {
+						delete lista[j];
+						lista[j] = c;
+						id[0][i] = c;
+						std::cout << "Cortesana blanca lista" << endl;
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	else if (tipo == ALFIL_CORTESANA_N) {
+		for (int i = 0; i < 8; i++) {
+			if (id[7][i]->getTipo() == ALFIL) {
+				Cortesana* c = new Cortesana(negro, 7, i);
+				for (int j = 0; i < 32; j++) {
+					if (lista[j]->getFila() == 7 && lista[j]->getColumna() == i) {
+						delete lista[j];
+						lista[j] = c;
+						id[7][i] = c;
+						std::cout << "Cortesana negra lista" << endl;
+						return;
+					}
+				}
+			}
+		}
+	}
 }
 
 
