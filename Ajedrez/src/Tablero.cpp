@@ -482,14 +482,53 @@ bool Tablero::comerAlPaso(int fdestino, int cdestino, int forigen, int corigen)
 	*/
 }
 
-void Tablero::promocionPeon(Pieza* peon) {//meter el puntero de la pieza a promocionar? o mejor posicion?
+void Tablero::promocionPeon(int fpieza, int cpieza, int nlista, Color color) {//meter la posicion de la pieza a promocionar
 	string seleccion;
 	cout << "Escribe el nombre de la pieza a la que quieres promocionar" << endl;
 	cout << "Disponibles: reina, caballo, alfil, torre, campesino, cortesana y obelisco" << endl;
 	cin >> seleccion;
 	
 	if (seleccion == "reina") {
-		
+		Reina* r = new Reina(color, fpieza, cpieza);
+		delete lista[nlista];
+		lista[nlista] = r;
+		id[fpieza][cpieza] = r;
+	}
+	else if (seleccion == "caballo") {
+		Caballo* c = new Caballo(color, fpieza, cpieza);
+		delete lista[nlista];
+		lista[nlista] = c;
+		id[fpieza][cpieza] = c;
+	}
+	else if (seleccion == "alfil") {
+		Alfil* a = new Alfil(color, fpieza, cpieza);
+		delete lista[nlista];
+		lista[nlista] = a;
+		id[fpieza][cpieza] = a;
+	}
+	else if (seleccion == "torre") {
+		Torre* t = new Torre(color, fpieza, cpieza);
+		delete lista[nlista];
+		lista[nlista] = t;
+		id[fpieza][cpieza] = t;
+	}
+	else if (seleccion == "campesino") {
+		Campesino* c = new Campesino(color, fpieza, cpieza);
+		delete lista[nlista];
+		lista[nlista] = c;
+		id[fpieza][cpieza] = c;
+	}
+	else if (seleccion == "cortesana") {
+		Cortesana* c = new Cortesana(color, fpieza, cpieza);
+		delete lista[nlista];
+		lista[nlista] = c;
+		id[fpieza][cpieza] = c;
+	}
+	else if (seleccion == "obelisco") {
+		Obelisco* o = new Obelisco(color, fpieza, cpieza);
+		delete lista[nlista];
+		lista[nlista] = o;
+		id[fpieza][cpieza] = o;
 	}
 }
 
