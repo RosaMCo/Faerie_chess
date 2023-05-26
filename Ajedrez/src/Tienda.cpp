@@ -40,6 +40,7 @@ void Tienda::dibuja()
 		ETSIDI::setFont("bin/fuentes/Bitwise.ttf", 12);
 		ETSIDI::printxy("¿Eres blanco o negro?", -5, 9);
 		ETSIDI::printxy("-1- Blanco		-2- Negro", -5, 8);
+		ETSIDI::printxy("Pulsa -c- para salir", -5, 7);
 	}
 	else {
 		ETSIDI::setTextColor(0, 1, 1);
@@ -47,6 +48,7 @@ void Tienda::dibuja()
 		ETSIDI::printxy("Elige la pieza que quieres sustituir ", -5, 9);
 		ETSIDI::printxy("(mira la consola para ver tus puntos)", -5, 8);
 		ETSIDI::printxy("-1- Peon	-2- Torre	-3- Alfil	-4- Rey", -5, 7);
+		ETSIDI::printxy("Pulsa -r- para retorceder", -5, 6);
 		
 	}
 	ETSIDI::printxy("CHESS WINX", 2, 1);
