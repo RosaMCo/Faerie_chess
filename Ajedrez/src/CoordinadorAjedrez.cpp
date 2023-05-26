@@ -136,9 +136,10 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 		else if (key == '3')
 		{
 			reglas.Inicializa();
-
+			reglas.tecla(key);
 			estado = REGLAS;
 			if (key == 'c')
+				reglas.tecla('y'||'Y');
 				estado = INICIO;
 
 		}
