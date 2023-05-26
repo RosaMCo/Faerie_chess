@@ -430,6 +430,7 @@ bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen, in
 			id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
 			std::cout << "\nID ACTUALIZADA; Ahora nueva posicion:"; imprimirId(cdestino, fdestino); std::cout << "\t\tLa posicion anterior: "; imprimirId(corigen, forigen);
 			//std::cout << "\nLISTA ACTUALIZADA: "; //imprimirLista(cdestino, fdestino);
+			validarPromocion();//se la llama antes de la comprobación del jaque
 			char _jaque = jaqueMate(turno);
 			estado_jaque = _jaque;
 			std::cout << "\n\n % %%%%%%%%%%%%%% ESTADO DE JAQUE : " << _jaque << "% %%%%%%%%%%%%%%\n";
