@@ -25,12 +25,13 @@ Tablero::Tablero() {
 			id[1][i] = lista[i];
 
 		}
-
+		
 		else {//negros
 			Peon* p = new Peon(negro, 6, i - 8);//fila 6, todas las columnas (-8 porque i empieza en 8 y las columnas en 0)
 			lista[i] = p;
 			id[6][i - 8] = lista[i];
 		}
+		
 	}
 
 	for (int i = 16; i < 20; i++) {//creación de torres
@@ -565,6 +566,26 @@ bool Tablero::comerAlPaso(int fdestino, int cdestino, int forigen, int corigen)
 	}
 	else return false;
 	*/
+}
+
+void Tablero::validarPromocion() {
+	for (int i = 0; i < 8; i++) {
+		if (id[0][i]) {
+			if ((id[0][i]->getColor() == negro) && (id[0][i]->getTipo() == PEON)) {
+				for (int j = 0; j < numero; j++) {
+					if (lista[j] == id[0][i]) promocionPeon(0, i, j, negro);
+				}
+			}
+		}
+		if (id[7][i]) {
+			if ((id[7][i]->getColor() == blanco) && (id[7][i]->getTipo() == PEON)) {
+				for (int j = 0; j < numero; j++) {
+					if (lista[j] == id[7][i]) promocionPeon(7, i, j, blanco);
+				}
+			}
+		}
+		
+	}
 }
 
 void Tablero::promocionPeon(int fpieza, int cpieza, int nlista, Color color) {//meter la posicion de la pieza a promocionar
