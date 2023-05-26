@@ -1110,15 +1110,15 @@ char Tablero::jaqueMate(Color turn)
 							for (int j = 0; j < 8; j++)
 								for (int i = 0; i < 8; i++)
 									_id[j][i] = dameCopiaId(i, j);
-							if (id[py][px])//si hay alguna pieza
+							if (_id[py][px])//si hay alguna pieza
 							{
-								if (id[py][px] != rey) //que no sea el propio rey
+								if (_id[py][px] != rey) //que no sea el propio rey
 								{
-									if (colorDistinto(*rey, *id[py][px]) == 0)//del mismo color al rey en jaque
+									if (colorDistinto(*rey, *_id[py][px]) == 0)//del mismo color al rey en jaque
 									{
-										if (id[py][px]->mover(x, y)) //que se pueda mover a una posición
+										if (_id[py][px]->mover(x, y)) //que se pueda mover a una posición
 										{
-											if (piezaEnMedio(y, x, py, px,0)) //si no hay piezas en medio
+											if (piezaEnMedio(y, x, py, px,0)==0) //si no hay piezas en medio
 											{
 												if (casillaVacia(x, y, 0))  //y la casilla destino está vacía
 												{
@@ -1128,13 +1128,13 @@ char Tablero::jaqueMate(Color turn)
 
 													if (amenaza(*_id[reyY][reyX], 0) == 0) //que proteja el rey
 													{
-														std::cout << "No es jaque mate porque al rey lo puedes proteger";// con: "; imprimirId(x, y, 0);
+														std::cout << "No es jaque mate porque al rey lo puedes proteger con: "; imprimirId(x, y, 0);
 														contador++;
 													}
 												}
-												if (id[y][x])
+												if (_id[y][x])
 												{
-													if (id[y][x]->getColor() != rey->getColor())
+													if (_id[y][x]->getColor() != rey->getColor())
 													{
 														_id[py][px]->setPosicion(x, y); //Supuesto de mover a posición
 														_id[y][x] = _id[py][px];
@@ -1142,7 +1142,7 @@ char Tablero::jaqueMate(Color turn)
 
 														if (amenaza(*_id[reyY][reyX], 0) == 0) //que proteja el rey
 														{
-															std::cout << "No es jaque mate porque al rey lo puedes proteger"; //con: "; imprimirId(x, y, 0);
+															std::cout << "No es jaque mate porque al rey lo puedes proteger con: "; imprimirId(x, y, 0);
 															contador++;
 														}
 													}
