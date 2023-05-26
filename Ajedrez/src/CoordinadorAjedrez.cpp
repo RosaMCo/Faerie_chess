@@ -158,8 +158,12 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 	}
 	else if (estado == GAMEOVER)
 	{
+		mundo.inicializa();
+		JaqueBlanco = JaqueNegro = 0;
+		
 		if (key == 'c')
 			estado = INICIO;
+		
 	}
 }
 
@@ -257,6 +261,7 @@ void CoordinadorAjedrez::jaque()
 		{
 			mundo.getTurno();
 			estado = GAMEOVER;
+			JaqueNegro = JaqueBlanco = false;
 
 		}
 		else estado = JUEGO;
