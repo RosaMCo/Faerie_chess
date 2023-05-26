@@ -30,7 +30,7 @@ void Reglas::Inicializa()
       
    }
     // Al final, se cierra el archivo
-   system("pause");
+  
 
     
 }
@@ -60,7 +60,7 @@ void Reglas::tecla(unsigned char key)
             cout << "\nPulse cualquier tecla para salir: \n";
         case 'y':cin >> key; cout << "Volviendo a la pantalla de inicio"; break;
         
-        default: system("pause"); goto pregunta1; break;
+        default: goto pregunta1; break;
         }
 
 	}
