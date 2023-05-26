@@ -12,7 +12,7 @@ Peon::Peon(Color col, int f, int c) {
 }
 
 bool Peon::mover(int nc, int nf) {
-	//std::cout << "Entro en mover de peon\n";
+	std::cout << "Entro en mover de peon\n";
 	if ((nc < 0) || (nc > 7) || (nf < 0) || (nf > 7))
 		return false;
 	else
