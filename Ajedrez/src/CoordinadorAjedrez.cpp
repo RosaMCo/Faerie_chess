@@ -121,7 +121,6 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 	if (estado == INICIO) {
 		if (key == '1')
 		{
-			mundo.inicializa();
 			estado = JUEGO;
 			cursor = 1;
 		}
@@ -130,18 +129,13 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 		{
 			estado = TIENDA;
 			cursor = 1;
-			if (key == 'c')
-				estado = INICIO;
 		}
 		else if (key == '3')
 		{
 			reglas.Inicializa();
 			reglas.tecla(key);
 			estado = REGLAS;
-			if (key == 'c')
-				reglas.tecla('y'||'Y');
-				estado = INICIO;
-
+			estado = INICIO;
 		}
 
 		else if (key == '4')
@@ -164,7 +158,6 @@ void CoordinadorAjedrez::tecla(unsigned char key)
 		
 		if (key == 'c')
 			estado = INICIO;
-		
 	}
 }
 
