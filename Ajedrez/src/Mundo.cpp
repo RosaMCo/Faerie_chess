@@ -44,12 +44,12 @@ void Mundo::dibuja()
 
 void Mundo::mueve()
 {
-
+	
 }
 
 void Mundo::inicializa()
 {
-	
+	tablero.InicializaTablero();
 }
 
 void Mundo::tecla(unsigned char key)
@@ -132,9 +132,9 @@ void Mundo::cambiaTurno()
 
 char Mundo::jaque()
 {
-	//return tablero.getEstadoJaque();
+	return tablero.getEstadoJaque();
 
-	return 'N';
+	//return 'N';
 }
 
 int* Mundo::ValidarClick( int x, int y)
