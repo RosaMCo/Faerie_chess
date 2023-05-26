@@ -32,6 +32,7 @@ private:
 	
 public:
 	Tablero();
+	virtual ~Tablero() {};
 	//void eliminarPieza(int index);
 	void eliminarPieza(int c, int f);
 	bool selPieza(int forigen, int corigen);//fila y columna (casilla) de origen para seleccionar la pieza
@@ -71,6 +72,8 @@ public:
 	void imprimirColor(Color col);
 	void comprobarAsignaciones();
 	Pieza* dameCopiaId(int c, int f);
+
+	void InicializaTablero();//Reseteo del tablero
 
 };
 
