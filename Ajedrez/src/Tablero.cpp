@@ -182,9 +182,10 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 					{
 						std::cout << "La puedo comer!! \n ";
 						eliminarPieza(cdestino, fdestino);
-						if (actualizarId(fdestino, cdestino, forigen, corigen, 1))//si cuando actualizo la id no voy a dejar el rey en jaque
+						/*if (actualizarId(fdestino, cdestino, forigen, corigen, 1))//si cuando actualizo la id no voy a dejar el rey en jaque
 							return(actualizarId(fdestino, cdestino, forigen, corigen));	//actualizo la id
-						else false;
+						else false;*/
+						return(actualizarId(fdestino, cdestino, forigen, corigen));
 					}
 					else { return false; std::cout << "No la puedo comer :( \n "; }
 				}
@@ -216,10 +217,11 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 					{
 						std::cout << "Me muevo a  \n ";
 						imprimirId(cdestino, fdestino);
-						if (actualizarId(fdestino, cdestino, forigen, corigen, 1))//si cuando voy a actualizar la id no dejo el rey en jaque
+						/*if (actualizarId(fdestino, cdestino, forigen, corigen, 1))//si cuando voy a actualizar la id no dejo el rey en jaque
 							return actualizarId(fdestino, cdestino, forigen, corigen); //actualizo Id
 						else
-							return false;
+							return false;*/
+						return actualizarId(fdestino, cdestino, forigen, corigen);
 					}
 					else { return false; std::cout << "No me puedo mover... \n "; }
 				}
@@ -231,9 +233,7 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen, int impedirJaque)
 {
 	std::cout << "\nestoy actualizando la id...";
-	//auto& destino = id[fdestino][cdestino];
-	//auto& origen = id[forigen][corigen];
-	if (impedirJaque)
+	/*if (impedirJaque)
 	{
 		Pieza* _rey = nullptr;
 		for (int j = 0; j < 8; j++)
@@ -297,10 +297,7 @@ bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen, in
 
 			}
 			
-			/*char _jaque = jaqueMate(turno);
-			estado_jaque = _jaque;
-			std::cout << "\n\n % %%%%%%%%%%%%%% ESTADO DE JAQUE : " << _jaque << "% %%%%%%%%%%%%%%\n";
-			return true;*/
+			
 
 		}
 		else
@@ -311,6 +308,13 @@ bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen, in
 
 	}
 	else
+	{*/
+	//NUEVA PARTE PARA DESLIGARNOS DE LA IDEA DE COPIA ID:
+	if (impedirJaque) //no hace nada si le pasamos el parámetro
+	{
+		std::cout << "\n";
+	}
+	else//valor por defecto, entra siempre.
 	{
 		if (id[forigen][corigen])//si hay pieza, id no nula
 		{
@@ -331,6 +335,7 @@ bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen, in
 			return false;
 		}
 	}
+	//}
 	
 
 }
