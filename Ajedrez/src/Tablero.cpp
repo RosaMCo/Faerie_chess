@@ -3,6 +3,9 @@
 #include <string>
 
 Tablero::Tablero() {
+
+	
+
 	setTurno(Color::blanco);//inician blancas
 	std::cout << "Incializo turno en: "<< turno; imprimirTurno();
 	
@@ -108,6 +111,110 @@ Tablero::Tablero() {
 	//imprimirLista();
 }
 
+void Tablero::InicializaTablero()
+{
+	setTurno(Color::blanco);//inician blancas
+	std::cout << "Incializo turno en: " << turno; imprimirTurno();
+
+	Tablero::actualizarId(0, 0, 0, 0, 0);
+
+	for (int fila = 0; fila < 8; fila++) {
+		for (int columna = 0; columna < 8; columna++) {
+			casilla[fila][columna].setPosicion(columna * 20.0 / 8 - 10, fila * 20.0 / 8 - 2.5);//valores aleatorios de las casillas, cambiar a los concretos
+			
+			id[fila][columna] = nullptr;
+			_id[fila][columna] = nullptr;
+		}
+	}
+	//los números mágicos son offsets para colocar las piezas en el tablero
+	for (int i = 0; i < 16; i++) {//creación de peones
+
+		if (i < 8) {//blancos
+			Peon* p = new Peon(blanco, 1, i);//fila 1, todas las columnas
+			lista[i] = p;
+			id[1][i] = lista[i];
+
+		}
+
+		else {//negros
+			Peon* p = new Peon(negro, 6, i - 8);//fila 6, todas las columnas (-8 porque i empieza en 8 y las columnas en 0)
+			lista[i] = p;
+			id[6][i - 8] = lista[i];
+		}
+
+	}
+
+	for (int i = 16; i < 20; i++) {//creación de torres
+		if (i < 18) {//blancas
+			Torre* t = new Torre(blanco, 0, (i - 16) * 7);//fila 0, columnas 0 y 7
+			lista[i] = t;
+			id[0][(i - 16) * 7] = lista[i];
+		}
+		else {//negras
+			Torre* t = new Torre(negro, 7, (i - 18) * 7);//fila 7, columnas 0 y 7
+			lista[i] = t;
+			id[7][(i - 18) * 7] = lista[i];
+		}
+	}
+
+	for (int i = 20; i < 24; i++) {//creación de caballos
+		if (i < 22) {//0s
+			Caballo* c = new Caballo(blanco, 0, (i - 20) * 5 + 1);//fila 0,  columnas 1 y 6
+			lista[i] = c;
+			id[0][(i - 20) * 5 + 1] = lista[i];
+		}
+
+		else {
+			Caballo* c = new Caballo(negro, 7, (i - 22) * 5 + 1);//fila 7, columnas 1 y 6
+			lista[i] = c;//negras
+			id[7][(i - 22) * 5 + 1] = lista[i];
+		}
+	}
+
+	for (int i = 24; i < 28; i++) {//creación de alfiles
+		if (i < 26) {//blancas
+			Alfil* a = new Alfil(blanco, 0, (i - 24) * 3 + 2);//fila 0, columnas 2 y 5
+			lista[i] = a;
+			id[0][(i - 24) * 3 + 2] = lista[i];
+		}
+
+		else {//negras
+			Alfil* a = new Alfil(negro, 7, (i - 26) * 3 + 2);//fila 7, columnas 2 y 5
+			lista[i] = a;
+			id[7][(i - 26) * 3 + 2] = lista[i];
+		}
+
+	}
+
+	for (int i = 28; i < 30; i++) {
+		if (i < 29) {
+			Reina* r = new Reina(blanco, 0, i - 25);//fila 0, columna 3
+			lista[i] = r;
+			id[0][i - 25] = lista[i];
+		}
+		else {
+			Reina* r = new Reina(negro, 7, i - 26);//fila 7, columna 3
+			lista[i] = r;
+			id[7][i - 26] = lista[i];
+		}
+	}
+
+	for (int i = 30; i < 32; i++) {
+		if (i < 31) {
+			Rey* r = new Rey(blanco, 0, i - 26);//fila 0, columna 4
+			lista[i] = r;
+			id[0][i - 26] = lista[i];
+		}
+
+		else {
+			Rey* r = new Rey(negro, 7, i - 27);//fila 7, columna 4
+			lista[i] = r;
+			id[7][i - 27] = lista[i];
+		}
+
+	}
+	numero = 32;
+}
 
 void Tablero::eliminarPieza(int c, int f)
 {
