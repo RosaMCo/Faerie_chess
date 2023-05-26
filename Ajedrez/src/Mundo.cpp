@@ -90,7 +90,7 @@ Casilla Mundo::getCasilla(int x, int y) { //Devuelve la casilla en función de la
 int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
 {//Implementación de una jugada
 		//NO BORRAR COSAS EN PRUEBAS
-	std::cout << "\tEntro en mundo::seleccionar ficha" << "\n";
+	//std::cout << "\tEntro en mundo::seleccionar ficha" << "\n";
 	//std::cout << "En mundo, el turno es: ";
 	//tablero.imprimirTurno();
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT) * 0.92; //cantidad de pixeles de alto 
@@ -109,7 +109,7 @@ int* Mundo::SeleccionarFicha(int button, int state, int x, int y)
 
 		position[0] = 7 - calculate_fila;
 		position[1] = calculate_columna;
-		std::cout << "Cursor:Seleccionada la pieza de c="<<position[1]+1<<" y f="<<position[0]+1 << "\n";
+		//std::cout << "Cursor:Seleccionada la pieza de c="<<position[1]+1<<" y f="<<position[0]+1 << "\n";
 
 		return position;
 	}
@@ -132,13 +132,15 @@ void Mundo::cambiaTurno()
 
 char Mundo::jaque()
 {
-	return tablero.getEstadoJaque();
+	//return tablero.getEstadoJaque();
+
+	return 'N';
 }
 
 int* Mundo::ValidarClick( int x, int y)
 { 
 	//NO BORRAR COSAS EN PRUEBAS
-	std::cout << "coordenada x : " << x << " coordenada y : " << y << "\n";
+	//std::cout << "coordenada x : " << x << " coordenada y : " << y << "\n";
 	/*std::cout << glutGet(GLUT_WINDOW_HEIGHT) * 0.92 << " maximo de altura\n";
 	std::cout << glutGet(GLUT_WINDOW_WIDTH) * 0.7 << " maximo de ancho\n";*/
 

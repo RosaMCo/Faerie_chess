@@ -49,24 +49,36 @@ bool Reina::mover(int nc, int nf)
 		return false;
 	else
 	{
-		if (nc == 0 && nf == 3)
+		if (nc == 4 && nf == 6)
 		{
 			std::cout << "\n";
+			if ((abs(nc - columna) == abs(nf - fila))) {
+				std::cout << "diagonal";
+			}if (((columna == nc) && (fila != nf))) {
+				std::cout << "vertical";
+			}if ((columna != nc) && (fila == nf)) {
+				std::cout << "horizontal";
+			}
 		}
-		if ((abs(nc - columna) == abs(nf - fila)) || ((columna == nc) && (fila != nf)) || ((columna != nc) && (fila == nf)))
+		if ((abs(nc - columna) == abs(nf - fila)) || ((columna == nc) ||(fila == nf)))
 		{
-			if (nc == 0 && nf == 3)
+			if (nc == 4 && nf == 6)
 			{
 				std::cout << "\n";
 			}
+			std::cout << "que puede moverse alli, asi que devuelvo true en movimiento de reina\n";
 			return true;//mov reina
 		}
 		else
 		{
-			if (nc == 0 && nf == 3)
+			if (nc == 4 && nf == 6)
 			{
 				std::cout << "\n";
-			}return false;//mov reina
+			}
+			std::cout << "que NO puede moverse ahi, asi que devuelvo false en movimiento de reina\n";
+			std::cout << " \tactual: (" << columna + 1 << "," << fila + 1 << ")\n\tfutura: (" << nc + 1 << "," << nf + 1 << ")\n";
+			std::cout << "diferencia en vabs h-v: " << abs(nc - columna) << ";" << abs(nf - fila) << "\n";
+			return false;//mov reina
 		}
 			
 	}

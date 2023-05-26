@@ -179,7 +179,7 @@ void CoordinadorAjedrez::jugada(int button, int state, int x, int y)
 			if (ficha_sel) {
 				//std::cout << "mover ficha;sel" << ficha_sel[0] << "\n";
 				//std::cout << "mover ficha;sel" << ficha_sel[1] << "\n";
-				std::cout << "Seleccion de cursor: c=" << ficha_sel[1]+1 << " f=" << ficha_sel[0]+1 << "\n";
+				//std::cout << "Seleccion de cursor: c=" << ficha_sel[1]+1 << " f=" << ficha_sel[0]+1 << "\n";
 				action_click = true;
 				ficha_selecionada = ficha_sel;
 			}

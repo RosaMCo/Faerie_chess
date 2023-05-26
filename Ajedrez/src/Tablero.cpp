@@ -133,12 +133,12 @@ void Tablero::eliminarPieza(int c, int f)
 }
 
 bool Tablero::selPieza(int forigen, int corigen) {//selección de pieza a mover [pasar como const?]
-	std::cout << "\tEntro en Tablero::seleccionar Pieza" << "\n";
+	//std::cout << "\tEntro en Tablero::seleccionar Pieza" << "\n";
 	std::cout << "El turno en tablero es:"; imprimirTurno();
 	auto& iden = id[forigen][corigen];//es muy largo de escribir, así que referencia/alias
 	if (iden) {//comprobar puntero no nulo (casilla no vacía)
 		if (iden->getColor() == turno) {//comprobar que coinciden el color de la pieza y el del turno
-			std::cout << "Coinciden color y turno; hay una pieza de color" << iden->getColor() << "\n";
+			//std::cout << "Coinciden color y turno; hay una pieza de color" << iden->getColor() << "\n";
 			return true;
 		}
 		else {
@@ -181,7 +181,9 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 					{
 						std::cout << "La puedo comer!! \n ";
 						eliminarPieza(cdestino, fdestino);
-						return(actualizarId(fdestino, cdestino, forigen, corigen));						
+						if (actualizarId(fdestino, cdestino, forigen, corigen, 1))//si cuando actualizo la id no voy a dejar el rey en jaque
+							return(actualizarId(fdestino, cdestino, forigen, corigen));	//actualizo la id
+						else false;
 					}
 					else { return false; std::cout << "No la puedo comer :( \n "; }
 				}
@@ -213,7 +215,10 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 					{
 						std::cout << "Me muevo a  \n ";
 						imprimirId(cdestino, fdestino);
-						return actualizarId(fdestino, cdestino, forigen, corigen);
+						if (actualizarId(fdestino, cdestino, forigen, corigen, 1))//si cuando voy a actualizar la id no dejo el rey en jaque
+							return actualizarId(fdestino, cdestino, forigen, corigen); //actualizo Id
+						else
+							return false;
 					}
 					else { return false; std::cout << "No me puedo mover... \n "; }
 				}
@@ -222,28 +227,108 @@ bool Tablero::mover(int fdestino, int cdestino, int forigen, int corigen) {//sel
 		}
 	}
 }
-bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen)
+bool Tablero::actualizarId(int fdestino,int cdestino,int forigen,int corigen, int impedirJaque)
 {
 	std::cout << "\nestoy actualizando la id...";
 	//auto& destino = id[fdestino][cdestino];
 	//auto& origen = id[forigen][corigen];
-	if (id[forigen][corigen])//si hay pieza, id no nula
+	if (impedirJaque)
 	{
-		id[forigen][corigen]->setPosicion(cdestino, fdestino);//actualizar posición de la pieza 
-		id[fdestino][cdestino] = id[forigen][corigen];//copia de dir. de memoria para que apunten ambos a la misma pieza
-		id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
-		std::cout << "\nID ACTUALIZADA; Ahora nueva posicion:"; imprimirId(cdestino, fdestino); std::cout<<"\t\tLa posicion anterior: "; imprimirId(corigen, forigen);
-		std::cout << "\nLISTA ACTUALIZADA: "; //imprimirLista(cdestino, fdestino);
-		char _jaque = jaqueMate(turno);
-		estado_jaque = _jaque;
-		std::cout << "\n\n % %%%%%%%%%%%%%% ESTADO DE JAQUE : " << _jaque << "% %%%%%%%%%%%%%%\n";
-		return true;
-		
+		Pieza* _rey = nullptr;
+		for (int j = 0; j < 8; j++)
+		{
+			for (int i = 0; i < 8; i++)
+			{
+				_id[j][i] = dameCopiaId(i, j);
+				if(_id[j][i])
+					if (((_id[j][i]->getTipo()) == REY) && (_id[j][i]->getColor() == turno))
+					{
+						_rey = _id[j][i]; imprimirId(j, i, 0);
+					}
+			}
+		}
+		std::cout << "Tras copia de la id, he identificado el rey del color del turno como"; imprimirId(_rey->getColumna(), _rey->getFila(), 0);
+		if (_id[forigen][corigen])
+		{
+			if (_id[forigen][corigen]->getTipo() == REY && _id[forigen][corigen]->getColor() == turno)
+			{
+				_id[forigen][corigen]->setPosicion(cdestino, fdestino);//actualizar posición de la pieza 
+				_id[fdestino][cdestino] = _id[forigen][corigen];//copia de dir. de memoria para que apunten ambos a la misma pieza
+				_id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
+				std::cout << "->He movido la id para estudiar el posible movimiento del rey a x=" << cdestino + 1 << " y=" << fdestino + 1 << "\n";
+				if (amenaza(*(_id[fdestino][cdestino]), 0))
+				{
+					std::cout << "Movimiento no permitido, rey quedaría en jaque\n";
+					for (int j = 0; j < 8; j++)
+						for (int i = 0; i < 8; i++)
+							_id[j][i] = dameCopiaId(i, j);
+					return false; 
+				}
+				else
+				{
+					for (int j = 0; j < 8; j++)
+						for (int i = 0; i < 8; i++)
+							_id[j][i] = dameCopiaId(i, j);
+					return true;
+				}
+			}
+			else
+			{
+				_id[forigen][corigen]->setPosicion(cdestino, fdestino);//actualizar posición de la pieza 
+				_id[fdestino][cdestino] = _id[forigen][corigen];//copia de dir. de memoria para que apunten ambos a la misma pieza
+				_id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
+				std::cout << "->He movido la id para estudiar el posible movimiento del rey a x=" << cdestino + 1 << " y=" << fdestino + 1 << "\n";
+				if (amenaza(*_rey, 0))
+				{
+					std::cout << "Movimiento no permitido, rey quedaría en jaque\n";
+					for (int j = 0; j < 8; j++)
+						for (int i = 0; i < 8; i++)
+							_id[j][i] = dameCopiaId(i, j);
+					return false; 
+				}
+				else
+				{
+					for (int j = 0; j < 8; j++)
+						for (int i = 0; i < 8; i++)
+							_id[j][i] = dameCopiaId(i, j);
+					return true;
+				}
+
+			}
+			
+			/*char _jaque = jaqueMate(turno);
+			estado_jaque = _jaque;
+			std::cout << "\n\n % %%%%%%%%%%%%%% ESTADO DE JAQUE : " << _jaque << "% %%%%%%%%%%%%%%\n";
+			return true;*/
+
+		}
+		else
+		{
+			std::cout << "Queria actualizar la id pero no había nada en origen";
+			return false;
+		}
+
 	}
-	else 
+	else
 	{
-		std::cout << "Queria actualizar la id pero no había nada en origen";
-		return false;
+		if (id[forigen][corigen])//si hay pieza, id no nula
+		{
+			id[forigen][corigen]->setPosicion(cdestino, fdestino);//actualizar posición de la pieza 
+			id[fdestino][cdestino] = id[forigen][corigen];//copia de dir. de memoria para que apunten ambos a la misma pieza
+			id[forigen][corigen] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
+			std::cout << "\nID ACTUALIZADA; Ahora nueva posicion:"; imprimirId(cdestino, fdestino); std::cout << "\t\tLa posicion anterior: "; imprimirId(corigen, forigen);
+			//std::cout << "\nLISTA ACTUALIZADA: "; //imprimirLista(cdestino, fdestino);
+			char _jaque = jaqueMate(turno);
+			estado_jaque = _jaque;
+			std::cout << "\n\n % %%%%%%%%%%%%%% ESTADO DE JAQUE : " << _jaque << "% %%%%%%%%%%%%%%\n";
+			return true;
+
+		}
+		else
+		{
+			std::cout << "Queria actualizar la id pero no había nada en origen";
+			return false;
+		}
 	}
 	
 
@@ -677,29 +762,24 @@ bool Tablero::amenaza(Pieza& pieza, int NojaqueMate)//no aplicado a comer al pas
 	
 	int _columna = pieza.getColumna();
 	int _fila = pieza.getFila();
-	for (int j = 0; j < 8; j++)
+	
+	if(NojaqueMate)
 	{
-		for (int i = 0; i < 8; i++)
+		for (int j = 0; j < 8; j++)
 		{
-			if (i == 0 && j == 3) {
-				std::cout << "\n";
-			}
-			if(NojaqueMate)
+			for (int i = 0; i < 8; i++)
 			{
-				if (i == 0 && j == 3) {
-					std::cout << "\n";
-				}
 				if (id[j][i])
 				{
 					if ((colorDistinto(*id[j][i], pieza)) && ((i != _columna) && (j != _fila)))
 					{
-						if (piezaEnMedio(j, i, _fila, _columna, NojaqueMate) == 0)
+						if (piezaEnMedio(j, i, _fila, _columna, 1) == 0)
 						{
 
 							if ((id[j][i]->comer(_columna, _fila)))
 							{
 								std::cout << "----Puede comer al rey el"; imprimirTipo(id[j][i]->getTipo()); imprimirColor(id[j][i]->getColor());
-								std::cout << " de x= " << i+1 << " y= " << j+1 << "estando supuestamente el rey en x= " << _columna+1 << " y= " << _fila+1 << "\n";
+								std::cout << " de x= " << i + 1 << " y= " << j + 1 << "estando supuestamente el rey en x= " << _columna + 1 << " y= " << _fila + 1 << "\n";
 								std::cout << "...Y Pieza en medio: " << piezaEnMedio(j, i, _fila, _columna, NojaqueMate) << "\n";
 								return true; //amenaza no jaque
 							}
@@ -707,59 +787,50 @@ bool Tablero::amenaza(Pieza& pieza, int NojaqueMate)//no aplicado a comer al pas
 					}
 				}
 			}
-			else
+		} return false;
+	}
+	else
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			for (int i = 0; i < 8; i++)
 			{
-				if (i == 0 && j == 3) {
-					std::cout << "En amenaza después de que el rey se mueva : \n"; imprimirId(i, j, NojaqueMate);
-				}
 				if (_id[j][i])
 				{
-					if (i == 0 && j == 3) {
-						std::cout << "\n";
-					}
 					if ((colorDistinto(*_id[j][i], pieza)) && ((i != _columna) && (j != _fila)))
 					{
-						if (i == 0 && j == 3) { 
-							std::cout << "\n";
-						}
-						if (piezaEnMedio(j, i, _fila, _columna, NojaqueMate) == 0)
+						if (piezaEnMedio(j, i, _fila, _columna, 0) == 0)
 						{
-							if (i == 0 && j == 3) {
-								imprimirId(i,j,0)
-									; 
+							//std::cout << "Estoy en amenaza despues de que el _rey se mueva a : \n"; imprimirId(_columna, _fila, 0);
+							if (_id[j][i]->getTipo() == REINA)//Esto sólo es una prueba, lo borraré pero no influye
+							{
+								std::cout << "Se encuentra sin pieza en medio y de color distinto una: "; imprimirId(i, j, 0);
 							}
+
 							if ((_id[j][i]->comer(_columna, _fila)))
 							{
-								if (i == 0 && j == 3) { std::cout << "\n"; }
 								std::cout << "----Puede comer al rey el"; imprimirTipo(_id[j][i]->getTipo()); imprimirColor(_id[j][i]->getColor());
-								std::cout << " de x= " << i+1 << " y= " << j+1 << "estando supuestamente el rey en x= " << _columna+1 << " y= " << _fila+1 << "\n";
+								std::cout << " de x= " << i + 1 << " y= " << j + 1 << "estando supuestamente el rey en x= " << _columna + 1 << " y= " << _fila + 1 << "\n";
 								std::cout << "...Y Pieza en medio: " << piezaEnMedio(j, i, _fila, _columna, NojaqueMate) << "\n";
 								return true; //amenaza jaque
 							}
 						}
 					}
 				}
-				else {
-					if (i == 0 && j == 3) {
-						std::cout << "\n"; //en jaque, puntero nulo
-						imprimirId(i, j, NojaqueMate);
-					}
-				}
+				
 			}
-			
-		}
-		
+		} return false;
 	}
-	return false; //amenaza(jaque y no jaque)
-
+			
 }
 Pieza* Tablero::jaque(Color turn)
 {
+	
 	for (int fila = 0; fila < 8; fila++)
 	{
 		for (int columna = 0; columna < 8; columna++)
 		{
-			if (id[fila][columna]) 
+			if (id[fila][columna])
 			{
 				if ((id[fila][columna]->getTipo() == REY) && (id[fila][columna]->getColor() != turn)) //si el rey del contrario...
 				{
@@ -803,12 +874,12 @@ char Tablero::jaqueMate(Color turn)
 										_id[y][x] = dameCopiaId(x, y);
 								std::cout << "::::::::ACTUALIZANDO POSICION DE REY::::::\n";
 								_id[reyY][reyX]->setPosicion(i, j);//Movemos el rey a la posición que podría moverse
-								std::cout << "\t1. Seteo posición de x=" << reyX + 1 << " y=" << reyY + 1 << " a x=" << i + 1 << " y=" << j + 1 << "\n";
-								imprimirId(reyX, reyY,0);
-								std::cout << "\t2. Copio dirección del antiguo rey al nuevo\n\t\t antes la _id[j][i]:\n"; imprimirId(i, j,0);
+								std::cout << "\t1. Seteo posición de x=" << reyX + 1 << " y=" << reyY + 1 << " a x=" << _id[reyX][reyY]->getColumna() +1 << " y=" << _id[reyX][reyY]->getFila() + 1 << "\n";imprimirId(reyX, reyY,0);
+								std::cout << "\t2. Copio dirección del antiguo rey al nuevo\n\t\t antes la _id[j][i]:\n"; 
+								imprimirId(i, j,0);
 								_id[j][i] = _id[reyY][reyX];//copia de dir. de memoria para que apunten ambos a la misma pieza
-								std::cout << "\t\t ahora la :id[j][i]:\n"; imprimirId(j, i, 0);
-								std::cout << "\t\t3. Borro la antigua posicion del rey. Ahora:\n"; imprimirId(reyX, reyY);
+								std::cout << "\t\t ahora la :id[j][i]:\n"; imprimirId(i, j, 0);
+								std::cout << "\t\t3. Borro la antigua posicion del rey. Ahora:\n"; imprimirId(reyX, reyY,0);
 								_id[reyY][reyX] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
 								std::cout << "\nActualizo mov del rey para estudiar el supuesto, ahora:\n";
 								imprimirId(i,j,0); imprimirId(reyX,reyY,0);
@@ -817,42 +888,29 @@ char Tablero::jaqueMate(Color turn)
 									std::cout << "No es jaque mate porque el rey"; imprimirColor(_id[j][i]->getColor()); std::cout << "se puede mover a : x = " << i + 1 << " y = " << j + 1 << "y allí estará a salvo\n";
 									contador++;
 								}
-								//rey->setPosicion(reyX, reyY);
-								//delete _rey;
 							}
 						}
 						else//...o a una casilla vacía que no le hace quedar en amenaza de nuevo
 						{
-							/*Color _color = turn == blanco ? negro : blanco;
-							Rey* _rey = new Rey(_color, j, i);//fila 0, columna 4
-							_rey->setPosicion(i, j);
-							if (amenaza(*_rey, 0) == 0)//que no le hace quedar en jaque de nuevo
-								contador++;
-							delete _rey;*/
-							//rey->setPosicion(i, j);
-							//if (amenaza(*rey, 0) == 0)//que no le hace quedar en jaque de nuevo
-							//std::cout << "No es jaque mate porque el rey"; imprimirColor(rey->getColor()); std::cout << "se puede mover a : x = " << i +1<< " y = " << j+1 << "\n";
-								//contador++;
-							//rey->setPosicion(reyX, reyY);
 							std::cout << "Estudio si el rey vuelve a quedar en jaque en x= " << i + 1 << " y=" << j + 1 << "\n";
 							std::cout << "\n";
 							for (int y = 0; y < 8; y++)
 								for (int x = 0; x < 8; x++)
 								{
-									_id[y][x] = dameCopiaId(x, y); if(x==0&&y==3)imprimirId(x, y, 0);
+									_id[y][x] = dameCopiaId(x, y); //if(x==0&&y==3)imprimirId(x, y, 0);
 								}
 							std::cout << "::::::::ACTUALIZANDO POSICION DE REY::::::\n";
 							_id[reyY][reyX]->setPosicion(i, j);//Movemos el rey a la posición que podría moverse
 							_id[j][i] = _id[reyY][reyX];
-							std::cout << "\t1. Seteo posición de x=" << reyX + 1 << " y=" << reyY + 1 << " a x=" << i + 1 << " y=" << j + 1 << "\n";
+							std::cout << "\t1. Seteo posición de x=" << reyX + 1 << " y=" << reyY + 1 << " a x=" << _id[reyX][reyY]->getColumna() + 1 << " y=" << _id[reyX][reyY]->getFila() + 1 << "\n";
 							imprimirId(reyX, reyY, 0);
-							/*std::cout << "\t2. Copio dirección del antiguo rey al nuevo\n\t\t antes la _id[j][i]:\n"; imprimirId(i, j, 0);
+							std::cout << "\t2. Copio dirección del antiguo rey al nuevo\n\t\t antes la _id[j][i]:\n"; imprimirId(i, j, 0);
 							_id[j][i] = _id[reyY][reyX];//copia de dir. de memoria para que apunten ambos a la misma pieza
-							std::cout << "\t\t ahora la :id[j][i]:\n"; imprimirId(j, i, 0);
-							std::cout << "\t\t3. Borro la antigua posicion del rey. Ahora:\n"; imprimirId(reyX, reyY);
+							std::cout << "\t\t ahora la :id[j][i]:\n"; imprimirId(i, j, 0);
+							std::cout << "\t\t3. Borro la antigua posicion del rey. Ahora:\n"; imprimirId(reyX, reyY,0);
 							_id[reyY][reyX] = nullptr;//casilla origen ahora vacía (no apunta a la pieza)
 							std::cout << "\nActualizo mov del rey para estudiar el supuesto, ahora:\n";
-							imprimirId(i, j, 0); imprimirId(reyX, reyY, 0);*/
+							imprimirId(i, j, 0); imprimirId(reyX, reyY, 0);
 							if (amenaza((*_id[j][i]), 0))//que no le hace quedar en jaque de nuevo
 							{
 								std::cout << "Debería ser JAQUE MATE\n";
@@ -867,10 +925,11 @@ char Tablero::jaqueMate(Color turn)
 
 				}
 			}
-			if (contador == 0) { return 'M'; std::cout << "JAQUE MATE DESDE TABLERO::JaqueMate\n"; }
-			else { return 'J';  std::cout << "JAQUE MATE DESDE TABLERO::JaqueMate\n"; }
+			
+			if (contador == 0) { std::cout << "JAQUE MATE DESDE TABLERO::JaqueMate\n"; estado_jaque = 'M'; return 'M'; }
+			else { std::cout << "JAQUE MATE DESDE TABLERO::Jaque\n"; estado_jaque = 'J'; return 'J'; }
 		}
-		else return 'N';
+		else { estado_jaque = 'N'; return 'N'; }
 	}
 
 }

@@ -61,7 +61,7 @@ public:
 	void promocionPeon(int fpieza, int cpieza, int nlista, Color color);//se graduan las piezas antes que nosotros ;_;
 	void intercambioPieza(Intercambio tipo);
 
-	bool actualizarId(int fdestino, int cdestino, int forigen, int corigen);
+	bool actualizarId(int fdestino, int cdestino, int forigen, int corigen,int impedirJaque=0);
 	void imprimirId(int i, int j,int NojaqueMate=1);
 	void imprimirLista(int i, int j);
 	void imprimirLista();
