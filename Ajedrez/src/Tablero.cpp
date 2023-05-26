@@ -904,7 +904,7 @@ bool Tablero::amenaza(Pieza& pieza, int NojaqueMate)//no aplicado a comer al pas
 			{
 				if (id[j][i])
 				{
-					if ((colorDistinto(*id[j][i], pieza)) && ((i != _columna) && (j != _fila)))
+					if ((colorDistinto(*id[j][i], pieza)) && !((i == _columna) && (j == _fila)))
 					{
 						if (piezaEnMedio(j, i, _fila, _columna, 1) == 0)
 						{
@@ -930,7 +930,7 @@ bool Tablero::amenaza(Pieza& pieza, int NojaqueMate)//no aplicado a comer al pas
 			{
 				if (_id[j][i])
 				{
-					if ((colorDistinto(*_id[j][i], pieza)) && ((i != _columna) && (j != _fila)))
+					if ((colorDistinto(*_id[j][i], pieza)) && !((i == _columna) && (j == _fila)))
 					{
 						if (piezaEnMedio(j, i, _fila, _columna, 0) == 0)
 						{
